@@ -5,6 +5,8 @@ require('dotenv').config();
 
 // Import des routes
 const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/users');
+const restaurantRoutes = require('./routes/restaurants');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,6 +38,12 @@ app.get('/api', (req, res) => {
 
 // Routes d'authentification
 app.use('/api/auth', authRoutes);
+
+// Routes utilisateurs
+app.use('/api/users', userRoutes);
+
+// Routes restaurants
+app.use('/api/restaurants', restaurantRoutes);
 
 // Route de test (redirige vers l'API)
 app.get('/test', (req, res) => {
