@@ -7,6 +7,7 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const restaurantRoutes = require('./routes/restaurants');
+const reservationRoutes = require('./routes/reservations');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,6 +45,9 @@ app.use('/api/users', userRoutes);
 
 // Routes restaurants
 app.use('/api/restaurants', restaurantRoutes);
+
+// Routes réservations
+app.use('/api/reservations', reservationRoutes);
 
 // Route de test (redirige vers l'API)
 app.get('/test', (req, res) => {
