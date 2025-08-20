@@ -3,6 +3,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
 
+// Import i18next configuration
+const { middleware } = require('./config/i18n');
+
 // Import des routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -25,15 +28,37 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware i18next pour la détection de langue
+app.use(middleware);
+
 // Middleware pour servir les fichiers statiques
 app.use(express.static('.'));
 
 // Routes API
 app.get('/api', (req, res) => {
   res.json({
-    message: 'Système de réservation en ligne - API Backend',
+    message: req.t('common:welcome') + ' - API Backend',
     status: 'OK',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    language: req.language || 'fr'
+  });
+});
+
+// Route de test des traductions
+app.get('/api/translations', (req, res) => {
+  res.json({
+    language: req.language || 'fr',
+    translations: {
+      welcome: req.t('common:welcome'),
+      loading: req.t('common:loading'),
+      error: req.t('common:error'),
+      success: req.t('common:success'),
+      login: req.t('auth:login'),
+      register: req.t('auth:register'),
+      users: req.t('users:users'),
+      restaurants: req.t('restaurants:restaurants'),
+      reservations: req.t('reservations:reservations')
+    }
   });
 });
 

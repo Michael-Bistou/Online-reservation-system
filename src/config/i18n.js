@@ -32,23 +32,7 @@ i18next
     ns: ['common', 'auth', 'users', 'restaurants', 'reservations'],
     defaultNS: 'common',
     
-    // Configuration des ressources
-    resources: {
-      fr: {
-        common: require('../locales/fr/common.json'),
-        auth: require('../locales/fr/auth.json'),
-        users: require('../locales/fr/users.json'),
-        restaurants: require('../locales/fr/restaurants.json'),
-        reservations: require('../locales/fr/reservations.json'),
-      },
-      en: {
-        common: require('../locales/en/common.json'),
-        auth: require('../locales/en/auth.json'),
-        users: require('../locales/en/users.json'),
-        restaurants: require('../locales/en/restaurants.json'),
-        reservations: require('../locales/en/reservations.json'),
-      }
-    },
+    // Les ressources seront chargées automatiquement par le backend
     
     // Configuration des options
     interpolation: {
