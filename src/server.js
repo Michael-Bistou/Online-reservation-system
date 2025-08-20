@@ -3,6 +3,9 @@ const cors = require('cors');
 const helmet = require('helmet');
 require('dotenv').config();
 
+// Import des routes
+const authRoutes = require('./routes/auth');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -30,6 +33,9 @@ app.get('/api', (req, res) => {
     timestamp: new Date().toISOString()
   });
 });
+
+// Routes d'authentification
+app.use('/api/auth', authRoutes);
 
 // Route de test (redirige vers l'API)
 app.get('/test', (req, res) => {
