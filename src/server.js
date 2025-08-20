@@ -19,8 +19,20 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Route de test
-app.get('/', (req, res) => {
+// Middleware pour servir les fichiers statiques
+app.use(express.static('.'));
+
+// Routes API
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'Système de réservation en ligne - API Backend',
+    status: 'OK',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Route de test (redirige vers l'API)
+app.get('/test', (req, res) => {
   res.json({
     message: 'Système de réservation en ligne - API Backend',
     status: 'OK',
@@ -39,10 +51,16 @@ app.get('/health', (req, res) => {
 
 // Gestion des erreurs 404
 app.use('*', (req, res) => {
-  res.status(404).json({
-    error: 'Route non trouvée',
-    message: `La route ${req.originalUrl} n'existe pas`
-  });
+  // Si c'est une route API, retourner une erreur JSON
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(404).json({
+      error: 'Route API non trouvée',
+      message: `La route API ${req.originalUrl} n'existe pas`
+    });
+  }
+  
+  // Pour les routes frontend, servir index.html (SPA fallback)
+  res.sendFile('index.html', { root: '.' });
 });
 
 // Middleware de gestion d'erreurs global
