@@ -92,6 +92,23 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Route pour le site legacy (HTML original)
+app.get('/legacy', (req, res) => {
+  res.sendFile('index.html', { root: '.' });
+});
+
+app.get('/legacy/about', (req, res) => {
+  res.sendFile('about.html', { root: '.' });
+});
+
+app.get('/legacy/services', (req, res) => {
+  res.sendFile('services.html', { root: '.' });
+});
+
+app.get('/legacy/contact', (req, res) => {
+  res.sendFile('contact.html', { root: '.' });
+});
+
 // Gestion des erreurs 404
 app.use('*', (req, res) => {
   // Si c'est une route API, retourner une erreur JSON

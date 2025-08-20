@@ -1,145 +1,210 @@
-# Système de Réservation en Ligne pour Restaurants
+# 🍽️ Système de Réservation en Ligne pour Restaurants
 
-Un système complet de réservation en ligne développé avec Node.js/Express pour le backend et Html, CSS et Vue.js pour le frontend.
+Un système complet de réservation en ligne développé avec **Node.js/Express** pour le backend et **Vue.js** pour le frontend.
 
-## 🚀 Fonctionnalités
+## 🚀 **Installation Rapide**
 
-- **Authentification** : Inscription/Connexion utilisateurs avec JWT
-- **Réservations** : Création et gestion des réservations
-- **Paiements** : Intégration Stripe pour les paiements
-- **Notifications** : Emails automatiques de confirmation
-- **Multilingue** : Support i18next pour plusieurs langues
-- **Interface moderne** : Design responsive avec Vue.js
+### **Option 1 : Installation automatique (Recommandée)**
+```bash
+# Windows
+install.bat
 
-## 📋 Prérequis
+# Linux/Mac
+chmod +x install.sh
+./install.sh
+```
 
-- Node.js (v16 ou supérieur)
-- MySQL (v8.0 ou supérieur)
-- npm ou yarn
+### **Option 2 : Installation manuelle**
+Suivez le guide complet : [INSTALLATION.md](INSTALLATION.md)
 
-## 🛠️ Installation
+## 🎯 **Fonctionnalités**
 
-1. **Cloner le repository**
-   ```bash
-   git clone <repository-url>
-   cd online-reservation-system
-   ```
+### **✅ Backend (Node.js/Express)**
+- **Authentification JWT** : Inscription/Connexion sécurisée
+- **API RESTful** : Endpoints pour toutes les opérations
+- **Base de données MySQL** : Schéma complet avec relations
+- **Support multilingue** : i18next pour français/anglais
+- **Validation des données** : express-validator
+- **Sécurité** : Helmet, CORS, bcrypt
 
-2. **Installer les dépendances**
-   ```bash
-   npm install
-   ```
+### **✅ Frontend (Vue.js 3)**
+- **Interface moderne** : Design responsive et intuitif
+- **Navigation fluide** : Vue Router avec protection des routes
+- **Gestion d'état** : Composition API réactive
+- **Communication API** : Axios pour les appels HTTP
+- **Support multilingue** : Interface en français/anglais
 
-3. **Configuration de l'environnement**
-   ```bash
-   cp .env.example .env
-   # Éditer .env avec vos configurations
-   ```
+### **✅ Base de données (MySQL)**
+- **Tables principales** : users, restaurants, tables, reservations
+- **Relations** : Clés étrangères et contraintes
+- **Données de test** : Utilisateurs et restaurants d'exemple
+- **Index optimisés** : Performance des requêtes
 
-4. **Configuration de la base de données**
-   ```bash
-   # Créer la base de données MySQL
-   mysql -u root -p
-   CREATE DATABASE reservation_system;
-   ```
+## 🌐 **URLs d'accès**
 
-5. **Lancer le serveur de développement**
-   ```bash
-   npm run dev
-   ```
+### **Application Vue.js (Nouveau)**
+- **URL principale** : http://localhost:5173
+- **Page d'accueil** : http://localhost:5173/
+- **Connexion** : http://localhost:5173/login
+- **Inscription** : http://localhost:5173/register
 
-## 📁 Structure du Projet
+### **Site HTML original (Legacy)**
+- **URL** : http://localhost:3000/legacy/
+- **Pages** : Accueil, À propos, Services, Contact
+
+### **API Backend**
+- **URL de base** : http://localhost:3000/api
+- **Documentation** : http://localhost:3000/api
+- **Test des traductions** : http://localhost:3000/api/translations
+
+## 🏗️ **Architecture du projet**
 
 ```
-online-reservation-system/
-├── src/                    # Backend source code
+Online-reservation-system/
+├── src/                    # Backend (Node.js/Express)
 │   ├── server.js          # Point d'entrée du serveur
-│   ├── config/            # Configuration (DB, etc.)
+│   ├── config/            # Configuration (DB, i18n)
 │   ├── routes/            # Routes API
 │   ├── controllers/       # Contrôleurs
-│   ├── models/            # Modèles de données
-│   ├── middleware/        # Middleware personnalisé
-│   └── utils/             # Utilitaires
-├── frontend/              # Frontend Vue.js
+│   ├── middleware/        # Middleware (auth, validation)
+│   └── locales/           # Traductions (fr/en)
+├── frontend/              # Frontend (Vue.js)
 │   ├── src/
-│   ├── public/
+│   │   ├── components/    # Composants réutilisables
+│   │   ├── views/         # Pages de l'application
+│   │   └── router/        # Configuration des routes
 │   └── package.json
-├── tests/                 # Tests unitaires
-├── docs/                  # Documentation
-└── package.json
+├── index.html             # Site original (legacy)
+├── package.json           # Dépendances backend
+├── INSTALLATION.md        # Guide d'installation détaillé
+└── README.md              # Ce fichier
 ```
 
-## 🔧 Scripts Disponibles
+## 🔧 **Technologies utilisées**
 
-- `npm start` : Lancer le serveur en production
-- `npm run dev` : Lancer le serveur en mode développement
-- `npm test` : Exécuter les tests
-- `npm run build` : Build du frontend
+### **Backend**
+- **Node.js** : Runtime JavaScript
+- **Express.js** : Framework web
+- **MySQL** : Base de données relationnelle
+- **JWT** : Authentification sécurisée
+- **bcryptjs** : Hachage des mots de passe
+- **i18next** : Support multilingue
+- **express-validator** : Validation des données
 
-## 🌐 API Endpoints
+### **Frontend**
+- **Vue.js 3** : Framework JavaScript progressif
+- **Vue Router** : Navigation entre les pages
+- **Axios** : Client HTTP pour les appels API
+- **i18next** : Traductions côté client
+- **Vite** : Outil de build ultra-rapide
 
-### Authentification
+### **Outils de développement**
+- **Nodemon** : Redémarrage automatique du serveur
+- **Git** : Contrôle de version
+- **npm** : Gestionnaire de paquets
+
+## 🚀 **Démarrage rapide**
+
+### **1. Prérequis**
+- Node.js (v16+)
+- MySQL (v8.0+)
+- Git
+
+### **2. Installation**
+```bash
+# Cloner le projet
+git clone <URL_DU_REPO>
+cd Online-reservation-system
+
+# Installation automatique
+install.bat  # Windows
+./install.sh # Linux/Mac
+```
+
+### **3. Configuration**
+```bash
+# Éditer le fichier .env
+cp env.dev .env
+# Modifier DB_PASSWORD et DB_PORT selon votre configuration
+```
+
+### **4. Lancement**
+```bash
+# Terminal 1 - Backend
+npm run dev
+
+# Terminal 2 - Frontend
+cd frontend
+npm run dev
+```
+
+## 📚 **API Endpoints**
+
+### **Authentification**
 - `POST /api/auth/register` - Inscription utilisateur
 - `POST /api/auth/login` - Connexion utilisateur
-- `POST /api/auth/logout` - Déconnexion
+- `GET /api/auth/profile` - Profil utilisateur
 
-### Réservations
-- `GET /api/reservations` - Liste des réservations
+### **Restaurants**
+- `GET /api/restaurants` - Liste des restaurants
+- `GET /api/restaurants/:id` - Détails d'un restaurant
+- `GET /api/restaurants/search` - Recherche de restaurants
+
+### **Réservations**
+- `GET /api/reservations` - Réservations de l'utilisateur
 - `POST /api/reservations` - Créer une réservation
 - `PUT /api/reservations/:id` - Modifier une réservation
-- `DELETE /api/reservations/:id` - Supprimer une réservation
+- `DELETE /api/reservations/:id` - Annuler une réservation
 
-### Utilisateurs
-- `GET /api/users/profile` - Profil utilisateur
-- `PUT /api/users/profile` - Modifier le profil
+## 🧪 **Tests**
 
-## 🔐 Variables d'Environnement
-
-Créer un fichier `.env` avec les variables suivantes :
-
-```env
-# Serveur
-PORT=3000
-NODE_ENV=development
-
-# Base de données
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_password
-DB_NAME=reservation_system
-
-# JWT
-JWT_SECRET=your_jwt_secret
-JWT_EXPIRES_IN=24h
-
-# Email
-EMAIL_HOST=smtp.gmail.com
-EMAIL_PORT=587
-EMAIL_USER=your_email@gmail.com
-EMAIL_PASS=your_email_password
-
-# Stripe
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-
-# Frontend URL
-FRONTEND_URL=http://localhost:8080
-```
-
-## 🧪 Tests
-
+### **Test du backend**
 ```bash
-npm test
+# Vérifier que l'API répond
+curl http://localhost:3000/api
 ```
 
-## 📝 Licence
+### **Test du frontend**
+- Ouvrir http://localhost:5173
+- Vérifier la navigation
+- Tester l'inscription/connexion
+
+### **Test de la base de données**
+```bash
+mysql -u root -p reservation_system
+SHOW TABLES;
+SELECT COUNT(*) FROM users;
+```
+
+## 🐛 **Résolution des problèmes**
+
+### **Erreurs courantes**
+1. **Port déjà utilisé** : `netstat -ano | findstr :3000`
+2. **MySQL non connecté** : Vérifier que MySQL est démarré
+3. **Module not found** : `npm install` dans le bon dossier
+
+### **Support**
+- Consulter [INSTALLATION.md](INSTALLATION.md) pour plus de détails
+- Vérifier les logs dans les terminaux
+- S'assurer que tous les prérequis sont installés
+
+## 📝 **Licence**
 
 MIT
 
-## 👥 Contribution
+## 👥 **Auteur**
 
-1. Fork le projet
-2. Créer une branche feature (`git checkout -b feature/AmazingFeature`)
-3. Commit les changements (`git commit -m 'Add some AmazingFeature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrir une Pull Request
+Développé dans le cadre d'un TFE (Travail de Fin d'Études)
+
+---
+
+## 🎓 **Pour les professeurs**
+
+Ce projet démontre :
+- **Architecture moderne** : Séparation frontend/backend
+- **Technologies actuelles** : Vue.js 3, Node.js, MySQL
+- **Bonnes pratiques** : Validation, sécurité, multilingue
+- **Documentation complète** : Installation et utilisation
+- **Code maintenable** : Structure modulaire et commentée
+
+**Installation en 5 minutes** avec les scripts automatiques fournis !
