@@ -1,6 +1,6 @@
 # Système de Réservation en Ligne pour Restaurants
 
-Un système complet de réservation en ligne développé avec Node.js/Express pour le backend et Html,CSS et Vue.js pour le frontend.
+Un système complet de réservation en ligne développé avec Node.js/Express pour le backend et Html, CSS et Vue.js pour le frontend.
 
 ## 🚀 Fonctionnalités
 
