@@ -119,7 +119,7 @@
 <script>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import authService from '../services/auth.js'
 
 export default {
   name: 'Register',
@@ -222,29 +222,41 @@ export default {
       successMessage.value = ''
 
       try {
-        const response = await axios.post('http://localhost:3000/api/auth/register', {
-          first_name: form.first_name.trim(),
-          last_name: form.last_name.trim(),
+        const userData = {
+          name: `${form.first_name.trim()} ${form.last_name.trim()}`,
           email: form.email.toLowerCase(),
           phone: form.phone.replace(/\s/g, ''),
           password: form.password
-        })
-
-        successMessage.value = 'Compte créé avec succès ! Redirection...'
-        
-        // Rediriger vers la page de connexion après 2 secondes
-        setTimeout(() => {
-          router.push('/login')
-        }, 2000)
-
-      } catch (error) {
-        console.error('Erreur d\'inscription:', error)
-        
-        if (error.response?.data?.message) {
-          errorMessage.value = error.response.data.message
-        } else {
-          errorMessage.value = 'Erreur lors de l\'inscription. Veuillez réessayer.'
         }
+
+        const result = await authService.register(userData)
+        
+        if (result.success) {
+          successMessage.value = 'Compte créé avec succès ! Redirection...'
+          
+          // Rediriger vers les restaurants après 2 secondes
+          setTimeout(() => {
+            router.push('/restaurants')
+          }, 2000)
+        } else {
+          if (result.errors && result.errors.length > 0) {
+            // Gérer les erreurs de validation du serveur
+            result.errors.forEach(error => {
+              if (error.path === 'email') errors.email = error.msg
+              if (error.path === 'name') {
+                errors.first_name = error.msg
+                errors.last_name = error.msg
+              }
+              if (error.path === 'phone') errors.phone = error.msg
+              if (error.path === 'password') errors.password = error.msg
+            })
+          } else {
+            errorMessage.value = result.error
+          }
+        }
+      } catch (err) {
+        console.error('Erreur d\'inscription:', err)
+        errorMessage.value = 'Une erreur inattendue s\'est produite'
       } finally {
         loading.value = false
       }

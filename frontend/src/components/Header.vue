@@ -28,26 +28,34 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import authService from '../services/auth.js'
 
 export default {
   name: 'Header',
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const isAuthenticated = ref(false)
+    const currentUser = ref(null)
 
     const checkAuth = () => {
-      const token = localStorage.getItem('token')
-      isAuthenticated.value = !!token
+      isAuthenticated.value = authService.isAuthenticated()
+      currentUser.value = authService.getCurrentUser()
     }
 
     const logout = () => {
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
+      authService.logout()
       isAuthenticated.value = false
-      router.push('/login')
+      currentUser.value = null
+      router.push('/')
     }
+
+    // Surveiller les changements de route pour mettre à jour l'état d'authentification
+    watch(route, () => {
+      checkAuth()
+    })
 
     onMounted(() => {
       checkAuth()
@@ -55,6 +63,7 @@ export default {
 
     return {
       isAuthenticated,
+      currentUser,
       logout
     }
   }

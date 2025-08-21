@@ -56,13 +56,14 @@
 
 <script>
 import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { useRouter, useRoute } from 'vue-router'
+import authService from '../services/auth.js'
 
 export default {
   name: 'Login',
   setup() {
     const router = useRouter()
+    const route = useRoute()
     const loading = ref(false)
     const errorMessage = ref('')
 
@@ -100,27 +101,18 @@ export default {
       errorMessage.value = ''
 
       try {
-        const response = await axios.post('http://localhost:3000/api/auth/login', {
-          email: form.email,
-          password: form.password
-        })
-
-        const { token, user } = response.data
-
-        // Stocker le token et les données utilisateur
-        localStorage.setItem('token', token)
-        localStorage.setItem('user', JSON.stringify(user))
-
-        // Rediriger vers la page d'accueil
-        router.push('/')
-      } catch (error) {
-        console.error('Erreur de connexion:', error)
+        const result = await authService.login(form.email, form.password)
         
-        if (error.response?.data?.message) {
-          errorMessage.value = error.response.data.message
+        if (result.success) {
+          // Rediriger vers la page demandée ou vers les restaurants
+          const redirectTo = route.query.redirect || '/restaurants'
+          router.push(redirectTo)
         } else {
-          errorMessage.value = 'Erreur de connexion. Veuillez réessayer.'
+          errorMessage.value = result.error
         }
+      } catch (err) {
+        console.error('Erreur de connexion:', err)
+        errorMessage.value = 'Une erreur inattendue s\'est produite'
       } finally {
         loading.value = false
       }
