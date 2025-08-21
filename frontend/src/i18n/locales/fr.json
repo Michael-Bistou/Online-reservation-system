@@ -1,0 +1,238 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "save": "Sauvegarder",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "all": "Tous",
+    "none": "Aucun",
+    "yes": "Oui",
+    "no": "Non",
+    "required": "Requis",
+    "optional": "Optionnel",
+    "actions": "Actions",
+    "details": "Détails",
+    "close": "Fermer",
+    "open": "Ouvrir",
+    "refresh": "Actualiser",
+    "retry": "Réessayer"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "restaurants": "Restaurants",
+    "reservations": "Mes Réservations",
+    "profile": "Mon Profil",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion",
+    "language": "Langue"
+  },
+  "home": {
+    "title": "Système de Réservation de Restaurants",
+    "subtitle": "Réservez facilement votre table dans les meilleurs restaurants",
+    "hero": {
+      "title": "Trouvez et réservez votre restaurant idéal",
+      "subtitle": "Des milliers de restaurants à votre disposition",
+      "cta": "Commencer à réserver"
+    },
+    "features": {
+      "title": "Pourquoi nous choisir ?",
+      "easy": {
+        "title": "Réservation facile",
+        "description": "En quelques clics, réservez votre table"
+      },
+      "secure": {
+        "title": "Paiement sécurisé",
+        "description": "Transactions sécurisées et protégées"
+      },
+      "reliable": {
+        "title": "Service fiable",
+        "description": "Confirmation instantanée de vos réservations"
+      }
+    },
+    "technologies": {
+      "title": "Technologies utilisées",
+      "backend": "Backend Node.js/Express",
+      "frontend": "Frontend Vue.js 3",
+      "database": "Base de données MySQL",
+      "auth": "Authentification JWT"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "subtitle": "Connectez-vous à votre compte",
+      "email": "Adresse email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "loading": "Connexion...",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "createAccount": "Créer un compte",
+      "errors": {
+        "invalidCredentials": "Identifiants invalides",
+        "emailRequired": "L'email est requis",
+        "passwordRequired": "Le mot de passe est requis",
+        "invalidEmail": "Format d'email invalide"
+      }
+    },
+    "register": {
+      "title": "Inscription",
+      "subtitle": "Créez votre compte",
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Adresse email",
+      "phone": "Numéro de téléphone",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "submit": "Créer un compte",
+      "loading": "Création...",
+      "hasAccount": "Vous avez déjà un compte ?",
+      "login": "Se connecter",
+      "success": "Compte créé avec succès ! Redirection...",
+      "errors": {
+        "firstNameRequired": "Le prénom est requis",
+        "firstNameMin": "Le prénom doit contenir au moins 2 caractères",
+        "lastNameRequired": "Le nom est requis",
+        "lastNameMin": "Le nom doit contenir au moins 2 caractères",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "phoneRequired": "Le téléphone est requis",
+        "phoneInvalid": "Format de téléphone invalide (10 chiffres)",
+        "passwordRequired": "Le mot de passe est requis",
+        "passwordMin": "Le mot de passe doit contenir au moins 6 caractères",
+        "passwordMatch": "Les mots de passe ne correspondent pas",
+        "emailExists": "Cette adresse email est déjà utilisée"
+      }
+    }
+  },
+  "restaurants": {
+    "title": "Restaurants",
+    "subtitle": "Découvrez nos restaurants partenaires",
+    "search": "Rechercher un restaurant...",
+    "filters": {
+      "title": "Filtres",
+      "cuisine": "Type de cuisine",
+      "rating": "Note minimum",
+      "price": "Prix",
+      "location": "Localisation",
+      "clear": "Effacer les filtres"
+    },
+    "sort": {
+      "title": "Trier par",
+      "name": "Nom",
+      "rating": "Note",
+      "price": "Prix",
+      "distance": "Distance"
+    },
+    "card": {
+      "rating": "Note",
+      "cuisine": "Cuisine",
+      "price": "Prix",
+      "reserve": "Réserver",
+      "viewDetails": "Voir les détails"
+    },
+    "noResults": "Aucun restaurant trouvé",
+    "loading": "Chargement des restaurants...",
+    "error": "Erreur lors du chargement des restaurants"
+  },
+  "reservations": {
+    "title": "Mes Réservations",
+    "subtitle": "Gérez vos réservations de restaurants",
+    "newReservation": "Nouvelle Réservation",
+    "loading": "Chargement de vos réservations...",
+    "noReservations": "Aucune réservation",
+    "noReservationsText": "Vous n'avez pas encore de réservations.",
+    "createFirst": "Créer ma première réservation",
+    "card": {
+      "restaurant": "Restaurant",
+      "date": "Date",
+      "time": "Heure",
+      "guests": "Nombre de personnes",
+      "table": "Table",
+      "notes": "Notes",
+      "contact": "Contact",
+      "status": {
+        "confirmed": "Confirmée",
+        "pending": "En attente",
+        "cancelled": "Annulée",
+        "completed": "Terminée"
+      }
+    },
+    "actions": {
+      "modify": "Modifier",
+      "cancel": "Annuler",
+      "viewRestaurant": "Voir Restaurant"
+    },
+    "cancelModal": {
+      "title": "Confirmer l'annulation",
+      "message": "Êtes-vous sûr de vouloir annuler cette réservation ?",
+      "confirm": "Confirmer l'annulation"
+    },
+    "error": "Erreur lors du chargement de vos réservations"
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Gérez vos informations personnelles",
+    "stats": {
+      "title": "Mes Statistiques",
+      "totalReservations": "Réservations totales",
+      "confirmedReservations": "Réservations confirmées",
+      "favoriteRestaurants": "Restaurants favoris",
+      "memberSince": "Membre depuis"
+    },
+    "personalInfo": {
+      "title": "Informations Personnelles",
+      "fullName": "Nom complet",
+      "email": "Adresse email",
+      "phone": "Numéro de téléphone",
+      "edit": "Modifier",
+      "cancel": "Annuler",
+      "save": "Sauvegarder",
+      "saving": "Sauvegarde...",
+      "success": "Profil mis à jour avec succès !",
+      "errors": {
+        "nameRequired": "Le nom est requis",
+        "nameMin": "Le nom doit contenir au moins 2 caractères",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "phoneInvalid": "Format de téléphone invalide"
+      }
+    },
+    "password": {
+      "title": "Changer le Mot de Passe",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "edit": "Modifier",
+      "cancel": "Annuler",
+      "change": "Changer le mot de passe",
+      "changing": "Changement...",
+      "success": "Mot de passe changé avec succès !",
+      "errors": {
+        "currentRequired": "Le mot de passe actuel est requis",
+        "newRequired": "Le nouveau mot de passe est requis",
+        "newMin": "Le mot de passe doit contenir au moins 6 caractères",
+        "confirmMatch": "Les mots de passe ne correspondent pas",
+        "currentIncorrect": "Mot de passe actuel incorrect"
+      }
+    },
+    "loading": "Chargement de votre profil...",
+    "error": "Erreur lors du chargement du profil"
+  },
+  "language": {
+    "title": "Langue",
+    "french": "Français",
+    "english": "English",
+    "change": "Changer de langue"
+  }
+}

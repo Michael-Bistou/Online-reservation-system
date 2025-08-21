@@ -8,19 +8,20 @@
       </div>
       
       <div class="nav-menu">
-        <router-link to="/" class="nav-link">Accueil</router-link>
-        <router-link to="/restaurants" class="nav-link" v-if="isAuthenticated">Restaurants</router-link>
-        <router-link to="/reservations" class="nav-link" v-if="isAuthenticated">Mes Réservations</router-link>
+        <router-link to="/" class="nav-link">{{ $t('navigation.home') }}</router-link>
+        <router-link to="/restaurants" class="nav-link" v-if="isAuthenticated">{{ $t('navigation.restaurants') }}</router-link>
+        <router-link to="/reservations" class="nav-link" v-if="isAuthenticated">{{ $t('navigation.reservations') }}</router-link>
       </div>
       
       <div class="nav-auth">
+        <LanguageSelector />
         <template v-if="isAuthenticated">
-          <router-link to="/profile" class="nav-link">Mon Profil</router-link>
-          <button @click="logout" class="btn btn-outline">Déconnexion</button>
+          <router-link to="/profile" class="nav-link">{{ $t('navigation.profile') }}</router-link>
+          <button @click="logout" class="btn btn-outline">{{ $t('navigation.logout') }}</button>
         </template>
         <template v-else>
-          <router-link to="/login" class="nav-link">Connexion</router-link>
-          <router-link to="/register" class="btn btn-primary">Inscription</router-link>
+          <router-link to="/login" class="nav-link">{{ $t('navigation.login') }}</router-link>
+          <router-link to="/register" class="btn btn-primary">{{ $t('navigation.register') }}</router-link>
         </template>
       </div>
     </nav>
@@ -31,6 +32,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import authService from '../services/auth.js'
+import LanguageSelector from './LanguageSelector.vue'
 
 export default {
   name: 'Header',
@@ -66,6 +68,10 @@ export default {
       currentUser,
       logout
     }
+  },
+  components: {
+    LanguageSelector
+  }
   }
 }
 </script>

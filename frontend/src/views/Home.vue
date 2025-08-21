@@ -2,9 +2,9 @@
   <div class="home">
     <section class="hero">
       <div class="hero-content">
-        <h1 class="hero-title">Système de Réservation en Ligne</h1>
+        <h1 class="hero-title">{{ $t('home.title') }}</h1>
         <p class="hero-subtitle">
-          Réservez votre table dans les meilleurs restaurants en quelques clics
+          {{ $t('home.subtitle') }}
         </p>
         <div class="hero-actions">
           <router-link to="/register" class="btn btn-primary btn-large">
@@ -19,7 +19,7 @@
 
     <section class="features">
       <div class="container">
-        <h2 class="section-title">Fonctionnalités</h2>
+        <h2 class="section-title">{{ $t('home.features.title') }}</h2>
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon">🍽️</div>
@@ -47,7 +47,7 @@
 
     <section class="tech-stack">
       <div class="container">
-        <h2 class="section-title">Technologies Utilisées</h2>
+        <h2 class="section-title">{{ $t('home.technologies.title') }}</h2>
         <div class="tech-grid">
           <div class="tech-item">
             <h4>Frontend</h4>

@@ -1,0 +1,238 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "all": "All",
+    "none": "None",
+    "yes": "Yes",
+    "no": "No",
+    "required": "Required",
+    "optional": "Optional",
+    "actions": "Actions",
+    "details": "Details",
+    "close": "Close",
+    "open": "Open",
+    "refresh": "Refresh",
+    "retry": "Retry"
+  },
+  "navigation": {
+    "home": "Home",
+    "restaurants": "Restaurants",
+    "reservations": "My Reservations",
+    "profile": "My Profile",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Restaurant Reservation System",
+    "subtitle": "Easily book your table at the best restaurants",
+    "hero": {
+      "title": "Find and book your ideal restaurant",
+      "subtitle": "Thousands of restaurants at your disposal",
+      "cta": "Start Booking"
+    },
+    "features": {
+      "title": "Why choose us?",
+      "easy": {
+        "title": "Easy Booking",
+        "description": "Book your table in just a few clicks"
+      },
+      "secure": {
+        "title": "Secure Payment",
+        "description": "Secure and protected transactions"
+      },
+      "reliable": {
+        "title": "Reliable Service",
+        "description": "Instant confirmation of your reservations"
+      }
+    },
+    "technologies": {
+      "title": "Technologies Used",
+      "backend": "Node.js/Express Backend",
+      "frontend": "Vue.js 3 Frontend",
+      "database": "MySQL Database",
+      "auth": "JWT Authentication"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Sign in to your account",
+      "email": "Email address",
+      "password": "Password",
+      "submit": "Sign in",
+      "loading": "Signing in...",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create an account",
+      "errors": {
+        "invalidCredentials": "Invalid credentials",
+        "emailRequired": "Email is required",
+        "passwordRequired": "Password is required",
+        "invalidEmail": "Invalid email format"
+      }
+    },
+    "register": {
+      "title": "Register",
+      "subtitle": "Create your account",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Create account",
+      "loading": "Creating...",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in",
+      "success": "Account created successfully! Redirecting...",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "firstNameMin": "First name must contain at least 2 characters",
+        "lastNameRequired": "Last name is required",
+        "lastNameMin": "Last name must contain at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email format",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Invalid phone format (10 digits)",
+        "passwordRequired": "Password is required",
+        "passwordMin": "Password must contain at least 6 characters",
+        "passwordMatch": "Passwords do not match",
+        "emailExists": "This email address is already in use"
+      }
+    }
+  },
+  "restaurants": {
+    "title": "Restaurants",
+    "subtitle": "Discover our partner restaurants",
+    "search": "Search for a restaurant...",
+    "filters": {
+      "title": "Filters",
+      "cuisine": "Cuisine type",
+      "rating": "Minimum rating",
+      "price": "Price",
+      "location": "Location",
+      "clear": "Clear filters"
+    },
+    "sort": {
+      "title": "Sort by",
+      "name": "Name",
+      "rating": "Rating",
+      "price": "Price",
+      "distance": "Distance"
+    },
+    "card": {
+      "rating": "Rating",
+      "cuisine": "Cuisine",
+      "price": "Price",
+      "reserve": "Reserve",
+      "viewDetails": "View details"
+    },
+    "noResults": "No restaurants found",
+    "loading": "Loading restaurants...",
+    "error": "Error loading restaurants"
+  },
+  "reservations": {
+    "title": "My Reservations",
+    "subtitle": "Manage your restaurant reservations",
+    "newReservation": "New Reservation",
+    "loading": "Loading your reservations...",
+    "noReservations": "No reservations",
+    "noReservationsText": "You don't have any reservations yet.",
+    "createFirst": "Create my first reservation",
+    "card": {
+      "restaurant": "Restaurant",
+      "date": "Date",
+      "time": "Time",
+      "guests": "Number of people",
+      "table": "Table",
+      "notes": "Notes",
+      "contact": "Contact",
+      "status": {
+        "confirmed": "Confirmed",
+        "pending": "Pending",
+        "cancelled": "Cancelled",
+        "completed": "Completed"
+      }
+    },
+    "actions": {
+      "modify": "Modify",
+      "cancel": "Cancel",
+      "viewRestaurant": "View Restaurant"
+    },
+    "cancelModal": {
+      "title": "Confirm cancellation",
+      "message": "Are you sure you want to cancel this reservation?",
+      "confirm": "Confirm cancellation"
+    },
+    "error": "Error loading your reservations"
+  },
+  "profile": {
+    "title": "My Profile",
+    "subtitle": "Manage your personal information",
+    "stats": {
+      "title": "My Statistics",
+      "totalReservations": "Total reservations",
+      "confirmedReservations": "Confirmed reservations",
+      "favoriteRestaurants": "Favorite restaurants",
+      "memberSince": "Member since"
+    },
+    "personalInfo": {
+      "title": "Personal Information",
+      "fullName": "Full name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "save": "Save",
+      "saving": "Saving...",
+      "success": "Profile updated successfully!",
+      "errors": {
+        "nameRequired": "Name is required",
+        "nameMin": "Name must contain at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email format",
+        "phoneInvalid": "Invalid phone format"
+      }
+    },
+    "password": {
+      "title": "Change Password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "change": "Change password",
+      "changing": "Changing...",
+      "success": "Password changed successfully!",
+      "errors": {
+        "currentRequired": "Current password is required",
+        "newRequired": "New password is required",
+        "newMin": "Password must contain at least 6 characters",
+        "confirmMatch": "Passwords do not match",
+        "currentIncorrect": "Current password is incorrect"
+      }
+    },
+    "loading": "Loading your profile...",
+    "error": "Error loading profile"
+  },
+  "language": {
+    "title": "Language",
+    "french": "Français",
+    "english": "English",
+    "change": "Change language"
+  }
+}
