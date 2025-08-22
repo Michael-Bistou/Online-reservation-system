@@ -2,8 +2,8 @@
   <div class="restaurants-page">
     <div class="container">
       <div class="page-header">
-        <h1 class="page-title">Restaurants</h1>
-        <p class="page-subtitle">Découvrez nos restaurants partenaires</p>
+        <h1 class="page-title">{{ $t('restaurants.title') }}</h1>
+        <p class="page-subtitle">{{ $t('restaurants.subtitle') }}</p>
       </div>
 
       <!-- Filtres et recherche -->
@@ -12,7 +12,7 @@
           <input
             type="text"
             v-model="searchQuery"
-            placeholder="Rechercher un restaurant..."
+            :placeholder="$t('restaurants.search')"
             class="search-input"
             @input="handleSearch"
           />
@@ -40,7 +40,7 @@
       <!-- État de chargement -->
       <div v-if="loading" class="loading">
         <div class="loading-spinner"></div>
-        <p>Chargement des restaurants...</p>
+        <p>{{ $t('restaurants.loading') }}</p>
       </div>
 
       <!-- Message d'erreur -->
@@ -98,7 +98,7 @@
 
       <!-- Message si aucun restaurant -->
       <div v-if="!loading && !error && filteredRestaurants.length === 0" class="no-results">
-        <p>Aucun restaurant trouvé pour votre recherche.</p>
+        <p>{{ $t('restaurants.noResults') }}</p>
         <button @click="clearFilters" class="btn btn-primary">
           Effacer les filtres
         </button>
@@ -110,12 +110,14 @@
 <script>
 import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
 export default {
   name: 'Restaurants',
   setup() {
     const router = useRouter()
+    const { t: $t } = useI18n()
     const loading = ref(false)
     const error = ref('')
     const restaurants = ref([])

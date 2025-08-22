@@ -2,8 +2,8 @@
   <div class="profile-page">
     <div class="container">
       <div class="page-header">
-        <h1 class="page-title">Mon Profil</h1>
-        <p class="page-subtitle">Gérez vos informations personnelles</p>
+        <h1 class="page-title">{{ $t('profile.title') }}</h1>
+        <p class="page-subtitle">{{ $t('profile.subtitle') }}</p>
       </div>
 
       <!-- État de chargement -->
@@ -16,7 +16,7 @@
       <div v-else class="profile-content">
         <!-- Statistiques utilisateur -->
         <div class="stats-section">
-          <h2 class="section-title">📊 Mes Statistiques</h2>
+          <h2 class="section-title">📊 {{ $t('profile.stats.title') }}</h2>
           <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-icon">📅</div>
@@ -212,11 +212,13 @@
 
 <script>
 import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
 export default {
   name: 'Profile',
   setup() {
+    const { t: $t } = useI18n()
     const loading = ref(false)
     const updateLoading = ref(false)
     const passwordLoading = ref(false)

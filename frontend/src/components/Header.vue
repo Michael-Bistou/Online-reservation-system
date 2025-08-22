@@ -72,7 +72,6 @@ export default {
   components: {
     LanguageSelector
   }
-  }
 }
 </script>
 

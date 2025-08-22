@@ -2,11 +2,11 @@
   <div class="login-page">
     <div class="container">
       <div class="login-card">
-        <h1 class="login-title">Connexion</h1>
+        <h1 class="login-title">{{ $t('auth.login.title') }}</h1>
         
         <form @submit.prevent="handleLogin" class="login-form">
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">{{ $t('auth.login.email') }}</label>
             <input
               type="email"
               id="email"
@@ -20,7 +20,7 @@
           </div>
 
           <div class="form-group">
-            <label for="password" class="form-label">Mot de passe</label>
+            <label for="password" class="form-label">{{ $t('auth.login.password') }}</label>
             <input
               type="password"
               id="password"
@@ -38,15 +38,15 @@
           </div>
 
           <button type="submit" class="btn btn-primary btn-full" :disabled="loading">
-            <span v-if="loading">Connexion...</span>
-            <span v-else>Se connecter</span>
+            <span v-if="loading">{{ $t('auth.login.loading') }}</span>
+            <span v-else>{{ $t('auth.login.submit') }}</span>
           </button>
         </form>
 
         <div class="login-footer">
-          <p>Vous n'avez pas de compte ?</p>
+          <p>{{ $t('auth.login.noAccount') }}</p>
           <router-link to="/register" class="btn btn-outline">
-            Créer un compte
+            {{ $t('auth.login.createAccount') }}
           </router-link>
         </div>
       </div>
@@ -77,17 +77,19 @@ export default {
       password: ''
     })
 
+    const { t: $t } = useI18n()
+    
     const validateForm = () => {
       errors.email = ''
       errors.password = ''
 
       if (!form.email) {
-        errors.email = 'L\'email est requis'
+        errors.email = $t('auth.login.errors.emailRequired')
         return false
       }
 
       if (!form.password) {
-        errors.password = 'Le mot de passe est requis'
+        errors.password = $t('auth.login.errors.passwordRequired')
         return false
       }
 

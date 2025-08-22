@@ -2,12 +2,12 @@
   <div class="register-page">
     <div class="container">
       <div class="register-card">
-        <h1 class="register-title">Inscription</h1>
+        <h1 class="register-title">{{ $t('auth.register.title') }}</h1>
         
         <form @submit.prevent="handleRegister" class="register-form">
           <div class="form-row">
             <div class="form-group">
-              <label for="first_name" class="form-label">Prénom</label>
+              <label for="first_name" class="form-label">{{ $t('auth.register.firstName') }}</label>
               <input
                 type="text"
                 id="first_name"
@@ -21,7 +21,7 @@
             </div>
 
             <div class="form-group">
-              <label for="last_name" class="form-label">Nom</label>
+              <label for="last_name" class="form-label">{{ $t('auth.register.lastName') }}</label>
               <input
                 type="text"
                 id="last_name"
@@ -36,7 +36,7 @@
           </div>
 
           <div class="form-group">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">{{ $t('auth.register.email') }}</label>
             <input
               type="email"
               id="email"
@@ -50,7 +50,7 @@
           </div>
 
           <div class="form-group">
-            <label for="phone" class="form-label">Téléphone</label>
+            <label for="phone" class="form-label">{{ $t('auth.register.phone') }}</label>
             <input
               type="tel"
               id="phone"
@@ -64,7 +64,7 @@
           </div>
 
           <div class="form-group">
-            <label for="password" class="form-label">Mot de passe</label>
+            <label for="password" class="form-label">{{ $t('auth.register.password') }}</label>
             <input
               type="password"
               id="password"
@@ -78,7 +78,7 @@
           </div>
 
           <div class="form-group">
-            <label for="confirm_password" class="form-label">Confirmer le mot de passe</label>
+            <label for="confirm_password" class="form-label">{{ $t('auth.register.confirmPassword') }}</label>
             <input
               type="password"
               id="confirm_password"
@@ -100,15 +100,15 @@
           </div>
 
           <button type="submit" class="btn btn-primary btn-full" :disabled="loading">
-            <span v-if="loading">Inscription...</span>
-            <span v-else>Créer mon compte</span>
+            <span v-if="loading">{{ $t('auth.register.loading') }}</span>
+            <span v-else>{{ $t('auth.register.submit') }}</span>
           </button>
         </form>
 
         <div class="register-footer">
-          <p>Vous avez déjà un compte ?</p>
+          <p>{{ $t('auth.register.hasAccount') }}</p>
           <router-link to="/login" class="btn btn-outline">
-            Se connecter
+            {{ $t('auth.register.login') }}
           </router-link>
         </div>
       </div>
@@ -119,12 +119,14 @@
 <script>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import authService from '../services/auth.js'
 
 export default {
   name: 'Register',
   setup() {
     const router = useRouter()
+    const { t: $t } = useI18n()
     const loading = ref(false)
     const errorMessage = ref('')
     const successMessage = ref('')

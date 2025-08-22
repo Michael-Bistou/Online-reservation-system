@@ -2,17 +2,17 @@
   <div class="reservations-page">
     <div class="container">
       <div class="page-header">
-        <h1 class="page-title">Mes Réservations</h1>
-        <p class="page-subtitle">Gérez vos réservations de restaurants</p>
+        <h1 class="page-title">{{ $t('reservations.title') }}</h1>
+        <p class="page-subtitle">{{ $t('reservations.subtitle') }}</p>
         <button @click="createNewReservation" class="btn btn-primary">
-          📅 Nouvelle Réservation
+                      📅 {{ $t('reservations.newReservation') }}
         </button>
       </div>
 
       <!-- État de chargement -->
       <div v-if="loading" class="loading">
         <div class="loading-spinner"></div>
-        <p>Chargement de vos réservations...</p>
+        <p>{{ $t('reservations.loading') }}</p>
       </div>
 
       <!-- Message d'erreur -->
@@ -91,10 +91,10 @@
       <div v-else class="no-reservations">
         <div class="empty-state">
           <div class="empty-icon">📅</div>
-          <h3>Aucune réservation</h3>
-          <p>Vous n'avez pas encore de réservations.</p>
+          <h3>{{ $t('reservations.noReservations') }}</h3>
+          <p>{{ $t('reservations.noReservationsText') }}</p>
           <button @click="createNewReservation" class="btn btn-primary">
-            Créer ma première réservation
+            {{ $t('reservations.createFirst') }}
           </button>
         </div>
       </div>
@@ -121,12 +121,14 @@
 <script>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
 export default {
   name: 'Reservations',
   setup() {
     const router = useRouter()
+    const { t: $t } = useI18n()
     const loading = ref(false)
     const error = ref('')
     const reservations = ref([])
