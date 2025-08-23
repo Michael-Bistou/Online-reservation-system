@@ -3,6 +3,7 @@ import authService from '../services/auth.js'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import RestaurantRegister from '../views/RestaurantRegister.vue'
 import Restaurants from '../views/Restaurants.vue'
 import RestaurantDetails from '../views/RestaurantDetails.vue'
 import Reservations from '../views/Reservations.vue'
@@ -26,6 +27,12 @@ const routes = [
     name: 'Register',
     component: Register,
     meta: { title: 'Inscription', guestOnly: true }
+  },
+  {
+    path: '/restaurant-register',
+    name: 'RestaurantRegister',
+    component: RestaurantRegister,
+    meta: { title: 'Inscription Restaurant', guestOnly: true }
   },
   {
     path: '/restaurants',

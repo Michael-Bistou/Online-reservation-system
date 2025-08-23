@@ -39,6 +39,7 @@
           <template v-else>
             <router-link to="/login" class="nav-link">{{ $t('navigation.login') }}</router-link>
             <router-link to="/register" class="btn btn-primary btn-sm">{{ $t('navigation.register') }}</router-link>
+            <router-link to="/restaurant-register" class="btn btn-outline btn-sm">{{ $t('navigation.restaurant_register') }}</router-link>
           </template>
           
           <button class="nav-toggle" @click="toggleMenu" :class="{ 'nav-toggle-open': isMenuOpen }">

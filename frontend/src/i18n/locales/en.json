@@ -34,6 +34,7 @@
     "profile": "My Profile",
     "login": "Login",
     "register": "Register",
+    "restaurant_register": "Restaurant",
     "logout": "Logout",
     "language": "Language"
   },
