@@ -1,7 +1,7 @@
 <template>
   <div class="reservations-page">
     <!-- Header Section -->
-    <div class="page-header">
+    <div class="page-header dark-bg">
       <div class="container">
         <div class="header-content">
           <div class="header-info">
@@ -40,7 +40,7 @@
         <!-- Reservations Content -->
         <div v-else>
           <!-- Filters and Stats -->
-          <div class="filters-section">
+          <div class="filters-section light-bg">
             <div class="filters-row">
               <div class="filter-group">
                 <label class="filter-label">{{ $t('reservations.status') }}</label>
@@ -77,28 +77,28 @@
 
             <!-- Stats Cards -->
             <div class="stats-grid">
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">📅</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ totalReservations }}</div>
                   <div class="stat-label">{{ $t('reservations.total_reservations') }}</div>
                 </div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">✅</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ confirmedReservations }}</div>
                   <div class="stat-label">{{ $t('reservations.confirmed_reservations') }}</div>
                 </div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">⏳</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ pendingReservations }}</div>
                   <div class="stat-label">{{ $t('reservations.pending_reservations') }}</div>
                 </div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">🎉</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ completedReservations }}</div>
@@ -109,7 +109,7 @@
           </div>
 
           <!-- Reservations List -->
-          <div class="reservations-section">
+          <div class="reservations-section light-bg">
             <div v-if="filteredReservations.length === 0" class="empty-state">
               <div class="empty-icon">📋</div>
               <h3>{{ $t('reservations.noReservations') }}</h3>
@@ -123,7 +123,7 @@
               <div
                 v-for="reservation in filteredReservations"
                 :key="reservation.id"
-                class="reservation-card"
+                class="reservation-card light-bg"
                 :class="`status-${reservation.status}`"
               >
                 <!-- Restaurant Info -->
@@ -166,13 +166,13 @@
                 <!-- Actions -->
                 <div class="reservation-actions">
                   <button @click="viewRestaurant(reservation.restaurant_id)" class="btn-outline btn-sm">
-                    {{ $t('reservations.viewRestaurant') }}
+                    {{ $t('reservations.actions.viewRestaurant') }}
                   </button>
                   <button v-if="canModify(reservation)" @click="editReservation(reservation)" class="btn-outline btn-sm">
-                    {{ $t('reservations.modify') }}
+                    {{ $t('reservations.actions.modify') }}
                   </button>
                   <button v-if="canCancel(reservation)" @click="cancelReservation(reservation)" class="btn-danger btn-sm">
-                    {{ $t('reservations.cancel') }}
+                    {{ $t('reservations.actions.cancel') }}
                   </button>
                 </div>
               </div>
@@ -184,7 +184,7 @@
 
     <!-- New Reservation Modal -->
     <div v-if="showNewReservationModal" class="modal-overlay" @click="showNewReservationModal = false">
-      <div class="modal-content" @click.stop>
+      <div class="modal-content light-bg" @click.stop>
         <div class="modal-header">
           <h3>{{ $t('reservations.newReservation') }}</h3>
           <button @click="showNewReservationModal = false" class="modal-close">×</button>
@@ -271,19 +271,19 @@
     <div v-if="showCancelModal" class="modal-overlay" @click="showCancelModal = false">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
-          <h3>{{ $t('reservations.confirm_cancellation') }}</h3>
+          <h3>{{ $t('reservations.cancelModal.title') }}</h3>
           <button @click="showCancelModal = false" class="modal-close">×</button>
         </div>
         
         <div class="modal-body">
-          <p>{{ $t('reservations.cancel_confirmation_message') }}</p>
+          <p>{{ $t('reservations.cancelModal.message') }}</p>
           <div class="modal-actions">
             <button @click="showCancelModal = false" class="btn-outline">
               {{ $t('common.cancel') }}
             </button>
             <button @click="confirmCancel" class="btn-danger" :disabled="submitting">
               <span v-if="submitting" class="loading-spinner-small"></span>
-              {{ submitting ? $t('common.submitting') : $t('reservations.confirm_cancellation') }}
+              {{ submitting ? $t('common.submitting') : $t('reservations.cancelModal.confirm') }}
             </button>
           </div>
         </div>
@@ -688,7 +688,7 @@ export default {
 
 .page-subtitle {
   font-size: 1.1rem;
-  opacity: 0.9;
+  color: white;
   margin: 0;
 }
 
@@ -810,9 +810,9 @@ export default {
   align-items: center;
   gap: 15px;
   padding: 20px;
-  background: var(--surface-color);
+  background: #2a2a2a;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #333;
 }
 
 .stat-icon {
@@ -830,13 +830,13 @@ export default {
 .stat-number {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: white;
   line-height: 1;
 }
 
 .stat-label {
   font-size: 0.9rem;
-  color: #5a6c7d;
+  color: #e0e0e0;
   margin-top: 5px;
 }
 

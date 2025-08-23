@@ -1,0 +1,177 @@
+/* Couleurs contextuelles pour les fonds clairs et sombres */
+
+/* ===== FONDS CLAIRS ===== */
+/* Sections avec fond blanc ou gris clair */
+.light-bg {
+  background: #ffffff;
+}
+
+.light-bg .section-title,
+.light-bg h1, .light-bg h2, .light-bg h3, .light-bg h4, .light-bg h5, .light-bg h6 {
+  color: #2c3e50; /* Bleu foncé */
+}
+
+.light-bg .section-subtitle,
+.light-bg p {
+  color: #5a6c7d; /* Gris bleu */
+}
+
+.light-bg .text-muted {
+  color: #7f8c8d; /* Gris */
+}
+
+/* ===== FONDS SOMBRES ===== */
+/* Sections avec fond noir ou gris foncé */
+.dark-bg {
+  background: #1a1a1a;
+  color: white;
+}
+
+.dark-bg .section-title,
+.dark-bg h1, .dark-bg h2, .dark-bg h3, .dark-bg h4, .dark-bg h5, .dark-bg h6 {
+  color: white;
+}
+
+.dark-bg .section-subtitle,
+.dark-bg p {
+  color: #e0e0e0; /* Gris clair */
+}
+
+.dark-bg .text-muted {
+  color: #b0b0b0; /* Gris moyen */
+}
+
+/* ===== CARTES SUR FONDS CLAIRS ===== */
+.light-bg .card {
+  background: white;
+  border: 1px solid #dee2e6;
+}
+
+.light-bg .card .card-title {
+  color: #2c3e50;
+}
+
+.light-bg .card .card-text {
+  color: #5a6c7d;
+}
+
+/* ===== CARTES SUR FONDS SOMBRES ===== */
+.dark-bg .card {
+  background: #2a2a2a;
+  border: 1px solid #333;
+}
+
+.dark-bg .card .card-title {
+  color: white;
+}
+
+.dark-bg .card .card-text {
+  color: #e0e0e0;
+}
+
+/* ===== BOUTONS ===== */
+/* Boutons sur fond clair */
+.light-bg .btn-outline {
+  border-color: #dee2e6;
+  color: #2c3e50;
+}
+
+.light-bg .btn-outline:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+  background-color: #f8f9fa;
+}
+
+/* Boutons sur fond sombre */
+.dark-bg .btn-outline {
+  border-color: #333;
+  color: white;
+}
+
+.dark-bg .btn-outline:hover {
+  border-color: #d4af37;
+  color: #d4af37;
+  background-color: #2a2a2a;
+}
+
+/* ===== FORMULAIRES ===== */
+/* Inputs sur fond clair */
+.light-bg .form-input {
+  border-color: #dee2e6;
+  color: #2c3e50;
+  background: white;
+}
+
+.light-bg .form-label {
+  color: #2c3e50;
+}
+
+/* Inputs sur fond sombre */
+.dark-bg .form-input {
+  border-color: #333;
+  color: white;
+  background: #2a2a2a;
+}
+
+.dark-bg .form-label {
+  color: white;
+}
+
+/* ===== LISTES ===== */
+/* Listes sur fond clair */
+.light-bg .list-item {
+  border-bottom: 1px solid #dee2e6;
+  color: #5a6c7d;
+}
+
+.light-bg .list-item:hover {
+  color: #2c3e50;
+}
+
+/* Listes sur fond sombre */
+.dark-bg .list-item {
+  border-bottom: 1px solid #333;
+  color: #e0e0e0;
+}
+
+.dark-bg .list-item:hover {
+  color: white;
+}
+
+/* ===== BADGES ===== */
+/* Badges sur fond clair */
+.light-bg .badge-primary {
+  background: #d4af37;
+  color: white;
+}
+
+/* Badges sur fond sombre */
+.dark-bg .badge-primary {
+  background: #d4af37;
+  color: white;
+}
+
+/* ===== UTILITAIRES ===== */
+.text-dark {
+  color: #2c3e50 !important;
+}
+
+.text-light {
+  color: #e0e0e0 !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.bg-dark {
+  background: #1a1a1a !important;
+}
+
+.bg-light {
+  background: #f8f9fa !important;
+}
+
+.bg-white {
+  background: white !important;
+}

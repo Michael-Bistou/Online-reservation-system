@@ -72,11 +72,11 @@
       </div>
 
       <!-- Main Content -->
-      <div class="main-content">
+      <div class="main-content light-bg">
         <div class="container">
           <div class="content-grid">
             <!-- Left Column - Restaurant Info -->
-            <div class="restaurant-info">
+            <div class="restaurant-info light-bg">
               <!-- Description -->
               <section class="info-section">
                 <h2 class="section-title">{{ $t('restaurants.description') }}</h2>
@@ -146,8 +146,8 @@
             </div>
 
             <!-- Right Column - Reservation Form -->
-            <div class="reservation-sidebar">
-              <div class="reservation-card">
+            <div class="reservation-sidebar light-bg">
+              <div class="reservation-card light-bg">
                 <h3 class="reservation-title">{{ $t('restaurants.make_reservation') }}</h3>
                 
                 <form @submit.prevent="handleReservation" class="reservation-form">
@@ -856,14 +856,14 @@ export default {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 20px;
-  color: var(--text-primary);
+  color: #2c3e50;
   font-family: 'Playfair Display', serif;
 }
 
 .description {
   font-size: 1.1rem;
   line-height: 1.6;
-  color: var(--text-secondary);
+  color: #5a6c7d;
 }
 
 .contact-info {
@@ -886,17 +886,17 @@ export default {
 .contact-details strong {
   display: block;
   margin-bottom: 5px;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 .contact-details p {
   margin: 0;
-  color: var(--text-secondary);
+  color: #5a6c7d;
 }
 
 .opening-hours p {
   font-size: 1.1rem;
-  color: var(--text-secondary);
+  color: #5a6c7d;
   margin: 0;
 }
 
@@ -921,7 +921,7 @@ export default {
 
 .amenity-text {
   font-weight: 500;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 /* Reservation Sidebar */
@@ -941,7 +941,7 @@ export default {
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 25px;
-  color: var(--text-primary);
+  color: #2c3e50;
   text-align: center;
 }
 
@@ -959,27 +959,28 @@ export default {
 
 .form-label {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #2c3e50;
   font-size: 0.9rem;
 }
 
 .form-input {
   padding: 12px 15px;
-  border: 2px solid var(--border-color);
+  border: 2px solid #dee2e6;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: #2c3e50;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: var(--primary-color);
+  border-color: #d4af37;
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
 }
 
 .form-input::placeholder {
-  color: var(--text-muted);
+  color: #7f8c8d;
 }
 
 .btn-submit {

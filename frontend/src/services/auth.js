@@ -5,7 +5,7 @@ const API_BASE_URL = 'http://localhost:5000/api'
 class AuthService {
   constructor() {
     this.token = localStorage.getItem('token')
-    this.user = null
+    this.user = JSON.parse(localStorage.getItem('userData') || 'null')
     this.setupAxiosInterceptors()
   }
 
@@ -120,6 +120,7 @@ class AuthService {
   // Déconnexion
   logout() {
     localStorage.removeItem('token')
+    localStorage.removeItem('userData')
     this.token = null
     this.user = null
   }

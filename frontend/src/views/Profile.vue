@@ -1,7 +1,7 @@
 <template>
   <div class="profile-page">
     <!-- Header Section -->
-    <div class="page-header">
+    <div class="page-header dark-bg">
       <div class="container">
         <div class="header-content">
           <div class="header-info">
@@ -39,31 +39,31 @@
         <!-- Profile Content -->
         <div v-else class="profile-content">
           <!-- Stats Section -->
-          <div class="stats-section">
+          <div class="stats-section light-bg">
             <h2 class="section-title">{{ $t('profile.stats.title') }}</h2>
             <div class="stats-grid">
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">📅</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ userStats.totalReservations }}</div>
                   <div class="stat-label">{{ $t('profile.stats.totalReservations') }}</div>
                 </div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">✅</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ userStats.confirmedReservations }}</div>
                   <div class="stat-label">{{ $t('profile.stats.confirmedReservations') }}</div>
                 </div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">⭐</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ userStats.favoriteRestaurants }}</div>
                   <div class="stat-label">{{ $t('profile.stats.favoriteRestaurants') }}</div>
                 </div>
               </div>
-              <div class="stat-card">
+              <div class="stat-card light-bg">
                 <div class="stat-icon">🎉</div>
                 <div class="stat-content">
                   <div class="stat-number">{{ userStats.memberSince }}</div>
@@ -74,7 +74,7 @@
           </div>
 
           <!-- Personal Info Section -->
-          <div class="info-section">
+          <div class="info-section light-bg">
             <div class="section-header">
               <h2 class="section-title">{{ $t('profile.personalInfo.title') }}</h2>
               <button 
@@ -86,7 +86,7 @@
               </button>
             </div>
 
-            <div class="info-card">
+            <div class="info-card light-bg">
               <div v-if="!editingPersonalInfo" class="info-display">
                 <div class="info-row">
                   <span class="info-label">{{ $t('profile.personalInfo.fullName') }}</span>
@@ -150,7 +150,7 @@
           </div>
 
           <!-- Password Section -->
-          <div class="info-section">
+          <div class="info-section light-bg">
             <div class="section-header">
               <h2 class="section-title">{{ $t('profile.password.title') }}</h2>
               <button 
@@ -162,7 +162,7 @@
               </button>
             </div>
 
-            <div class="info-card">
+            <div class="info-card light-bg">
               <div v-if="!editingPassword" class="info-display">
                 <div class="info-row">
                   <span class="info-label">{{ $t('profile.password.title') }}</span>
@@ -219,10 +219,10 @@
           </div>
 
           <!-- Account Actions Section -->
-          <div class="actions-section">
+          <div class="actions-section light-bg">
             <h2 class="section-title">{{ $t('common.actions') }}</h2>
             <div class="actions-grid">
-              <button @click="exportData" class="action-card">
+              <button @click="exportData" class="action-card light-bg">
                 <div class="action-icon">📊</div>
                 <div class="action-content">
                   <h3>Exporter mes données</h3>
@@ -230,7 +230,7 @@
                 </div>
               </button>
               
-              <button @click="showDeleteAccountModal = true" class="action-card danger">
+              <button @click="showDeleteAccountModal = true" class="action-card danger light-bg">
                 <div class="action-icon">🗑️</div>
                 <div class="action-content">
                   <h3>Supprimer mon compte</h3>
@@ -245,7 +245,7 @@
 
     <!-- Delete Account Modal -->
     <div v-if="showDeleteAccountModal" class="modal-overlay" @click="showDeleteAccountModal = false">
-      <div class="modal-content" @click.stop>
+      <div class="modal-content light-bg" @click.stop>
         <div class="modal-header">
           <h3>Supprimer mon compte</h3>
           <button @click="showDeleteAccountModal = false" class="modal-close">×</button>
@@ -283,7 +283,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import axios from 'axios'
+import authService from '../services/auth.js'
 
 export default {
   name: 'Profile',
@@ -347,11 +347,17 @@ export default {
         loading.value = true
         error.value = null
         
-        // Try to get from API first
-        try {
-          const response = await axios.get('http://localhost:5000/api/users/profile')
-          userProfile.value = response.data.user
-        } catch (apiError) {
+        // Try to get from auth service first
+        const currentUser = authService.getCurrentUser()
+        if (currentUser) {
+          userProfile.value = {
+            id: currentUser.id || 1,
+            full_name: currentUser.full_name || `${currentUser.first_name} ${currentUser.last_name}`,
+            email: currentUser.email,
+            phone: currentUser.phone || '',
+            created_at: currentUser.created_at || new Date().toISOString()
+          }
+        } else {
           // Fallback to sample data
           userProfile.value = getSampleProfile()
         }
@@ -365,6 +371,24 @@ export default {
     }
 
     const getSampleProfile = () => {
+      // Try to get user data from localStorage first
+      const userData = localStorage.getItem('userData')
+      if (userData) {
+        try {
+          const parsedData = JSON.parse(userData)
+          return {
+            id: parsedData.id || 1,
+            full_name: parsedData.full_name || parsedData.firstName + ' ' + parsedData.lastName,
+            email: parsedData.email,
+            phone: parsedData.phone || '',
+            created_at: parsedData.created_at || new Date().toISOString()
+          }
+        } catch (e) {
+          console.error('Erreur parsing localStorage:', e)
+        }
+      }
+      
+      // Fallback to sample data
       return {
         id: 1,
         full_name: 'Jean Dupont',
@@ -573,7 +597,7 @@ export default {
 
 .page-subtitle {
   font-size: 1.1rem;
-  opacity: 0.9;
+  color: white;
   margin: 0;
 }
 
@@ -671,9 +695,9 @@ export default {
   align-items: center;
   gap: 15px;
   padding: 20px;
-  background: var(--surface-color);
+  background: #2a2a2a;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #333;
   transition: all 0.3s ease;
 }
 
@@ -697,13 +721,13 @@ export default {
 .stat-number {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: white;
   line-height: 1;
 }
 
 .stat-label {
   font-size: 0.9rem;
-  color: #5a6c7d;
+  color: #e0e0e0;
   margin-top: 5px;
 }
 
@@ -743,10 +767,10 @@ export default {
 
 /* Info Card */
 .info-card {
-  background: var(--surface-color);
+  background: #2a2a2a;
   border-radius: 12px;
   padding: 25px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #333;
 }
 
 .info-display {
@@ -760,7 +784,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #333;
 }
 
 .info-row:last-child {
@@ -769,17 +793,17 @@ export default {
 
 .info-label {
   font-weight: 600;
-  color: #2c3e50;
+  color: white;
   min-width: 120px;
 }
 
 .info-value {
-  color: #5a6c7d;
+  color: #e0e0e0;
   text-align: right;
 }
 
 .info-note {
-  color: #7f8c8d;
+  color: #b0b0b0;
   font-size: 0.9rem;
   margin: 0;
   font-style: italic;
@@ -800,24 +824,24 @@ export default {
 
 .form-label {
   font-weight: 600;
-  color: #2c3e50;
+  color: white;
   font-size: 0.9rem;
 }
 
 .form-input {
   padding: 12px 15px;
-  border: 2px solid #dee2e6;
+  border: 2px solid #333;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: white;
-  color: #2c3e50;
+  background: #2a2a2a;
+  color: white;
 }
 
 .form-input:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
 }
 
 .error-message {

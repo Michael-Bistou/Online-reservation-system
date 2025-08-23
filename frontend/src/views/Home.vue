@@ -54,11 +54,11 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section class="features dark-bg">
       <div class="container">
         <div class="section-header">
           <div class="section-badge">
-            <span class="badge badge-primary">Fonctionnalités</span>
+            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">Fonctionnalités</span>
           </div>
           <h2 class="section-title">Une Expérience Unique</h2>
           <p class="section-subtitle">Découvrez les fonctionnalités qui font de notre plateforme la solution idéale pour vos réservations gastronomiques</p>
@@ -140,13 +140,69 @@
       </div>
     </section>
 
-    <!-- Tech Stack Section -->
-    <section class="tech-stack">
+    <!-- Featured Restaurants Section -->
+    <section class="featured-restaurants light-bg">
       <div class="container">
         <div class="section-header">
-                     <div class="section-badge">
-             <span class="badge badge-primary">Technologies</span>
-           </div>
+          <div class="section-badge">
+            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">Restaurants</span>
+          </div>
+          <h2 class="section-title">Restaurants Vedettes</h2>
+          <p class="section-subtitle">Découvrez nos restaurants les plus populaires et réservez votre table dès maintenant</p>
+        </div>
+        
+        <div class="restaurants-grid">
+          <div class="restaurant-card featured-card" v-for="restaurant in featuredRestaurants" :key="restaurant.id">
+            <div class="restaurant-image">
+              <img :src="restaurant.image" :alt="restaurant.name" class="restaurant-img">
+              <div class="restaurant-overlay">
+                <div class="restaurant-badges">
+                  <span class="badge badge-featured">Vedette</span>
+                  <span class="badge badge-rating">{{ restaurant.rating }}★</span>
+                </div>
+              </div>
+            </div>
+            <div class="restaurant-info">
+              <div class="restaurant-header">
+                <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+                <div class="restaurant-rating">
+                  <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+                  <span class="rating-number">{{ restaurant.rating }}</span>
+                </div>
+              </div>
+              <div class="restaurant-details">
+                <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
+                <p class="restaurant-price">{{ restaurant.price_range }}</p>
+                <p class="restaurant-address">{{ restaurant.address }}</p>
+              </div>
+              <div class="restaurant-actions">
+                <router-link :to="`/restaurants/${restaurant.id}`" class="btn btn-primary btn-sm">
+                  Voir détails
+                </router-link>
+                <router-link :to="`/restaurants/${restaurant.id}`" class="btn btn-outline btn-sm">
+                  Réserver
+                </router-link>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="section-actions">
+          <router-link to="/restaurants" class="btn btn-primary btn-lg">
+            Voir tous les restaurants
+            <span class="btn-arrow">→</span>
+          </router-link>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-stack dark-bg">
+      <div class="container">
+        <div class="section-header">
+                               <div class="section-badge">
+            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">Technologies</span>
+          </div>
           <h2 class="section-title">Stack Technique Moderne</h2>
           <p class="section-subtitle">Technologies de pointe utilisées pour développer cette application de nouvelle génération</p>
         </div>
@@ -208,7 +264,7 @@
       <div class="container">
         <div class="cta-content">
           <div class="cta-badge">
-            <span class="badge badge-primary">Prêt ?</span>
+            <span class="badge badge-primary" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.3);">Prêt ?</span>
           </div>
           <h2 class="cta-title">Prêt à vivre l'expérience ?</h2>
           <p class="cta-subtitle">Rejoignez notre plateforme et découvrez une nouvelle façon de réserver vos restaurants préférés</p>
@@ -235,13 +291,45 @@ export default {
   name: 'Home',
   setup() {
     const isAuthenticated = ref(false)
+    
+    // Données des restaurants vedettes
+    const featuredRestaurants = ref([
+      {
+        id: 1,
+        name: "Le Petit Bistrot",
+        cuisine_type: "Française",
+        price_range: "€€",
+        rating: 4.8,
+        address: "123 Rue de la Paix, Paris",
+        image: "/img/restaurants/restaurant1.jpg"
+      },
+      {
+        id: 2,
+        name: "Sakura Sushi",
+        cuisine_type: "Japonaise",
+        price_range: "€€€",
+        rating: 4.9,
+        address: "456 Avenue des Champs, Paris",
+        image: "/img/restaurants/restaurant2.jpg"
+      },
+      {
+        id: 3,
+        name: "Trattoria Bella",
+        cuisine_type: "Italienne",
+        price_range: "€€",
+        rating: 4.7,
+        address: "789 Boulevard Saint-Germain, Paris",
+        image: "/img/restaurants/restaurant3.jpg"
+      }
+    ])
 
     onMounted(() => {
       isAuthenticated.value = authService.isAuthenticated()
     })
 
     return {
-      isAuthenticated
+      isAuthenticated,
+      featuredRestaurants
     }
   }
 }
@@ -422,35 +510,35 @@ export default {
          
 
                  .btn-primary {
-           background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-           border: none;
-           color: var(--surface-dark);
-           font-weight: 600;
-           box-shadow: var(--shadow-gold);
-         }
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  border: none;
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
 
-         .btn-primary:hover {
-           background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-color) 100%);
-           color: var(--surface-dark);
-           box-shadow: 0 8px 25px rgba(200, 162, 125, 0.4);
-           transform: translateY(-2px);
-         }
+.btn-primary:hover {
+  background: linear-gradient(135deg, #b8941f 0%, #d4af37 100%);
+  color: white;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
 
                  .btn-outline {
-           background: transparent;
-           border: 2px solid var(--primary-color);
-           color: var(--primary-color);
-           backdrop-filter: blur(10px);
-           transition: var(--transition-slow);
-         }
+  background: transparent;
+  border: 2px solid #d4af37;
+  color: #d4af37;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
 
-                   .btn-outline:hover {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            color: var(--surface-dark);
-            box-shadow: var(--shadow-gold);
-            transform: translateY(-2px);
-          }
+.btn-outline:hover {
+  background: #d4af37;
+  border-color: #d4af37;
+  color: white;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
 
           .btn-secondary {
             background: var(--surface-dark);
@@ -486,8 +574,9 @@ export default {
 /* Features Section */
 .features {
   padding: 8rem 0;
-  background: var(--surface-color);
+  background: #1a1a1a;
   position: relative;
+  color: white;
 }
 
 .features::before {
@@ -497,7 +586,7 @@ export default {
   left: 0;
   right: 0;
   height: 100px;
-  background: linear-gradient(to bottom, var(--surface-color), transparent);
+  background: linear-gradient(to bottom, #1a1a1a, transparent);
 }
 
 .section-header {
@@ -510,36 +599,59 @@ export default {
 }
 
         .section-title {
-          font-size: clamp(2.5rem, 5vw, 4rem);
-          font-weight: 300;
-          margin-bottom: 1.5rem;
-          color: var(--text-primary);
-          font-family: 'Playfair Display', serif;
-          letter-spacing: -0.02em;
-        }
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: -0.02em;
+}
 
-        .section-subtitle {
-          font-size: 1.25rem;
-          color: var(--text-secondary);
-          max-width: 700px;
-          margin: 0 auto;
-          line-height: 1.6;
-          font-weight: 300;
-          font-family: 'Inter', sans-serif;
-        }
+.section-subtitle {
+  font-size: 1.25rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 300;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Couleurs pour fonds sombres */
+.features .section-title,
+.tech-stack .section-title {
+  color: white;
+}
+
+.features .section-subtitle,
+.tech-stack .section-subtitle {
+  color: #e0e0e0;
+}
+
+/* Couleurs pour fonds clairs */
+.featured-restaurants .section-title {
+  color: #2c3e50;
+}
+
+.featured-restaurants .section-subtitle {
+  color: #5a6c7d;
+}
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .feature-card {
   text-align: center;
   padding: 3rem 2rem;
-  transition: var(--transition);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  background: #2a2a2a;
+  border-radius: 15px;
+  border: 1px solid #333;
 }
 
 .feature-card::before {
@@ -549,7 +661,7 @@ export default {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: linear-gradient(135deg, #d4af37, #b8941f);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -563,17 +675,17 @@ export default {
 }
 
                  .feature-icon-wrapper {
-           width: 80px;
-           height: 80px;
-           background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-           border-radius: 50%;
-           display: flex;
-           align-items: center;
-           justify-content: center;
-           margin: 0 auto 2rem;
-           transition: var(--transition);
-           box-shadow: var(--shadow-gold);
-         }
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
 
                  .feature-card:hover .feature-icon-wrapper {
            transform: scale(1.1);
@@ -585,30 +697,37 @@ export default {
         }
 
         .feature-title {
-          font-size: 1.5rem;
-          font-weight: 500;
-          margin-bottom: 1rem;
-          color: var(--text-primary);
-          font-family: 'Playfair Display', serif;
-        }
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
 
-        .feature-description {
-          color: var(--text-secondary);
-          line-height: 1.6;
-          margin-bottom: 1.5rem;
-          font-family: 'Inter', sans-serif;
-          font-weight: 300;
-        }
+.feature-description {
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+}
+
+/* Couleurs pour cartes sur fond sombre */
+.features .feature-title {
+  color: white;
+}
+
+.features .feature-description {
+  color: #e0e0e0;
+}
 
 .feature-link {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: var(--primary-color);
+  color: #d4af37;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .feature-link:hover {
@@ -628,8 +747,9 @@ export default {
 /* Tech Stack Section */
 .tech-stack {
   padding: 8rem 0;
-  background: var(--surface-color);
+  background: #1a1a1a;
   position: relative;
+  color: white;
 }
 
 .tech-stack::before {
@@ -639,7 +759,7 @@ export default {
   left: 0;
   right: 0;
   height: 100px;
-  background: linear-gradient(to bottom, var(--surface-color), transparent);
+  background: linear-gradient(to bottom, #1a1a1a, transparent);
 }
 
 .tech-grid {
@@ -652,6 +772,9 @@ export default {
   padding: 3rem;
   position: relative;
   overflow: hidden;
+  background: #2a2a2a;
+  border-radius: 15px;
+  border: 1px solid #333;
 }
 
 .tech-card::before {
@@ -661,7 +784,7 @@ export default {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: linear-gradient(135deg, #d4af37, #b8941f);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -676,19 +799,19 @@ export default {
   gap: 1.5rem;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 2px solid #333;
 }
 
 .tech-icon-wrapper {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  background: linear-gradient(135deg, #d4af37, #b8941f);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: var(--transition);
-  box-shadow: var(--shadow-gold);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
 }
 
 .tech-card:hover .tech-icon-wrapper {
@@ -703,8 +826,12 @@ export default {
 .tech-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: var(--text-primary);
   margin: 0;
+}
+
+/* Couleurs pour cartes sur fond sombre */
+.tech-stack .tech-title {
+  color: white;
 }
 
 .tech-list {
@@ -718,14 +845,21 @@ export default {
   align-items: center;
   gap: 1rem;
   padding: 1rem 0;
-  border-bottom: 1px solid var(--border-color);
-  color: var(--text-secondary);
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
 .tech-list li:hover {
-  color: var(--text-primary);
   padding-left: 0.5rem;
+}
+
+/* Couleurs pour listes sur fond sombre */
+.tech-stack .tech-list li {
+  border-bottom: 1px solid #333;
+  color: #e0e0e0;
+}
+
+.tech-stack .tech-list li:hover {
+  color: white;
 }
 
 .tech-list li:last-child {
@@ -737,17 +871,21 @@ export default {
   padding: 0.25rem 0.75rem;
   min-width: 80px;
   text-align: center;
+  background: #d4af37;
+  color: white;
+  border-radius: 4px;
+  font-weight: 600;
 }
 
                  /* CTA Section */
          .cta {
-           padding: 8rem 0;
-           background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-           color: var(--surface-dark);
-           text-align: center;
-           position: relative;
-           overflow: hidden;
-         }
+  padding: 8rem 0;
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
 
 .cta::before {
   content: '';
@@ -772,21 +910,22 @@ export default {
 }
 
         .cta-title {
-          font-size: clamp(2.5rem, 5vw, 4rem);
-          font-weight: 300;
-          margin-bottom: 1.5rem;
-          font-family: 'Playfair Display', serif;
-          letter-spacing: -0.02em;
-        }
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: -0.02em;
+  color: white;
+}
 
         .cta-subtitle {
-          font-size: 1.25rem;
-          margin-bottom: 3rem;
-          opacity: 0.95;
-          line-height: 1.6;
-          font-weight: 300;
-          font-family: 'Inter', sans-serif;
-        }
+  font-size: 1.25rem;
+  margin-bottom: 3rem;
+  color: white;
+  line-height: 1.6;
+  font-weight: 300;
+  font-family: 'Inter', sans-serif;
+}
 
 .cta-actions {
   display: flex;
@@ -806,6 +945,153 @@ export default {
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
+/* Featured Restaurants Section */
+.featured-restaurants {
+  padding: 6rem 0;
+  background: #f8f9fa;
+}
+
+.restaurants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.featured-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.restaurant-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.restaurant-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.featured-card:hover .restaurant-img {
+  transform: scale(1.05);
+}
+
+.restaurant-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+.restaurant-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.badge-featured {
+  background: #d4af37;
+  color: white;
+}
+
+.badge-rating {
+  background: #28a745;
+  color: white;
+}
+
+.restaurant-info {
+  padding: 25px;
+}
+
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.restaurant-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  color: #2c3e50;
+}
+
+.restaurant-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rating-stars {
+  font-size: 0.9rem;
+}
+
+.rating-number {
+  font-size: 0.8rem;
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.restaurant-details {
+  margin-bottom: 20px;
+}
+
+.restaurant-cuisine {
+  color: #d4af37;
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
+}
+
+.restaurant-price {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  margin: 0 0 5px 0;
+}
+
+.restaurant-address {
+  color: #5a6c7d;
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.restaurant-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+}
+
+.section-actions {
+  text-align: center;
+  margin-top: 3rem;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .hero {
@@ -823,7 +1109,11 @@ export default {
     align-items: center;
   }
   
-  .features-grid,
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
   .tech-grid {
     grid-template-columns: 1fr;
   }
@@ -869,6 +1159,11 @@ export default {
   .feature-card,
   .tech-card {
     padding: 2rem 1.5rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
