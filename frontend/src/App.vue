@@ -24,18 +24,18 @@ export default {
 
 /* Reset et variables CSS globales */
 :root {
-  /* Couleurs principales - Style restaurant élégant */
+  /* Couleurs principales - Style restaurant sombre et élégant */
   --primary-color: #d4af37;
   --primary-hover: #b8860b;
   --secondary-color: #2c3e50;
   --success-color: #27ae60;
   --warning-color: #f39c12;
   --error-color: #e74c3c;
-  --background-color: #f8fafc;
-  --surface-color: #ffffff;
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --border-color: #e2e8f0;
+  --background-color: #0f0f0f;
+  --surface-color: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --border-color: #333333;
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -47,6 +47,12 @@ export default {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 body {
@@ -62,30 +68,39 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .main-content {
   flex: 1;
-  padding: 2rem 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Conteneurs */
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 2rem;
 }
 
 .container-sm {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 2rem;
 }
 
 .container-lg {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 2rem;
 }
 
 /* Grille responsive */

@@ -3,10 +3,10 @@
     <div class="container">
       <nav class="nav">
         <div class="nav-brand">
-          <router-link to="/" class="nav-logo">
-            <span class="logo-icon">🍽️</span>
-            <span class="logo-text">RestaurantReservation</span>
-          </router-link>
+                                <router-link to="/" class="nav-logo">
+                        <span class="logo-icon">G</span>
+                        <span class="logo-text">GastroReserve</span>
+                      </router-link>
         </div>
         
         <div class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
@@ -121,7 +121,7 @@ import LanguageSelector from './LanguageSelector.vue'
           top: 0;
           z-index: 100;
           backdrop-filter: blur(8px);
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(26, 26, 26, 0.95);
         }
 
 .nav {

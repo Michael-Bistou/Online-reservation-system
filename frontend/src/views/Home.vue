@@ -12,11 +12,8 @@
         <div class="video-overlay"></div>
       </div>
       
-      <div class="container">
-        <div class="hero-content">
-          <div class="hero-badge">
-            <span class="badge badge-primary">🍽️ Nouveau</span>
-          </div>
+             <div class="hero-content">
+
           
           <h1 class="hero-title">
             <span class="title-line">Découvrez</span>
@@ -44,26 +41,16 @@
             </div>
           </div>
           
-          <div class="hero-actions">
-            <router-link to="/register" class="btn btn-primary btn-lg hero-btn">
-              <span class="btn-icon">🚀</span>
-              <span class="btn-text">Commencer maintenant</span>
-              <span class="btn-arrow">→</span>
-            </router-link>
-            <router-link to="/restaurants" class="btn btn-outline btn-lg hero-btn" v-if="isAuthenticated">
-              <span class="btn-icon">🍽️</span>
-              <span class="btn-text">Explorer les restaurants</span>
-            </router-link>
-          </div>
-          
-          <div class="hero-scroll">
-            <div class="scroll-indicator">
-              <span class="scroll-text">Découvrir</span>
-              <div class="scroll-arrow">↓</div>
-            </div>
-          </div>
+                     <div class="hero-actions">
+             <router-link to="/register" class="btn btn-primary btn-lg hero-btn">
+               <span class="btn-text">Commencer maintenant</span>
+               <span class="btn-arrow">→</span>
+             </router-link>
+             <router-link to="/restaurants" class="btn btn-outline btn-lg hero-btn" v-if="isAuthenticated">
+               <span class="btn-text">Explorer les restaurants</span>
+             </router-link>
+           </div>
         </div>
-      </div>
     </section>
 
     <!-- Features Section -->
@@ -71,7 +58,7 @@
       <div class="container">
         <div class="section-header">
           <div class="section-badge">
-            <span class="badge badge-primary">✨ Fonctionnalités</span>
+            <span class="badge badge-primary">Fonctionnalités</span>
           </div>
           <h2 class="section-title">Une Expérience Unique</h2>
           <p class="section-subtitle">Découvrez les fonctionnalités qui font de notre plateforme la solution idéale pour vos réservations gastronomiques</p>
@@ -79,9 +66,9 @@
         
         <div class="features-grid">
           <div class="feature-card card">
-            <div class="feature-icon-wrapper">
-              <div class="feature-icon">🍽️</div>
-            </div>
+                         <div class="feature-icon-wrapper">
+               <div class="feature-icon">R</div>
+             </div>
             <h3 class="feature-title">Réservations Instantanées</h3>
             <p class="feature-description">Réservez votre table en quelques clics, 24h/24 et 7j/7. Interface intuitive et processus simplifié pour une expérience fluide.</p>
             <div class="feature-link">
@@ -91,9 +78,9 @@
           </div>
           
           <div class="feature-card card">
-            <div class="feature-icon-wrapper">
-              <div class="feature-icon">🔐</div>
-            </div>
+                         <div class="feature-icon-wrapper">
+               <div class="feature-icon">S</div>
+             </div>
             <h3 class="feature-title">Sécurité Maximale</h3>
             <p class="feature-description">Authentification JWT, données chiffrées et protection complète de vos informations personnelles. Votre sécurité est notre priorité.</p>
             <div class="feature-link">
@@ -103,9 +90,9 @@
           </div>
           
           <div class="feature-card card">
-            <div class="feature-icon-wrapper">
-              <div class="feature-icon">🌍</div>
-            </div>
+                         <div class="feature-icon-wrapper">
+               <div class="feature-icon">M</div>
+             </div>
             <h3 class="feature-title">Multilingue & Accessible</h3>
             <p class="feature-description">Interface disponible en français et anglais. Support complet pour l'internationalisation et accessibilité universelle.</p>
             <div class="feature-link">
@@ -115,9 +102,9 @@
           </div>
           
           <div class="feature-card card">
-            <div class="feature-icon-wrapper">
-              <div class="feature-icon">📱</div>
-            </div>
+                         <div class="feature-icon-wrapper">
+               <div class="feature-icon">D</div>
+             </div>
             <h3 class="feature-title">Design Responsive</h3>
             <p class="feature-description">Interface parfaitement adaptée à tous les appareils : desktop, tablette et mobile. Une expérience optimale partout.</p>
             <div class="feature-link">
@@ -127,9 +114,9 @@
           </div>
           
           <div class="feature-card card">
-            <div class="feature-icon-wrapper">
-              <div class="feature-icon">⚡</div>
-            </div>
+                         <div class="feature-icon-wrapper">
+               <div class="feature-icon">P</div>
+             </div>
             <h3 class="feature-title">Performance Optimale</h3>
             <p class="feature-description">Application optimisée avec Vite et Vue.js 3 pour des temps de chargement ultra-rapides et une expérience fluide.</p>
             <div class="feature-link">
@@ -139,9 +126,9 @@
           </div>
           
           <div class="feature-card card">
-            <div class="feature-icon-wrapper">
-              <div class="feature-icon">🛠️</div>
-            </div>
+                         <div class="feature-icon-wrapper">
+               <div class="feature-icon">A</div>
+             </div>
             <h3 class="feature-title">Architecture Moderne</h3>
             <p class="feature-description">Backend API REST, frontend SPA et base de données MySQL pour une solution évolutive et maintenable.</p>
             <div class="feature-link">
@@ -158,7 +145,7 @@
       <div class="container">
         <div class="section-header">
           <div class="section-badge">
-            <span class="badge badge-success">💻 Technologies</span>
+            <span class="badge badge-success">Technologies</span>
           </div>
           <h2 class="section-title">Stack Technique Moderne</h2>
           <p class="section-subtitle">Technologies de pointe utilisées pour développer cette application de nouvelle génération</p>
@@ -167,9 +154,9 @@
         <div class="tech-grid">
           <div class="tech-card card">
             <div class="tech-header">
-              <div class="tech-icon-wrapper">
-                <div class="tech-icon">🎨</div>
-              </div>
+                             <div class="tech-icon-wrapper">
+                 <div class="tech-icon">F</div>
+               </div>
               <h3 class="tech-title">Frontend</h3>
             </div>
             <ul class="tech-list">
@@ -183,9 +170,9 @@
           
           <div class="tech-card card">
             <div class="tech-header">
-              <div class="tech-icon-wrapper">
-                <div class="tech-icon">⚙️</div>
-              </div>
+                             <div class="tech-icon-wrapper">
+                 <div class="tech-icon">B</div>
+               </div>
               <h3 class="tech-title">Backend</h3>
             </div>
             <ul class="tech-list">
@@ -199,9 +186,9 @@
           
           <div class="tech-card card">
             <div class="tech-header">
-              <div class="tech-icon-wrapper">
-                <div class="tech-icon">🛠️</div>
-              </div>
+                             <div class="tech-icon-wrapper">
+                 <div class="tech-icon">T</div>
+               </div>
               <h3 class="tech-title">Outils & DevOps</h3>
             </div>
             <ul class="tech-list">
@@ -221,20 +208,18 @@
       <div class="container">
         <div class="cta-content">
           <div class="cta-badge">
-            <span class="badge badge-primary">🎯 Prêt ?</span>
+            <span class="badge badge-primary">Prêt ?</span>
           </div>
           <h2 class="cta-title">Prêt à vivre l'expérience ?</h2>
           <p class="cta-subtitle">Rejoignez notre plateforme et découvrez une nouvelle façon de réserver vos restaurants préférés</p>
           <div class="cta-actions">
-            <router-link to="/register" class="btn btn-primary btn-lg cta-btn">
-              <span class="btn-icon">🎯</span>
-              <span class="btn-text">Créer un compte</span>
-              <span class="btn-arrow">→</span>
-            </router-link>
-            <router-link to="/login" class="btn btn-outline btn-lg cta-btn">
-              <span class="btn-icon">🔑</span>
-              <span class="btn-text">Se connecter</span>
-            </router-link>
+                         <router-link to="/register" class="btn btn-primary btn-lg cta-btn">
+               <span class="btn-text">Créer un compte</span>
+               <span class="btn-arrow">→</span>
+             </router-link>
+             <router-link to="/login" class="btn btn-outline btn-lg cta-btn">
+               <span class="btn-text">Se connecter</span>
+             </router-link>
           </div>
         </div>
       </div>
@@ -263,54 +248,64 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  min-height: 100vh;
-}
+        .home {
+          min-height: 100vh;
+          margin: 0;
+          padding: 0;
+          overflow-x: hidden;
+          width: 100vw;
+          max-width: 100vw;
+        }
 
         /* Hero Section avec Vidéo */
         .hero {
           position: relative;
           height: 100vh;
+          width: 100vw;
           display: flex;
           align-items: center;
           justify-content: center;
           overflow: hidden;
           color: white;
+          margin: 0;
+          padding: 0;
+          left: 50%;
+          transform: translateX(-50%);
         }
 
-.hero-video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
+        .hero-video {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          z-index: 1;
+        }
 
-.background-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
+        .background-video {
+          width: 100vw;
+          height: 100vh;
+          object-fit: cover;
+          object-position: center;
+        }
 
-.video-fallback {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);
-}
+        .video-fallback {
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);
+        }
 
         .video-overlay {
           position: absolute;
           top: 0;
           left: 0;
-          width: 100%;
-          height: 100%;
+          width: 100vw;
+          height: 100vh;
           background: linear-gradient(
             135deg,
-            rgba(0, 0, 0, 0.3) 0%,
-            rgba(0, 0, 0, 0.2) 50%,
-            rgba(0, 0, 0, 0.4) 100%
+            rgba(0, 0, 0, 0.4) 0%,
+            rgba(0, 0, 0, 0.3) 50%,
+            rgba(0, 0, 0, 0.5) 100%
           );
         }
 
@@ -318,8 +313,10 @@ export default {
   position: relative;
   z-index: 2;
   text-align: center;
-  max-width: 900px;
+  width: 100%;
+  max-width: 1200px;
   padding: 0 2rem;
+  margin: 0 auto;
 }
 
 .hero-badge {
@@ -445,10 +442,7 @@ export default {
           color: white;
         }
 
-        .btn-icon {
-          margin-right: 0.75rem;
-          font-size: 1.1em;
-        }
+
 
         .btn-arrow {
           margin-left: 0.75rem;
@@ -460,49 +454,7 @@ export default {
           transform: translateX(6px);
         }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-}
 
-.scroll-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-}
-
-.scroll-indicator:hover {
-  opacity: 1;
-}
-
-.scroll-text {
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-
-.scroll-arrow {
-  font-size: 1.5rem;
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-10px);
-  }
-  60% {
-    transform: translateY(-5px);
-  }
-}
 
 /* Features Section */
 .features {
