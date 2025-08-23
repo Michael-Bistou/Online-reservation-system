@@ -723,7 +723,7 @@ export default {
 .restaurant-name {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #2c3e50;
   margin: 0;
   font-family: 'Playfair Display', serif;
 }
@@ -740,7 +740,7 @@ export default {
 
 .rating-number {
   font-size: 0.8rem;
-  color: var(--text-muted);
+  color: #7f8c8d;
   font-weight: 600;
 }
 
@@ -749,20 +749,20 @@ export default {
 }
 
 .restaurant-cuisine {
-  color: var(--primary-color);
+  color: #d4af37;
   font-weight: 600;
   margin: 0 0 5px 0;
   font-size: 0.9rem;
 }
 
 .restaurant-price {
-  color: var(--text-muted);
+  color: #7f8c8d;
   font-size: 0.9rem;
   margin: 0 0 5px 0;
 }
 
 .restaurant-address {
-  color: var(--text-secondary);
+  color: #5a6c7d;
   font-size: 0.85rem;
   margin: 0;
   line-height: 1.4;
@@ -798,23 +798,25 @@ export default {
 }
 
 .btn-reserve {
-  background: var(--primary-color);
+  background: #d4af37;
   color: white;
+  font-weight: 600;
 }
 
 .btn-reserve:hover {
-  background: var(--primary-hover);
+  background: #b8941f;
   transform: translateY(-2px);
 }
 
 .btn-details {
   background: transparent;
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
+  color: #d4af37;
+  border: 2px solid #d4af37;
+  font-weight: 600;
 }
 
 .btn-details:hover {
-  background: var(--primary-color);
+  background: #d4af37;
   color: white;
 }
 

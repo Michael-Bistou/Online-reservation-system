@@ -1,0 +1,269 @@
+/* Variables CSS personnalisées pour le thème restaurant */
+:root {
+  /* Couleurs principales */
+  --primary-color: #d4af37; /* Or doré */
+  --primary-hover: #b8941f; /* Or plus foncé au hover */
+  --primary-light: #f4e4a6; /* Or très clair */
+  
+  /* Couleurs de texte avec bon contraste */
+  --text-primary: #2c3e50; /* Bleu foncé pour le texte principal */
+  --text-secondary: #5a6c7d; /* Gris bleu pour le texte secondaire */
+  --text-muted: #7f8c8d; /* Gris pour le texte atténué */
+  --text-light: #ffffff; /* Blanc pour le texte sur fond sombre */
+  
+  /* Couleurs de fond */
+  --surface-color: #f8f9fa; /* Gris très clair pour les surfaces */
+  --surface-hover: #e9ecef; /* Gris clair pour les hovers */
+  --background-color: #ffffff; /* Blanc pour le fond principal */
+  
+  /* Couleurs de bordure */
+  --border-color: #dee2e6; /* Gris clair pour les bordures */
+  --border-hover: #adb5bd; /* Gris moyen pour les bordures au hover */
+  
+  /* Couleurs d'état */
+  --success-color: #28a745; /* Vert pour les succès */
+  --error-color: #dc3545; /* Rouge pour les erreurs */
+  --warning-color: #ffc107; /* Jaune pour les avertissements */
+  --info-color: #17a2b8; /* Bleu pour les informations */
+  
+  /* Couleurs de statut */
+  --status-pending: #ffc107; /* Jaune pour en attente */
+  --status-confirmed: #28a745; /* Vert pour confirmé */
+  --status-cancelled: #dc3545; /* Rouge pour annulé */
+  --status-completed: #6c757d; /* Gris pour terminé */
+  
+  /* Ombres */
+  --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.2);
+  
+  /* Espacements */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+  
+  /* Rayons de bordure */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Classes utilitaires pour les couleurs de texte */
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+.text-light {
+  color: var(--text-light) !important;
+}
+
+.text-success {
+  color: var(--success-color) !important;
+}
+
+.text-error {
+  color: var(--error-color) !important;
+}
+
+.text-warning {
+  color: var(--warning-color) !important;
+}
+
+.text-info {
+  color: var(--info-color) !important;
+}
+
+/* Classes utilitaires pour les couleurs de fond */
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+.bg-surface {
+  background-color: var(--surface-color) !important;
+}
+
+.bg-light {
+  background-color: var(--background-color) !important;
+}
+
+.bg-success {
+  background-color: var(--success-color) !important;
+}
+
+.bg-error {
+  background-color: var(--error-color) !important;
+}
+
+.bg-warning {
+  background-color: var(--warning-color) !important;
+}
+
+.bg-info {
+  background-color: var(--info-color) !important;
+}
+
+/* Classes pour les bordures */
+.border-light {
+  border-color: var(--border-color) !important;
+}
+
+.border-primary {
+  border-color: var(--primary-color) !important;
+}
+
+/* Classes pour les ombres */
+.shadow-light {
+  box-shadow: var(--shadow-light) !important;
+}
+
+.shadow-medium {
+  box-shadow: var(--shadow-medium) !important;
+}
+
+.shadow-heavy {
+  box-shadow: var(--shadow-heavy) !important;
+}
+
+/* Classes pour les transitions */
+.transition-fast {
+  transition: var(--transition-fast) !important;
+}
+
+.transition-normal {
+  transition: var(--transition-normal) !important;
+}
+
+.transition-slow {
+  transition: var(--transition-slow) !important;
+}
+
+/* Styles de base améliorés */
+body {
+  color: var(--text-primary);
+  background-color: var(--background-color);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+/* Styles pour les boutons */
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--text-light);
+  transition: var(--transition-normal);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: var(--text-light);
+}
+
+.btn-outline {
+  background-color: transparent;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  transition: var(--transition-normal);
+}
+
+.btn-outline:hover {
+  background-color: var(--surface-hover);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+/* Styles pour les formulaires */
+.form-input {
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  background-color: var(--background-color);
+  transition: var(--transition-normal);
+}
+
+.form-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  outline: none;
+}
+
+.form-label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Styles pour les cartes */
+.card {
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-medium);
+}
+
+/* Styles pour les badges de statut */
+.badge {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.badge-pending {
+  background-color: var(--status-pending);
+  color: var(--text-primary);
+}
+
+.badge-confirmed {
+  background-color: var(--status-confirmed);
+  color: var(--text-light);
+}
+
+.badge-cancelled {
+  background-color: var(--status-cancelled);
+  color: var(--text-light);
+}
+
+.badge-completed {
+  background-color: var(--status-completed);
+  color: var(--text-light);
+}

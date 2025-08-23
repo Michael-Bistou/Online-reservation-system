@@ -777,7 +777,7 @@ export default {
 
 .filter-label {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #2c3e50;
   font-size: 0.9rem;
 }
 
@@ -830,13 +830,13 @@ export default {
 .stat-number {
   font-size: 1.8rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #2c3e50;
   line-height: 1;
 }
 
 .stat-label {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: #5a6c7d;
   margin-top: 5px;
 }
 
@@ -862,11 +862,11 @@ export default {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 .empty-state p {
-  color: var(--text-secondary);
+  color: #5a6c7d;
   margin-bottom: 30px;
 }
 
@@ -918,7 +918,7 @@ export default {
   font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 .reservation-meta {
@@ -926,7 +926,7 @@ export default {
   flex-wrap: wrap;
   gap: 15px;
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: #5a6c7d;
 }
 
 .status-badge {
@@ -975,11 +975,11 @@ export default {
 
 .detail-label {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 .detail-value {
-  color: var(--text-secondary);
+  color: #5a6c7d;
 }
 
 .reservation-actions {
@@ -995,14 +995,16 @@ export default {
 
 .btn-outline {
   background: transparent;
-  border: 2px solid var(--border-color);
-  color: var(--text-primary);
+  border: 2px solid #dee2e6;
+  color: #2c3e50;
   transition: all 0.3s ease;
+  font-weight: 600;
 }
 
 .btn-outline:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  border-color: #d4af37;
+  color: #d4af37;
+  background-color: #f8f9fa;
 }
 
 .btn-danger {
@@ -1053,7 +1055,7 @@ export default {
   margin: 0;
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 .modal-close {
@@ -1092,17 +1094,18 @@ export default {
 
 .form-label {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #2c3e50;
   font-size: 0.9rem;
 }
 
 .form-input {
   padding: 12px 15px;
-  border: 2px solid var(--border-color);
+  border: 2px solid #dee2e6;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
   background: white;
+  color: #2c3e50;
 }
 
 .form-input:focus {
