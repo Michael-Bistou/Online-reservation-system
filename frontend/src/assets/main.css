@@ -1,6 +1,7 @@
 @import './base.css';
 @import './theme.css';
 @import './contextual-colors.css';
+@import './restaurant-nav.css';
 
 #app {
   max-width: 1280px;

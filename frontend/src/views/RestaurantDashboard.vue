@@ -1,5 +1,43 @@
 <template>
   <div class="restaurant-dashboard">
+    <!-- Barre de navigation restaurant -->
+    <div class="restaurant-nav">
+      <div class="container">
+        <div class="nav-content">
+          <div class="nav-brand">
+            <router-link to="/restaurant-dashboard" class="nav-logo">
+              🏪 Dashboard Restaurant
+            </router-link>
+          </div>
+          <div class="nav-links">
+            <router-link to="/restaurant-dashboard" class="nav-link active">
+              📊 Dashboard
+            </router-link>
+            <router-link to="/restaurant-reservations" class="nav-link">
+              📅 Réservations
+            </router-link>
+            <router-link to="/restaurant-stats" class="nav-link">
+              📈 Statistiques
+            </router-link>
+            <router-link to="/restaurant-menu" class="nav-link">
+              📝 Menu
+            </router-link>
+            <router-link to="/restaurant-profile" class="nav-link">
+              ⚙️ Profil
+            </router-link>
+          </div>
+          <div class="nav-actions">
+            <router-link to="/" class="btn btn-outline btn-sm">
+              🏠 Site Principal
+            </router-link>
+            <button @click="logout" class="btn btn-outline btn-sm">
+              🚪 Déconnexion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="dashboard-header">
       <div class="container">
         <h1 class="dashboard-title">Dashboard Restaurant</h1>
@@ -108,13 +146,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Bouton de déconnexion -->
-        <div class="logout-section">
-          <button @click="logout" class="btn btn-outline">
-            Se déconnecter
-          </button>
-        </div>
       </div>
     </div>
   </div>
@@ -163,7 +194,10 @@ export default {
 .restaurant-dashboard {
   min-height: 100vh;
   background: #f8f9fa;
+  padding-top: 80px;
 }
+
+
 
 .dashboard-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -357,29 +391,7 @@ export default {
   margin-top: 40px;
 }
 
-.btn {
-  padding: 12px 30px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-}
 
-.btn-outline {
-  background: transparent;
-  color: #667eea;
-  border: 2px solid #667eea;
-}
-
-.btn-outline:hover {
-  background: #667eea;
-  color: white;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {

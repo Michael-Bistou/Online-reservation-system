@@ -1,5 +1,43 @@
 <template>
   <div class="restaurant-reservations">
+    <!-- Barre de navigation restaurant -->
+    <div class="restaurant-nav">
+      <div class="container">
+        <div class="nav-content">
+          <div class="nav-brand">
+            <router-link to="/restaurant-dashboard" class="nav-logo">
+              🏪 Dashboard Restaurant
+            </router-link>
+          </div>
+          <div class="nav-links">
+            <router-link to="/restaurant-dashboard" class="nav-link">
+              📊 Dashboard
+            </router-link>
+            <router-link to="/restaurant-reservations" class="nav-link active">
+              📅 Réservations
+            </router-link>
+            <router-link to="/restaurant-stats" class="nav-link">
+              📈 Statistiques
+            </router-link>
+            <router-link to="/restaurant-menu" class="nav-link">
+              📝 Menu
+            </router-link>
+            <router-link to="/restaurant-profile" class="nav-link">
+              ⚙️ Profil
+            </router-link>
+          </div>
+          <div class="nav-actions">
+            <router-link to="/" class="btn btn-outline btn-sm">
+              🏠 Site Principal
+            </router-link>
+            <button @click="logout" class="btn btn-outline btn-sm">
+              🚪 Déconnexion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="page-header">
       <div class="container">
         <h1 class="page-title">Gestion des Réservations</h1>
@@ -507,6 +545,12 @@ export default {
       }
     }
 
+    const logout = () => {
+      localStorage.removeItem('restaurantLoggedIn')
+      localStorage.removeItem('currentRestaurant')
+      window.location.href = '/restaurant-login'
+    }
+
     onMounted(() => {
       loadReservations()
     })
@@ -536,7 +580,8 @@ export default {
       confirmReservation,
       rejectReservation,
       completeReservation,
-      cancelReservation
+      cancelReservation,
+      logout
     }
   }
 }
@@ -546,7 +591,10 @@ export default {
 .restaurant-reservations {
   min-height: 100vh;
   background: #f8f9fa;
+  padding-top: 80px; /* Espace pour la barre de navigation fixe */
 }
+
+
 
 .page-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -842,18 +890,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-}
+
 
 .btn-success {
   background: #28a745;
@@ -882,16 +919,7 @@ export default {
   background: #5a6fd8;
 }
 
-.btn-outline {
-  background: transparent;
-  color: #667eea;
-  border: 2px solid #667eea;
-}
 
-.btn-outline:hover {
-  background: #667eea;
-  color: white;
-}
 
 .btn-icon {
   margin-right: 5px;

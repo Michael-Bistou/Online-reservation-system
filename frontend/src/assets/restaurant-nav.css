@@ -1,0 +1,147 @@
+/* Styles de navigation communs pour toutes les pages restaurant */
+
+.restaurant-nav {
+  background: #2c3e50;
+  color: white;
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.restaurant-nav .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+
+.nav-link {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-link:hover {
+  color: #ecf0f1;
+}
+
+.nav-link.active {
+  color: #3498db;
+  font-weight: 700;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Styles de boutons pour la navigation */
+.restaurant-nav .nav-actions .btn {
+  padding: 8px 15px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+  border: none !important;
+  text-align: center !important;
+  font-size: 0.9rem !important;
+}
+
+.restaurant-nav .nav-actions .btn-outline {
+  border: 2px solid #3498db !important;
+  color: #3498db !important;
+  background: transparent !important;
+}
+
+.restaurant-nav .nav-actions .btn-outline:hover {
+  background-color: #3498db !important;
+  color: white !important;
+}
+
+.restaurant-nav .nav-actions .btn-sm {
+  padding: 6px 12px !important;
+  font-size: 0.8rem !important;
+}
+
+/* Styles pour les boutons primaires */
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .nav-content {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .nav-link {
+    font-size: 0.8rem;
+  }
+}

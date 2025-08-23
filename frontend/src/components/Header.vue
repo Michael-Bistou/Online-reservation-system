@@ -3,7 +3,7 @@
     <div class="container">
       <nav class="nav">
         <div class="nav-brand">
-                                <router-link to="/" class="nav-logo">
+                                <router-link :to="isRestaurantAuthenticated ? '/restaurant-dashboard' : '/'" class="nav-logo">
                         <span class="logo-icon">G</span>
                         <span class="logo-text">GastroReserve</span>
                       </router-link>
@@ -24,7 +24,19 @@
         <div class="nav-auth">
           <LanguageSelector />
           
-          <template v-if="isAuthenticated">
+          <template v-if="isRestaurantAuthenticated">
+            <div class="user-menu">
+              <router-link to="/restaurant-dashboard" class="nav-link user-link">
+                <span class="user-avatar">🏪</span>
+                <span class="user-name">{{ $t('navigation.restaurant_dashboard') }}</span>
+              </router-link>
+              <button @click="logoutRestaurant" class="btn btn-outline btn-sm">
+                {{ $t('navigation.logout') }}
+              </button>
+            </div>
+          </template>
+          
+          <template v-else-if="isAuthenticated">
             <div class="user-menu">
               <NotificationCenter />
               <router-link to="/profile" class="nav-link user-link">
@@ -68,17 +80,26 @@ import NotificationCenter from './NotificationCenter.vue'
             const route = useRoute()
             const isAuthenticated = ref(false)
             const currentUser = ref(null)
+            const isRestaurantAuthenticated = ref(false)
             const isMenuOpen = ref(false)
 
             const checkAuth = () => {
               isAuthenticated.value = authService.isAuthenticated()
               currentUser.value = authService.getCurrentUser()
+              isRestaurantAuthenticated.value = localStorage.getItem('restaurantLoggedIn') === 'true'
             }
 
             const logout = () => {
               authService.logout()
               isAuthenticated.value = false
               currentUser.value = null
+              router.push('/')
+            }
+
+            const logoutRestaurant = () => {
+              localStorage.removeItem('restaurantLoggedIn')
+              localStorage.removeItem('currentRestaurant')
+              isRestaurantAuthenticated.value = false
               router.push('/')
             }
 
@@ -103,8 +124,10 @@ import NotificationCenter from './NotificationCenter.vue'
             return {
               isAuthenticated,
               currentUser,
+              isRestaurantAuthenticated,
               isMenuOpen,
               logout,
+              logoutRestaurant,
               toggleMenu,
               closeMenu
             }

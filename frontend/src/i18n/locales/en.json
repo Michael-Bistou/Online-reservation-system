@@ -35,6 +35,7 @@
     "login": "Login",
     "register": "Register",
     "restaurant_register": "Restaurant",
+    "restaurant_dashboard": "Restaurant Dashboard",
     "logout": "Logout",
     "language": "Language"
   },

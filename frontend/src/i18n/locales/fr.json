@@ -43,6 +43,7 @@
     "login": "Connexion",
     "register": "Inscription",
     "restaurant_register": "Restaurant",
+    "restaurant_dashboard": "Dashboard Restaurant",
     "logout": "Déconnexion",
     "language": "Langue"
   },

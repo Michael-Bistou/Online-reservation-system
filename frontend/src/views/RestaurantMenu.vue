@@ -1,5 +1,43 @@
 <template>
   <div class="restaurant-menu">
+    <!-- Barre de navigation restaurant -->
+    <div class="restaurant-nav">
+      <div class="container">
+        <div class="nav-content">
+          <div class="nav-brand">
+            <router-link to="/restaurant-dashboard" class="nav-logo">
+              🏪 Dashboard Restaurant
+            </router-link>
+          </div>
+          <div class="nav-links">
+            <router-link to="/restaurant-dashboard" class="nav-link">
+              📊 Dashboard
+            </router-link>
+            <router-link to="/restaurant-reservations" class="nav-link">
+              📅 Réservations
+            </router-link>
+            <router-link to="/restaurant-stats" class="nav-link">
+              📈 Statistiques
+            </router-link>
+            <router-link to="/restaurant-menu" class="nav-link active">
+              📝 Menu
+            </router-link>
+            <router-link to="/restaurant-profile" class="nav-link">
+              ⚙️ Profil
+            </router-link>
+          </div>
+          <div class="nav-actions">
+            <router-link to="/" class="btn btn-outline btn-sm">
+              🏠 Site Principal
+            </router-link>
+            <button @click="logout" class="btn btn-outline btn-sm">
+              🚪 Déconnexion
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="page-header">
       <div class="container">
         <h1 class="page-title">Gestion du Menu</h1>
@@ -540,6 +578,12 @@ export default {
       return labels[category] || category
     }
 
+    const logout = () => {
+      localStorage.removeItem('restaurantLoggedIn')
+      localStorage.removeItem('currentRestaurant')
+      window.location.href = '/restaurant-login'
+    }
+
     onMounted(() => {
       loadMenu()
     })
@@ -567,7 +611,8 @@ export default {
       closeModal,
       exportMenu,
       importMenu,
-      getCategoryLabel
+      getCategoryLabel,
+      logout
     }
   }
 }
@@ -577,13 +622,17 @@ export default {
 .restaurant-menu {
   min-height: 100vh;
   background: #f8f9fa;
+  padding-top: 80px; /* Espace pour la barre de navigation fixe */
 }
+
+
 
 .page-header {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 60px 0 40px;
   text-align: center;
+  margin-top: 80px; /* Adjust for fixed nav */
 }
 
 .page-title {
@@ -623,20 +672,6 @@ export default {
   flex-wrap: wrap;
 }
 
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
 .btn-primary {
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
@@ -645,17 +680,6 @@ export default {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-}
-
-.btn-outline {
-  background: white;
-  color: #667eea;
-  border: 2px solid #667eea;
-}
-
-.btn-outline:hover {
-  background: #667eea;
-  color: white;
 }
 
 .btn-danger {
