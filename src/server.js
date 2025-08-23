@@ -31,8 +31,26 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware i18next pour la détection de langue
 app.use(middleware);
 
-// Middleware pour servir les fichiers statiques
-app.use(express.static('.'));
+// Middleware pour servir les fichiers statiques (supprimé - obsolète)
+// app.use(express.static('.'));
+
+// Route racine - Information API
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Système de réservation en ligne - API Backend',
+    status: 'API uniquement',
+    info: 'Cette API sert le frontend Vue.js sur http://localhost:8080',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      api: '/api',
+      health: '/health',
+      auth: '/api/auth',
+      users: '/api/users',
+      restaurants: '/api/restaurants',
+      reservations: '/api/reservations'
+    }
+  });
+});
 
 // Routes API
 app.get('/api', (req, res) => {
@@ -92,22 +110,8 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Route pour le site legacy (HTML original)
-app.get('/legacy', (req, res) => {
-  res.sendFile('index.html', { root: '.' });
-});
-
-app.get('/legacy/about', (req, res) => {
-  res.sendFile('about.html', { root: '.' });
-});
-
-app.get('/legacy/services', (req, res) => {
-  res.sendFile('services.html', { root: '.' });
-});
-
-app.get('/legacy/contact', (req, res) => {
-  res.sendFile('contact.html', { root: '.' });
-});
+// Routes legacy supprimées - obsolètes
+// Le frontend Vue.js est maintenant l'interface principale
 
 // Gestion des erreurs 404
 app.use('*', (req, res) => {
@@ -119,8 +123,20 @@ app.use('*', (req, res) => {
     });
   }
   
-  // Pour les routes frontend, servir index.html (SPA fallback)
-  res.sendFile('index.html', { root: '.' });
+  // Pour toutes les autres routes, rediriger vers l'API info
+  res.status(404).json({
+    message: 'API Backend - Système de réservation en ligne',
+    status: 'API uniquement',
+    info: 'Cette API sert le frontend Vue.js sur http://localhost:8080',
+    endpoints: {
+      api: '/api',
+      health: '/health',
+      auth: '/api/auth',
+      users: '/api/users',
+      restaurants: '/api/restaurants',
+      reservations: '/api/reservations'
+    }
+  });
 });
 
 // Middleware de gestion d'erreurs global
