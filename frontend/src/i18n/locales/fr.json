@@ -26,10 +26,13 @@
     "open": "Ouvrir",
     "refresh": "Actualiser",
     "retry": "Réessayer",
-    "clear_filters": "Effacer les filtres",
-    "submitting": "Envoi...",
-    "people": "personnes",
-    "please_fill_all_fields": "Veuillez remplir tous les champs obligatoires"
+                    "clear_filters": "Effacer les filtres",
+                "submitting": "Envoi...",
+                "people": "personnes",
+                "please_fill_all_fields": "Veuillez remplir tous les champs obligatoires",
+                "all": "Tous",
+                "today": "Aujourd'hui",
+                "select": "Sélectionner"
   },
   "navigation": {
     "home": "Accueil",
@@ -162,11 +165,20 @@
   "reservations": {
     "title": "Mes Réservations",
     "subtitle": "Gérez vos réservations de restaurants",
+    "my_reservations": "Mes Réservations",
     "newReservation": "Nouvelle Réservation",
     "loading": "Chargement de vos réservations...",
     "noReservations": "Aucune réservation",
     "noReservationsText": "Vous n'avez pas encore de réservations.",
     "createFirst": "Créer ma première réservation",
+    "create_reservation": "Créer la réservation",
+    "search_placeholder": "Rechercher par restaurant...",
+    "total_reservations": "Total des réservations",
+    "confirmed_reservations": "Réservations confirmées",
+    "pending_reservations": "Réservations en attente",
+    "completed_reservations": "Réservations terminées",
+    "reservation_id": "ID de réservation",
+    "restaurant": "Restaurant",
     "card": {
       "restaurant": "Restaurant",
       "date": "Date",
@@ -192,7 +204,14 @@
       "message": "Êtes-vous sûr de vouloir annuler cette réservation ?",
       "confirm": "Confirmer l'annulation"
     },
-    "error": "Erreur lors du chargement de vos réservations"
+    "cancel_confirmation_message": "Êtes-vous sûr de vouloir annuler cette réservation ? Cette action ne peut pas être annulée.",
+    "error": "Erreur lors du chargement de vos réservations",
+    "load_error": "Erreur lors du chargement de vos réservations",
+    "cancel_error": "Erreur lors de l'annulation de la réservation",
+    "special_requests_placeholder": "Demandes spéciales, allergies, préférences...",
+    "reservation_error": "Erreur lors de la création de la réservation",
+    "reservation_created": "Réservation créée avec succès !",
+    "reservation_cancelled": "Réservation annulée avec succès !"
   },
   "profile": {
     "title": "Mon Profil",

@@ -28,19 +28,18 @@
 
           <!-- Filters -->
           <div class="filters">
-            <select v-model="selectedCuisine" class="filter-select" @change="handleFilter">
-              <option value="">{{ $t('restaurants.cuisine_types') }}</option>
-              <option value="française">Française</option>
-              <option value="italienne">Italienne</option>
-              <option value="japonaise">Japonaise</option>
-              <option value="chinoise">Chinoise</option>
-              <option value="mexicaine">Mexicaine</option>
-              <option value="indienne">Indienne</option>
-              <option value="thai">Thaï</option>
-              <option value="libanaise">Libanaise</option>
-              <option value="grecque">Grecque</option>
-              <option value="espagnole">Espagnole</option>
-            </select>
+                                    <select v-model="selectedCuisine" class="filter-select" @change="handleFilter">
+                          <option value="">{{ $t('restaurants.cuisine_types') }}</option>
+                          <option value="Française">Française</option>
+                          <option value="Italienne">Italienne</option>
+                          <option value="Japonaise">Japonaise</option>
+                          <option value="Chinoise">Chinoise</option>
+                          <option value="Mexicaine">Mexicaine</option>
+                          <option value="Indienne">Indienne</option>
+                          <option value="Thaï">Thaï</option>
+                          <option value="Grecque">Grecque</option>
+                          <option value="Espagnole">Espagnole</option>
+                        </select>
 
             <select v-model="selectedPriceRange" class="filter-select" @change="handleFilter">
               <option value="">{{ $t('restaurants.price_range') }}</option>
@@ -242,124 +241,210 @@ export default {
       }
     }
 
-    const getSampleRestaurants = () => {
-      return [
-        {
-          id: 1,
-          name: "Le Petit Bistrot",
-          cuisine_type: "Française",
-          address: "123 Rue de la Paix, Paris",
-          phone: "01 23 45 67 89",
-          email: "contact@petitbistrot.fr",
-          description: "Authentique cuisine française dans un cadre chaleureux",
-          price_range: "€€",
-          rating: 4.5,
-          opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30",
-          capacity: 50,
-          has_parking: true,
-          has_wifi: true,
-          has_outdoor_seating: false,
-          is_wheelchair_accessible: true,
-          is_featured: true,
-          is_popular: true
-        },
-        {
-          id: 2,
-          name: "Sakura Sushi",
-          cuisine_type: "Japonaise",
-          address: "456 Avenue des Champs, Paris",
-          phone: "01 98 76 54 32",
-          email: "info@sakurasushi.fr",
-          description: "Sushi frais et authentique dans un décor zen",
-          price_range: "€€€",
-          rating: 4.8,
-          opening_hours: "Mar-Dim: 12h-14h, 19h-23h",
-          capacity: 30,
-          has_parking: false,
-          has_wifi: true,
-          has_outdoor_seating: true,
-          is_wheelchair_accessible: false,
-          is_featured: false,
-          is_popular: true
-        },
-        {
-          id: 3,
-          name: "Trattoria Bella",
-          cuisine_type: "Italienne",
-          address: "789 Boulevard Saint-Germain, Paris",
-          phone: "01 11 22 33 44",
-          email: "reservation@trattoriabella.fr",
-          description: "Pâtes et pizzas traditionnelles italiennes",
-          price_range: "€€",
-          rating: 4.2,
-          opening_hours: "Lun-Dim: 12h-15h, 19h-23h",
-          capacity: 80,
-          has_parking: true,
-          has_wifi: true,
-          has_outdoor_seating: true,
-          is_wheelchair_accessible: true,
-          is_featured: false,
-          is_popular: false
-        },
-        {
-          id: 4,
-          name: "Spice Garden",
-          cuisine_type: "Indienne",
-          address: "321 Rue du Commerce, Paris",
-          phone: "01 55 66 77 88",
-          email: "hello@spicegarden.fr",
-          description: "Cuisine indienne épicée et colorée",
-          price_range: "€€",
-          rating: 4.0,
-          opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
-          capacity: 60,
-          has_parking: false,
-          has_wifi: true,
-          has_outdoor_seating: false,
-          is_wheelchair_accessible: true,
-          is_featured: false,
-          is_popular: false
-        },
-        {
-          id: 5,
-          name: "Le Grand Restaurant",
-          cuisine_type: "Française",
-          address: "654 Champs-Élysées, Paris",
-          phone: "01 99 88 77 66",
-          email: "contact@legrandrestaurant.fr",
-          description: "Gastronomie française de luxe",
-          price_range: "€€€€",
-          rating: 4.9,
-          opening_hours: "Mar-Sam: 19h-23h",
-          capacity: 40,
-          has_parking: true,
-          has_wifi: true,
-          has_outdoor_seating: true,
-          is_wheelchair_accessible: true,
-          is_featured: true,
-          is_popular: true
-        },
-        {
-          id: 6,
-          name: "Taco Loco",
-          cuisine_type: "Mexicaine",
-          address: "987 Rue de Rivoli, Paris",
-          phone: "01 44 55 66 77",
-          email: "hola@tacoloco.fr",
-          description: "Tacos authentiques et margaritas",
-          price_range: "€",
-          rating: 3.8,
-          opening_hours: "Lun-Dim: 11h30-23h",
-          capacity: 45,
-          has_parking: false,
-          has_wifi: true,
-          has_outdoor_seating: true,
-          is_wheelchair_accessible: false,
-          is_featured: false,
-          is_popular: false
-        }
-      ]
-    }
+                    const getSampleRestaurants = () => {
+                  return [
+                    {
+                      id: 1,
+                      name: "Le Petit Bistrot",
+                      cuisine_type: "Française",
+                      address: "123 Rue de la Paix, Paris",
+                      phone: "01 23 45 67 89",
+                      email: "contact@petitbistrot.fr",
+                      description: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
+                      price_range: "€€",
+                      rating: 4.5,
+                      review_count: 127,
+                      opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30",
+                      capacity: 50,
+                      has_parking: true,
+                      has_wifi: true,
+                      has_outdoor_seating: false,
+                      is_wheelchair_accessible: true,
+                      is_featured: true,
+                      is_popular: true
+                    },
+                    {
+                      id: 2,
+                      name: "Sakura Sushi",
+                      cuisine_type: "Japonaise",
+                      address: "456 Avenue des Champs, Paris",
+                      phone: "01 98 76 54 32",
+                      email: "info@sakurasushi.fr",
+                      description: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
+                      price_range: "€€€",
+                      rating: 4.8,
+                      review_count: 89,
+                      opening_hours: "Mar-Dim: 12h-14h, 19h-23h",
+                      capacity: 30,
+                      has_parking: false,
+                      has_wifi: true,
+                      has_outdoor_seating: true,
+                      is_wheelchair_accessible: false,
+                      is_featured: false,
+                      is_popular: true
+                    },
+                    {
+                      id: 3,
+                      name: "Trattoria Bella",
+                      cuisine_type: "Italienne",
+                      address: "789 Boulevard Saint-Germain, Paris",
+                      phone: "01 11 22 33 44",
+                      email: "reservation@trattoriabella.fr",
+                      description: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
+                      price_range: "€€",
+                      rating: 4.2,
+                      review_count: 156,
+                      opening_hours: "Lun-Dim: 12h-15h, 19h-23h",
+                      capacity: 80,
+                      has_parking: true,
+                      has_wifi: true,
+                      has_outdoor_seating: true,
+                      is_wheelchair_accessible: true,
+                      is_featured: false,
+                      is_popular: false
+                    },
+                    {
+                      id: 4,
+                      name: "Spice Garden",
+                      cuisine_type: "Indienne",
+                      address: "321 Rue du Commerce, Paris",
+                      phone: "01 55 66 77 88",
+                      email: "hello@spicegarden.fr",
+                      description: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
+                      price_range: "€€",
+                      rating: 4.0,
+                      review_count: 94,
+                      opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+                      capacity: 60,
+                      has_parking: false,
+                      has_wifi: true,
+                      has_outdoor_seating: false,
+                      is_wheelchair_accessible: true,
+                      is_featured: false,
+                      is_popular: false
+                    },
+                    {
+                      id: 5,
+                      name: "Le Grand Restaurant",
+                      cuisine_type: "Française",
+                      address: "654 Champs-Élysées, Paris",
+                      phone: "01 99 88 77 66",
+                      email: "contact@legrandrestaurant.fr",
+                      description: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
+                      price_range: "€€€€",
+                      rating: 4.9,
+                      review_count: 203,
+                      opening_hours: "Mar-Sam: 19h-23h",
+                      capacity: 40,
+                      has_parking: true,
+                      has_wifi: true,
+                      has_outdoor_seating: true,
+                      is_wheelchair_accessible: true,
+                      is_featured: true,
+                      is_popular: true
+                    },
+                    {
+                      id: 6,
+                      name: "Taco Loco",
+                      cuisine_type: "Mexicaine",
+                      address: "987 Rue de Rivoli, Paris",
+                      phone: "01 44 55 66 77",
+                      email: "hola@tacoloco.fr",
+                      description: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
+                      price_range: "€",
+                      rating: 3.8,
+                      review_count: 67,
+                      opening_hours: "Lun-Dim: 11h30-23h",
+                      capacity: 45,
+                      has_parking: false,
+                      has_wifi: true,
+                      has_outdoor_seating: true,
+                      is_wheelchair_accessible: false,
+                      is_featured: false,
+                      is_popular: false
+                    },
+                    {
+                      id: 7,
+                      name: "Bamboo Palace",
+                      cuisine_type: "Chinoise",
+                      address: "147 Rue de la Roquette, Paris",
+                      phone: "01 33 44 55 66",
+                      email: "info@bamboopalace.fr",
+                      description: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
+                      price_range: "€€",
+                      rating: 4.3,
+                      review_count: 112,
+                      opening_hours: "Mar-Dim: 12h-15h, 18h30-23h",
+                      capacity: 70,
+                      has_parking: true,
+                      has_wifi: true,
+                      has_outdoor_seating: false,
+                      is_wheelchair_accessible: true,
+                      is_featured: false,
+                      is_popular: true
+                    },
+                    {
+                      id: 8,
+                      name: "Ouzeri Athina",
+                      cuisine_type: "Grecque",
+                      address: "258 Rue du Faubourg Saint-Antoine, Paris",
+                      phone: "01 66 77 88 99",
+                      email: "contact@ouzeriathina.fr",
+                      description: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
+                      price_range: "€€",
+                      rating: 4.1,
+                      review_count: 78,
+                      opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+                      capacity: 55,
+                      has_parking: false,
+                      has_wifi: true,
+                      has_outdoor_seating: true,
+                      is_wheelchair_accessible: true,
+                      is_featured: false,
+                      is_popular: false
+                    },
+                    {
+                      id: 9,
+                      name: "Tapas Barcelona",
+                      cuisine_type: "Espagnole",
+                      address: "369 Avenue de la République, Paris",
+                      phone: "01 77 88 99 00",
+                      email: "hola@tapasbarcelona.fr",
+                      description: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
+                      price_range: "€€",
+                      rating: 4.4,
+                      review_count: 145,
+                      opening_hours: "Lun-Sam: 12h-15h, 19h-23h",
+                      capacity: 65,
+                      has_parking: true,
+                      has_wifi: true,
+                      has_outdoor_seating: true,
+                      is_wheelchair_accessible: true,
+                      is_featured: false,
+                      is_popular: true
+                    },
+                    {
+                      id: 10,
+                      name: "Siam Garden",
+                      cuisine_type: "Thaï",
+                      address: "741 Rue de Charonne, Paris",
+                      phone: "01 88 99 00 11",
+                      email: "sawadee@siamgarden.fr",
+                      description: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
+                      price_range: "€€",
+                      rating: 4.6,
+                      review_count: 98,
+                      opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+                      capacity: 50,
+                      has_parking: false,
+                      has_wifi: true,
+                      has_outdoor_seating: false,
+                      is_wheelchair_accessible: true,
+                      is_featured: false,
+                      is_popular: true
+                    }
+                  ]
+                }
 
     const handleSearch = () => {
       // Search is handled by computed property
