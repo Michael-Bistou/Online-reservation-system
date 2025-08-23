@@ -1,30 +1,54 @@
 <template>
-  <header class="header">
-    <nav class="nav">
-      <div class="nav-brand">
-        <router-link to="/" class="nav-logo">
-          🍽️ RestaurantReservation
-        </router-link>
-      </div>
-      
-      <div class="nav-menu">
-        <router-link to="/" class="nav-link">{{ $t('navigation.home') }}</router-link>
-        <router-link to="/restaurants" class="nav-link" v-if="isAuthenticated">{{ $t('navigation.restaurants') }}</router-link>
-        <router-link to="/reservations" class="nav-link" v-if="isAuthenticated">{{ $t('navigation.reservations') }}</router-link>
-      </div>
-      
-      <div class="nav-auth">
-        <LanguageSelector />
-        <template v-if="isAuthenticated">
-          <router-link to="/profile" class="nav-link">{{ $t('navigation.profile') }}</router-link>
-          <button @click="logout" class="btn btn-outline">{{ $t('navigation.logout') }}</button>
-        </template>
-        <template v-else>
-          <router-link to="/login" class="nav-link">{{ $t('navigation.login') }}</router-link>
-          <router-link to="/register" class="btn btn-primary">{{ $t('navigation.register') }}</router-link>
-        </template>
-      </div>
-    </nav>
+          <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <div class="nav-brand">
+          <router-link to="/" class="nav-logo">
+            <span class="logo-icon">🍽️</span>
+            <span class="logo-text">RestaurantReservation</span>
+          </router-link>
+        </div>
+        
+        <div class="nav-menu" :class="{ 'nav-menu-open': isMenuOpen }">
+          <router-link to="/" class="nav-link" @click="closeMenu">
+            {{ $t('navigation.home') }}
+          </router-link>
+          <router-link to="/restaurants" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
+            {{ $t('navigation.restaurants') }}
+          </router-link>
+          <router-link to="/reservations" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
+            {{ $t('navigation.reservations') }}
+          </router-link>
+        </div>
+        
+        <div class="nav-auth">
+          <LanguageSelector />
+          
+          <template v-if="isAuthenticated">
+            <div class="user-menu">
+              <router-link to="/profile" class="nav-link user-link">
+                <span class="user-avatar">👤</span>
+                <span class="user-name">{{ currentUser?.first_name || $t('navigation.profile') }}</span>
+              </router-link>
+              <button @click="logout" class="btn btn-outline btn-sm">
+                {{ $t('navigation.logout') }}
+              </button>
+            </div>
+          </template>
+          
+          <template v-else>
+            <router-link to="/login" class="nav-link">{{ $t('navigation.login') }}</router-link>
+            <router-link to="/register" class="btn btn-primary btn-sm">{{ $t('navigation.register') }}</router-link>
+          </template>
+          
+          <button class="nav-toggle" @click="toggleMenu" :class="{ 'nav-toggle-open': isMenuOpen }">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
   </header>
 </template>
 
@@ -34,128 +58,276 @@ import { useRouter, useRoute } from 'vue-router'
 import authService from '../services/auth.js'
 import LanguageSelector from './LanguageSelector.vue'
 
-export default {
-  name: 'Header',
-  setup() {
-    const router = useRouter()
-    const route = useRoute()
-    const isAuthenticated = ref(false)
-    const currentUser = ref(null)
+        export default {
+          name: 'Header',
+          setup() {
+            const router = useRouter()
+            const route = useRoute()
+            const isAuthenticated = ref(false)
+            const currentUser = ref(null)
+            const isMenuOpen = ref(false)
 
-    const checkAuth = () => {
-      isAuthenticated.value = authService.isAuthenticated()
-      currentUser.value = authService.getCurrentUser()
-    }
+            const checkAuth = () => {
+              isAuthenticated.value = authService.isAuthenticated()
+              currentUser.value = authService.getCurrentUser()
+            }
 
-    const logout = () => {
-      authService.logout()
-      isAuthenticated.value = false
-      currentUser.value = null
-      router.push('/')
-    }
+            const logout = () => {
+              authService.logout()
+              isAuthenticated.value = false
+              currentUser.value = null
+              router.push('/')
+            }
 
-    // Surveiller les changements de route pour mettre à jour l'état d'authentification
-    watch(route, () => {
-      checkAuth()
-    })
+            const toggleMenu = () => {
+              isMenuOpen.value = !isMenuOpen.value
+            }
 
-    onMounted(() => {
-      checkAuth()
-    })
+            const closeMenu = () => {
+              isMenuOpen.value = false
+            }
 
-    return {
-      isAuthenticated,
-      currentUser,
-      logout
-    }
-  },
-  components: {
-    LanguageSelector
-  }
-}
+            // Surveiller les changements de route pour mettre à jour l'état d'authentification
+            watch(route, () => {
+              checkAuth()
+              closeMenu()
+            })
+
+            onMounted(() => {
+              checkAuth()
+            })
+
+            return {
+              isAuthenticated,
+              currentUser,
+              isMenuOpen,
+              logout,
+              toggleMenu,
+              closeMenu
+            }
+          },
+          components: {
+            LanguageSelector
+          }
+        }
 </script>
 
 <style scoped>
-.header {
-  background: #fff;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
+        .header {
+          background: var(--surface-color);
+          box-shadow: var(--shadow-sm);
+          border-bottom: 1px solid var(--border-color);
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          backdrop-filter: blur(8px);
+          background: rgba(255, 255, 255, 0.95);
+        }
 
 .nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 1rem 0;
+  gap: 2rem;
 }
 
 .nav-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
+  flex-shrink: 0;
 }
 
-.nav-logo {
-  text-decoration: none;
-  color: #333;
+        .nav-logo {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          text-decoration: none;
+          color: var(--text-primary);
+          font-weight: 700;
+          font-size: 1.25rem;
+          transition: var(--transition);
+        }
+
+        .nav-logo:hover {
+          color: var(--primary-color);
+          transform: translateY(-1px);
+        }
+
+.logo-icon {
+  font-size: 1.5rem;
+}
+
+.logo-text {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .logo-text {
+    display: inline;
+  }
 }
 
 .nav-menu {
   display: flex;
+  align-items: center;
   gap: 2rem;
+  flex: 1;
+  justify-content: center;
+}
+
+        .nav-link {
+          text-decoration: none;
+          color: var(--text-secondary);
+          font-weight: 500;
+          font-size: 0.875rem;
+          transition: var(--transition);
+          position: relative;
+          padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+          color: var(--primary-color);
+        }
+
+        .nav-link.router-link-active {
+          color: var(--primary-color);
+        }
+
+.nav-link.router-link-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--primary-color);
+  border-radius: 1px;
 }
 
 .nav-auth {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-shrink: 0;
 }
 
-.nav-link {
-  text-decoration: none;
-  color: #666;
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.user-link:hover {
+  background: var(--background-color);
+}
+
+.user-avatar {
+  font-size: 1.25rem;
+}
+
+.user-name {
+  display: none;
   font-weight: 500;
-  transition: color 0.3s;
 }
 
-.nav-link:hover {
-  color: #007bff;
+@media (min-width: 768px) {
+  .user-name {
+    display: inline;
+  }
 }
 
-.nav-link.router-link-active {
-  color: #007bff;
-}
-
-.btn {
-  padding: 0.5rem 1rem;
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
   border: none;
-  border-radius: 4px;
-  font-weight: 500;
-  text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s;
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
 }
 
-.btn-primary {
-  background: #007bff;
-  color: white;
+.nav-toggle:hover {
+  background: var(--background-color);
 }
 
-.btn-primary:hover {
-  background: #0056b3;
+.nav-toggle span {
+  width: 20px;
+  height: 2px;
+  background: var(--text-secondary);
+  transition: var(--transition);
+  border-radius: 1px;
 }
 
-.btn-outline {
-  background: transparent;
-  color: #007bff;
-  border: 1px solid #007bff;
+.nav-toggle-open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
 }
 
-.btn-outline:hover {
-  background: #007bff;
-  color: white;
+.nav-toggle-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle-open span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+@media (max-width: 768px) {
+  .nav {
+    padding: 0.75rem 0;
+  }
+  
+  .nav-menu {
+    position: fixed;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--surface-color);
+    flex-direction: column;
+    gap: 0;
+    padding: 1rem 0;
+    box-shadow: var(--shadow-lg);
+    border-top: 1px solid var(--border-color);
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+  }
+  
+  .nav-menu-open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .nav-link {
+    width: 100%;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+  
+  .nav-link:last-child {
+    border-bottom: none;
+  }
+  
+  .nav-link.router-link-active::after {
+    display: none;
+  }
+  
+  .nav-toggle {
+    display: flex;
+  }
+  
+  .user-menu {
+    display: none;
+  }
 }
 </style>
