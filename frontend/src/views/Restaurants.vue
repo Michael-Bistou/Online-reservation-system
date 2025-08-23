@@ -161,12 +161,14 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
 export default {
   name: 'Restaurants',
   setup() {
+    const router = useRouter()
     const { t } = useI18n()
     
     // Reactive data
@@ -376,8 +378,7 @@ export default {
 
     const viewRestaurant = (restaurant) => {
       // Navigate to restaurant details page
-      console.log('View restaurant:', restaurant)
-      // this.$router.push(`/restaurants/${restaurant.id}`)
+      router.push(`/restaurants/${restaurant.id}`)
     }
 
     // Lifecycle

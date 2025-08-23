@@ -15,6 +15,7 @@
   "party_size": "Nombre de personnes",
   "table_number": "Numéro de table",
   "special_requests": "Demandes spéciales",
+  "special_requests_placeholder": "Demandes spéciales, allergies, préférences...",
   "contact_phone": "Téléphone de contact",
   "contact_email": "Email de contact",
   "status": "Statut",
@@ -47,5 +48,6 @@
   "invalid_time": "Heure invalide",
   "past_date": "Impossible de réserver dans le passé",
   "restaurant_closed": "Le restaurant est fermé à cette heure",
-  "max_party_size_exceeded": "Nombre maximum de personnes dépassé"
+  "max_party_size_exceeded": "Nombre maximum de personnes dépassé",
+  "reservation_error": "Erreur lors de la création de la réservation"
 }

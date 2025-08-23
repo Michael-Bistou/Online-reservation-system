@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Restaurants from '../views/Restaurants.vue'
+import RestaurantDetails from '../views/RestaurantDetails.vue'
 import Reservations from '../views/Reservations.vue'
 import Profile from '../views/Profile.vue'
 
@@ -31,6 +32,12 @@ const routes = [
     name: 'Restaurants',
     component: Restaurants,
     meta: { title: 'Restaurants', requiresAuth: true }
+  },
+  {
+    path: '/restaurants/:id',
+    name: 'RestaurantDetails',
+    component: RestaurantDetails,
+    meta: { title: 'Détails Restaurant', requiresAuth: true }
   },
   {
     path: '/reservations',
