@@ -297,6 +297,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+import notificationService from '../services/notificationService.js'
 
 export default {
   name: 'RestaurantDetails',
@@ -674,6 +675,9 @@ export default {
         
         // Sauvegarder
         localStorage.setItem('restaurantReservations', JSON.stringify(existingReservations))
+        
+        // Créer une notification pour le restaurant
+        notificationService.createReservationNotification(reservation, restaurant.value.name)
         
         console.log('Réservation sauvegardée:', reservation)
       } catch (err) {

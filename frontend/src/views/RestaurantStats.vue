@@ -106,26 +106,38 @@
               </div>
             </div>
 
-            <!-- Répartition par statut -->
-            <div class="chart-card">
-              <h3 class="chart-title">Répartition par statut</h3>
-              <div class="chart-container">
-                <div class="pie-chart">
-                  <div class="pie-segment pending" :style="{ transform: `rotate(${pendingAngle}deg)` }">
-                    <span class="segment-label">En attente: {{ statusStats.pending }}</span>
-                  </div>
-                  <div class="pie-segment confirmed" :style="{ transform: `rotate(${confirmedAngle}deg)` }">
-                    <span class="segment-label">Confirmées: {{ statusStats.confirmed }}</span>
-                  </div>
-                  <div class="pie-segment completed" :style="{ transform: `rotate(${completedAngle}deg)` }">
-                    <span class="segment-label">Terminées: {{ statusStats.completed }}</span>
-                  </div>
-                  <div class="pie-segment cancelled" :style="{ transform: `rotate(${cancelledAngle}deg)` }">
-                    <span class="segment-label">Annulées: {{ statusStats.cancelled }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                         <!-- Répartition par statut -->
+             <div class="chart-card">
+               <h3 class="chart-title">Répartition par statut</h3>
+               <div class="chart-container">
+                 <div class="pie-chart-container">
+                   <div class="pie-chart">
+                     <div class="pie-segment pending" :style="{ transform: `rotate(${pendingAngle}deg)` }"></div>
+                     <div class="pie-segment confirmed" :style="{ transform: `rotate(${confirmedAngle}deg)` }"></div>
+                     <div class="pie-segment completed" :style="{ transform: `rotate(${completedAngle}deg)` }"></div>
+                     <div class="pie-segment cancelled" :style="{ transform: `rotate(${cancelledAngle}deg)` }"></div>
+                   </div>
+                   <div class="pie-legend">
+                     <div class="legend-item">
+                       <span class="legend-color pending"></span>
+                       <span class="legend-text">En attente: {{ statusStats.pending }}</span>
+                     </div>
+                     <div class="legend-item">
+                       <span class="legend-color confirmed"></span>
+                       <span class="legend-text">Confirmées: {{ statusStats.confirmed }}</span>
+                     </div>
+                     <div class="legend-item">
+                       <span class="legend-color completed"></span>
+                       <span class="legend-text">Terminées: {{ statusStats.completed }}</span>
+                     </div>
+                     <div class="legend-item">
+                       <span class="legend-color cancelled"></span>
+                       <span class="legend-text">Annulées: {{ statusStats.cancelled }}</span>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
           </div>
         </div>
 
@@ -657,33 +669,76 @@ export default {
   transform-origin: center;
 }
 
-.pie-chart {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  position: relative;
-  margin: 0 auto;
-  background: conic-gradient(
-    #ffc107 0deg 90deg,
-    #28a745 90deg 180deg,
-    #6c757d 180deg 270deg,
-    #dc3545 270deg 360deg
-  );
-}
+ .pie-chart-container {
+   display: flex;
+   align-items: center;
+   gap: 30px;
+   justify-content: center;
+   flex-wrap: wrap;
+ }
 
-.pie-segment {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
+ .pie-chart {
+   width: 200px;
+   height: 200px;
+   border-radius: 50%;
+   position: relative;
+   background: conic-gradient(
+     #ffc107 0deg 90deg,
+     #28a745 90deg 180deg,
+     #6c757d 180deg 270deg,
+     #dc3545 270deg 360deg
+   );
+   flex-shrink: 0;
+ }
 
-.segment-label {
-  position: absolute;
-  font-size: 0.8rem;
-  color: #2c3e50;
-  font-weight: 600;
-}
+ .pie-segment {
+   position: absolute;
+   width: 100%;
+   height: 100%;
+   border-radius: 50%;
+ }
+
+ .pie-legend {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   min-width: 200px;
+ }
+
+ .legend-item {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   font-size: 0.9rem;
+   color: #2c3e50;
+ }
+
+ .legend-color {
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   flex-shrink: 0;
+ }
+
+ .legend-color.pending {
+   background: #ffc107;
+ }
+
+ .legend-color.confirmed {
+   background: #28a745;
+ }
+
+ .legend-color.completed {
+   background: #6c757d;
+ }
+
+ .legend-color.cancelled {
+   background: #dc3545;
+ }
+
+ .legend-text {
+   font-weight: 500;
+ }
 
 .peak-hours-section {
   background: white;
@@ -800,32 +855,46 @@ export default {
   margin: 0;
 }
 
-@media (max-width: 768px) {
-  .page-title {
-    font-size: 2rem;
-  }
-  
-  .metrics-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .chart-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .filter-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  
-  .filter-group {
-    min-width: auto;
-  }
-  
-  .trends-grid {
-    grid-template-columns: 1fr;
-  }
-}
+ @media (max-width: 768px) {
+   .page-title {
+     font-size: 2rem;
+   }
+   
+   .metrics-grid {
+     grid-template-columns: 1fr;
+   }
+   
+   .chart-grid {
+     grid-template-columns: 1fr;
+   }
+   
+   .filter-row {
+     flex-direction: column;
+     align-items: stretch;
+   }
+   
+   .filter-group {
+     min-width: auto;
+   }
+   
+   .trends-grid {
+     grid-template-columns: 1fr;
+   }
+   
+   .pie-chart-container {
+     flex-direction: column;
+     gap: 20px;
+   }
+   
+   .pie-chart {
+     width: 150px;
+     height: 150px;
+   }
+   
+   .pie-legend {
+     min-width: auto;
+   }
+ }
 
 @media (max-width: 480px) {
   .page-header {

@@ -26,6 +26,7 @@
           
           <template v-if="isAuthenticated">
             <div class="user-menu">
+              <NotificationCenter />
               <router-link to="/profile" class="nav-link user-link">
                 <span class="user-avatar">👤</span>
                 <span class="user-name">{{ currentUser?.first_name || $t('navigation.profile') }}</span>
@@ -58,6 +59,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import authService from '../services/auth.js'
 import LanguageSelector from './LanguageSelector.vue'
+import NotificationCenter from './NotificationCenter.vue'
 
         export default {
           name: 'Header',
@@ -108,7 +110,8 @@ import LanguageSelector from './LanguageSelector.vue'
             }
           },
           components: {
-            LanguageSelector
+            LanguageSelector,
+            NotificationCenter
           }
         }
 </script>

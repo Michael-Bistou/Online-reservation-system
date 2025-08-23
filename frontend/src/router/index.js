@@ -14,6 +14,7 @@ import Restaurants from '../views/Restaurants.vue'
 import RestaurantDetails from '../views/RestaurantDetails.vue'
 import Reservations from '../views/Reservations.vue'
 import Profile from '../views/Profile.vue'
+import Notifications from '../views/Notifications.vue'
 
 const routes = [
   {
@@ -99,6 +100,12 @@ const routes = [
     name: 'Profile',
     component: Profile,
     meta: { title: 'Mon Profil', requiresAuth: true }
+  },
+  {
+    path: '/notifications',
+    name: 'Notifications',
+    component: Notifications,
+    meta: { title: 'Notifications', requiresAuth: true }
   },
   {
     path: '/:pathMatch(.*)*',

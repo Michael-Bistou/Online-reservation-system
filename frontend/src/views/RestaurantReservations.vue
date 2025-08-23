@@ -185,6 +185,7 @@
 
 <script>
 import { ref, computed, onMounted } from 'vue'
+import notificationService from '../services/notificationService.js'
 
 export default {
   name: 'RestaurantReservations',
@@ -417,6 +418,10 @@ export default {
       if (reservation) {
         reservation.status = 'confirmed'
         updateReservationInStorage(reservation)
+        
+        // Créer une notification pour l'utilisateur
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        notificationService.createReservationStatusNotification(reservation, 'confirmed', currentRestaurant.restaurant_name)
       }
     }
 
@@ -435,6 +440,10 @@ export default {
       if (reservation) {
         reservation.status = 'cancelled'
         updateReservationInStorage(reservation)
+        
+        // Créer une notification pour l'utilisateur
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        notificationService.createReservationStatusNotification(reservation, 'cancelled', currentRestaurant.restaurant_name)
       }
     }
 
@@ -453,6 +462,10 @@ export default {
       if (reservation) {
         reservation.status = 'completed'
         updateReservationInStorage(reservation)
+        
+        // Créer une notification pour l'utilisateur
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        notificationService.createReservationStatusNotification(reservation, 'completed', currentRestaurant.restaurant_name)
       }
     }
 
@@ -471,6 +484,10 @@ export default {
       if (reservation) {
         reservation.status = 'cancelled'
         updateReservationInStorage(reservation)
+        
+        // Créer une notification pour l'utilisateur
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        notificationService.createReservationStatusNotification(reservation, 'cancelled', currentRestaurant.restaurant_name)
       }
     }
 
