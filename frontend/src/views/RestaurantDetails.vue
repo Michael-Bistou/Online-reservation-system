@@ -333,13 +333,18 @@ export default {
         
         const restaurantId = route.params.id
         
-        // Try to get from API first
-        try {
-          const response = await axios.get(`http://localhost:5000/api/restaurants/${restaurantId}`)
-          restaurant.value = response.data.restaurant
-        } catch (apiError) {
-          // Fallback to sample data
-          restaurant.value = getSampleRestaurant(restaurantId)
+        // Vérifier si c'est un restaurant inscrit
+        if (restaurantId.startsWith('registered_')) {
+          restaurant.value = getRegisteredRestaurant()
+        } else {
+          // Try to get from API first
+          try {
+            const response = await axios.get(`http://localhost:5000/api/restaurants/${restaurantId}`)
+            restaurant.value = response.data.restaurant
+          } catch (apiError) {
+            // Fallback to sample data
+            restaurant.value = getSampleRestaurant(restaurantId)
+          }
         }
         
         if (!restaurant.value) {
@@ -350,6 +355,42 @@ export default {
         error.value = t('restaurants.load_error')
       } finally {
         loading.value = false
+      }
+    }
+
+    const getRegisteredRestaurant = () => {
+      const restaurantData = localStorage.getItem('restaurantData')
+      if (!restaurantData) return null
+      
+      try {
+        const data = JSON.parse(restaurantData)
+        
+        // Convertir au format attendu
+        return {
+          id: `registered_${Date.now()}`,
+          name: data.restaurant_name,
+          cuisine_type: data.cuisine_type,
+          address: data.address,
+          phone: data.phone,
+          email: data.email,
+          description: data.description || 'Restaurant inscrit sur notre plateforme',
+          price_range: data.price_range,
+          rating: 0,
+          review_count: 0,
+          opening_hours: data.opening_hours,
+          capacity: data.capacity,
+          has_parking: data.has_parking,
+          has_wifi: data.has_wifi,
+          has_outdoor_seating: data.has_outdoor_seating,
+          is_wheelchair_accessible: data.is_wheelchair_accessible,
+          is_featured: false,
+          is_popular: false,
+          is_registered: true,
+          website: data.website
+        }
+      } catch (err) {
+        console.error('Erreur lors du parsing des données restaurant:', err)
+        return null
       }
     }
 
@@ -570,16 +611,36 @@ export default {
           return
         }
 
-        // Create reservation
-        const reservation = {
-          restaurant_id: restaurant.value.id,
-          date: reservationData.value.date,
-          time: reservationData.value.time,
-          party_size: parseInt(reservationData.value.partySize),
-          special_requests: reservationData.value.specialRequests
+        // Récupérer les informations de l'utilisateur connecté
+        const userData = localStorage.getItem('userData')
+        if (!userData) {
+          alert('Vous devez être connecté pour faire une réservation')
+          router.push('/login')
+          return
         }
 
-        // For now, just show success message
+        const user = JSON.parse(userData)
+
+        // Create reservation
+        const reservation = {
+          id: Date.now(), // ID unique
+          restaurant_id: restaurant.value.id,
+          restaurant_name: restaurant.value.name,
+          clientName: `${user.firstName} ${user.lastName}`,
+          clientEmail: user.email,
+          clientPhone: user.phone || 'Non renseigné',
+          date: reservationData.value.date,
+          time: reservationData.value.time,
+          partySize: parseInt(reservationData.value.partySize),
+          specialRequests: reservationData.value.specialRequests,
+          status: 'pending',
+          created_at: new Date().toISOString()
+        }
+
+        // Sauvegarder la réservation dans localStorage
+        saveReservation(reservation)
+
+        // Show success message
         alert(t('reservations.reservation_created'))
         
         // Reset form
@@ -600,6 +661,23 @@ export default {
         alert(t('reservations.reservation_error'))
       } finally {
         submitting.value = false
+      }
+    }
+
+    const saveReservation = (reservation) => {
+      try {
+        // Récupérer les réservations existantes
+        const existingReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
+        
+        // Ajouter la nouvelle réservation
+        existingReservations.push(reservation)
+        
+        // Sauvegarder
+        localStorage.setItem('restaurantReservations', JSON.stringify(existingReservations))
+        
+        console.log('Réservation sauvegardée:', reservation)
+      } catch (err) {
+        console.error('Erreur lors de la sauvegarde de la réservation:', err)
       }
     }
 

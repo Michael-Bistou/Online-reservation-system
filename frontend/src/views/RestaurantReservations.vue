@@ -304,11 +304,31 @@ export default {
     // Methods
     const loadReservations = () => {
       loading.value = true
-      // Simuler un chargement
-      setTimeout(() => {
+      
+      // Charger les réservations depuis localStorage
+      try {
+        const storedReservations = localStorage.getItem('restaurantReservations')
+        if (storedReservations) {
+          const allReservations = JSON.parse(storedReservations)
+          
+          // Récupérer les données du restaurant connecté
+          const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+          
+          // Filtrer les réservations pour ce restaurant
+          const restaurantReservations = allReservations.filter(reservation => 
+            reservation.restaurant_name === currentRestaurant.restaurant_name
+          )
+          
+          reservations.value = restaurantReservations.length > 0 ? restaurantReservations : mockReservations
+        } else {
+          reservations.value = mockReservations
+        }
+      } catch (err) {
+        console.error('Erreur lors du chargement des réservations:', err)
         reservations.value = mockReservations
-        loading.value = false
-      }, 1000)
+      }
+      
+      loading.value = false
     }
 
     const refreshReservations = () => {
@@ -396,6 +416,7 @@ export default {
       const reservation = reservations.value.find(r => r.id === id)
       if (reservation) {
         reservation.status = 'confirmed'
+        updateReservationInStorage(reservation)
       }
     }
 
@@ -413,6 +434,7 @@ export default {
       const reservation = reservations.value.find(r => r.id === id)
       if (reservation) {
         reservation.status = 'cancelled'
+        updateReservationInStorage(reservation)
       }
     }
 
@@ -430,6 +452,7 @@ export default {
       const reservation = reservations.value.find(r => r.id === id)
       if (reservation) {
         reservation.status = 'completed'
+        updateReservationInStorage(reservation)
       }
     }
 
@@ -447,6 +470,23 @@ export default {
       const reservation = reservations.value.find(r => r.id === id)
       if (reservation) {
         reservation.status = 'cancelled'
+        updateReservationInStorage(reservation)
+      }
+    }
+
+    const updateReservationInStorage = (updatedReservation) => {
+      try {
+        const storedReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
+        
+        // Trouver et mettre à jour la réservation
+        const index = storedReservations.findIndex(r => r.id === updatedReservation.id)
+        if (index !== -1) {
+          storedReservations[index] = updatedReservation
+          localStorage.setItem('restaurantReservations', JSON.stringify(storedReservations))
+          console.log('Réservation mise à jour:', updatedReservation)
+        }
+      } catch (err) {
+        console.error('Erreur lors de la mise à jour de la réservation:', err)
       }
     }
 

@@ -224,20 +224,73 @@ export default {
         loading.value = true
         error.value = null
         
-        const response = await axios.get('http://localhost:5000/api/restaurants')
-        restaurants.value = response.data.restaurants || []
+        // Charger les restaurants depuis l'API
+        let apiRestaurants = []
+        try {
+          const response = await axios.get('http://localhost:5000/api/restaurants')
+          apiRestaurants = response.data.restaurants || []
+        } catch (err) {
+          console.log('API non disponible, utilisation des données locales')
+        }
         
-        // If no restaurants in database, add sample data
+        // Charger les restaurants inscrits depuis localStorage
+        const registeredRestaurants = getRegisteredRestaurants()
+        
+        // Combiner les restaurants de l'API et les restaurants inscrits
+        restaurants.value = [...apiRestaurants, ...registeredRestaurants]
+        
+        // Si aucun restaurant de l'API, ajouter les restaurants d'exemple
+        if (apiRestaurants.length === 0) {
+          restaurants.value = [...getSampleRestaurants(), ...registeredRestaurants]
+        }
+        
+        // Si toujours aucun restaurant, utiliser seulement les données d'exemple
         if (restaurants.value.length === 0) {
           restaurants.value = getSampleRestaurants()
         }
       } catch (err) {
         console.error('Erreur lors du chargement des restaurants:', err)
         error.value = t('restaurants.load_error')
-        // Use sample data as fallback
+        // Utiliser les données d'exemple en cas d'erreur
         restaurants.value = getSampleRestaurants()
       } finally {
         loading.value = false
+      }
+    }
+
+    const getRegisteredRestaurants = () => {
+      const restaurantData = localStorage.getItem('restaurantData')
+      if (!restaurantData) return []
+      
+      try {
+        const restaurant = JSON.parse(restaurantData)
+        
+        // Convertir le format du restaurant inscrit au format attendu
+        return [{
+          id: `registered_${Date.now()}`, // ID unique pour les restaurants inscrits
+          name: restaurant.restaurant_name,
+          cuisine_type: restaurant.cuisine_type,
+          address: restaurant.address,
+          phone: restaurant.phone,
+          email: restaurant.email,
+          description: restaurant.description || 'Restaurant inscrit sur notre plateforme',
+          price_range: restaurant.price_range,
+          rating: 0, // Pas encore d'avis
+          review_count: 0,
+          opening_hours: restaurant.opening_hours,
+          capacity: restaurant.capacity,
+          has_parking: restaurant.has_parking,
+          has_wifi: restaurant.has_wifi,
+          has_outdoor_seating: restaurant.has_outdoor_seating,
+          is_wheelchair_accessible: restaurant.is_wheelchair_accessible,
+          is_featured: false,
+          is_popular: false,
+          is_registered: true, // Marquer comme restaurant inscrit
+          website: restaurant.website
+        }]
+      } catch (err) {
+        console.error('Erreur lors du parsing des données restaurant:', err)
+        return []
       }
     }
 
