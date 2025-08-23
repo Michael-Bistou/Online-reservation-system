@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import RestaurantRegister from '../views/RestaurantRegister.vue'
+import RestaurantLogin from '../views/RestaurantLogin.vue'
+import RestaurantDashboard from '../views/RestaurantDashboard.vue'
 import Restaurants from '../views/Restaurants.vue'
 import RestaurantDetails from '../views/RestaurantDetails.vue'
 import Reservations from '../views/Reservations.vue'
@@ -33,6 +35,18 @@ const routes = [
     name: 'RestaurantRegister',
     component: RestaurantRegister,
     meta: { title: 'Inscription Restaurant', guestOnly: true }
+  },
+  {
+    path: '/restaurant-login',
+    name: 'RestaurantLogin',
+    component: RestaurantLogin,
+    meta: { title: 'Connexion Restaurant', guestOnly: true }
+  },
+  {
+    path: '/restaurant-dashboard',
+    name: 'RestaurantDashboard',
+    component: RestaurantDashboard,
+    meta: { title: 'Dashboard Restaurant', requiresRestaurantAuth: true }
   },
   {
     path: '/restaurants',
@@ -73,11 +87,12 @@ const router = createRouter({
 // Navigation guard améliorée pour l'authentification
 router.beforeEach((to, from, next) => {
   const isAuthenticated = authService.isAuthenticated()
+  const isRestaurantAuthenticated = localStorage.getItem('restaurantLoggedIn') === 'true'
   
   // Mettre à jour le titre de la page
   document.title = to.meta.title ? `${to.meta.title} - Système de Réservation` : 'Système de Réservation'
   
-  // Vérifier l'authentification
+  // Vérifier l'authentification utilisateur
   if (to.meta.requiresAuth && !isAuthenticated) {
     // Rediriger vers la page de connexion avec l'URL de retour
     next({
@@ -87,8 +102,14 @@ router.beforeEach((to, from, next) => {
     return
   }
   
+  // Vérifier l'authentification restaurant
+  if (to.meta.requiresRestaurantAuth && !isRestaurantAuthenticated) {
+    next('/restaurant-login')
+    return
+  }
+  
   // Empêcher les utilisateurs connectés d'accéder aux pages d'invité
-  if (to.meta.guestOnly && isAuthenticated) {
+  if (to.meta.guestOnly && (isAuthenticated || isRestaurantAuthenticated)) {
     next('/')
     return
   }
