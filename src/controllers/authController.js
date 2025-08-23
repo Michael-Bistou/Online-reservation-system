@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { query } = require('../config/database');
+const { query, run, get } = require('../config/database');
 const { body, validationResult } = require('express-validator');
 
 /**
@@ -22,12 +22,12 @@ const register = async (req, res) => {
     const { email, password, first_name, last_name, phone } = req.body;
 
     // Vérifier si l'utilisateur existe déjà
-    const [existingUser] = await query(
+    const existingUsers = await query(
       'SELECT id FROM users WHERE email = ?',
       [email]
     );
 
-    if (existingUser) {
+    if (existingUsers.length > 0) {
       return res.status(409).json({
         error: 'Utilisateur déjà existant',
         message: 'Un utilisateur avec cet email existe déjà'
@@ -39,13 +39,13 @@ const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
     // Créer l'utilisateur
-    const [result] = await query(
+    const result = await run(
       'INSERT INTO users (email, password, first_name, last_name, phone) VALUES (?, ?, ?, ?, ?)',
       [email, hashedPassword, first_name, last_name, phone]
     );
 
     // Récupérer l'utilisateur créé (sans le mot de passe)
-    const [newUser] = await query(
+    const newUser = await get(
       'SELECT id, email, first_name, last_name, phone, created_at FROM users WHERE id = ?',
       [result.insertId]
     );
@@ -97,17 +97,19 @@ const login = async (req, res) => {
     const { email, password } = req.body;
 
     // Récupérer l'utilisateur
-    const [user] = await query(
+    const users = await query(
       'SELECT id, email, password, first_name, last_name, phone FROM users WHERE email = ?',
       [email]
     );
 
-    if (!user) {
+    if (users.length === 0) {
       return res.status(401).json({
         error: 'Identifiants invalides',
         message: 'Email ou mot de passe incorrect'
       });
     }
+
+    const user = users[0];
 
     // Vérifier le mot de passe
     const isValidPassword = await bcrypt.compare(password, user.password);
@@ -152,17 +154,19 @@ const login = async (req, res) => {
  */
 const getProfile = async (req, res) => {
   try {
-    const [user] = await query(
+    const users = await query(
       'SELECT id, email, first_name, last_name, phone, created_at FROM users WHERE id = ?',
       [req.user.id]
     );
 
-    if (!user) {
+    if (users.length === 0) {
       return res.status(404).json({
         error: 'Utilisateur non trouvé',
         message: 'L\'utilisateur n\'existe pas'
       });
     }
+
+    const user = users[0];
 
     res.json({
       user
@@ -195,16 +199,18 @@ const updateProfile = async (req, res) => {
     const { first_name, last_name, phone } = req.body;
 
     // Mettre à jour le profil
-    await query(
+    await run(
       'UPDATE users SET first_name = ?, last_name = ?, phone = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
       [first_name, last_name, phone, req.user.id]
     );
 
     // Récupérer l'utilisateur mis à jour
-    const [updatedUser] = await query(
+    const updatedUsers = await query(
       'SELECT id, email, first_name, last_name, phone, created_at, updated_at FROM users WHERE id = ?',
       [req.user.id]
     );
+
+    const updatedUser = updatedUsers[0];
 
     res.json({
       message: 'Profil mis à jour avec succès',

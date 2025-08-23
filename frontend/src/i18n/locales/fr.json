@@ -25,7 +25,8 @@
     "close": "Fermer",
     "open": "Ouvrir",
     "refresh": "Actualiser",
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "clear_filters": "Effacer les filtres"
   },
   "navigation": {
     "home": "Accueil",
@@ -116,9 +117,20 @@
     }
   },
   "restaurants": {
-    "title": "Restaurants",
-    "subtitle": "Découvrez nos restaurants partenaires",
-    "search": "Rechercher un restaurant...",
+    "restaurants": "Restaurants",
+    "restaurant_list": "Découvrez nos restaurants partenaires",
+    "search_restaurants": "Rechercher un restaurant...",
+    "loading": "Chargement des restaurants...",
+    "no_restaurants_found": "Aucun restaurant trouvé",
+    "try_different_filters": "Essayez de modifier vos critères de recherche",
+    "view_details": "Voir les détails",
+    "make_reservation": "Faire une réservation",
+    "load_error": "Erreur lors du chargement des restaurants",
+    "cuisine_types": "Type de cuisine",
+    "price_range": "Gamme de prix",
+    "rating": "Note minimum",
+    "featured_restaurant": "Vedette",
+    "popular_restaurant": "Populaire",
     "filters": {
       "title": "Filtres",
       "cuisine": "Type de cuisine",
@@ -142,7 +154,6 @@
       "viewDetails": "Voir les détails"
     },
     "noResults": "Aucun restaurant trouvé",
-    "loading": "Chargement des restaurants...",
     "error": "Erreur lors du chargement des restaurants"
   },
   "reservations": {

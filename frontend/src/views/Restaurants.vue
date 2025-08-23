@@ -1,255 +1,404 @@
 <template>
   <div class="restaurants-page">
-    <div class="container">
-      <div class="page-header">
-        <h1 class="page-title">{{ $t('restaurants.title') }}</h1>
-        <p class="page-subtitle">{{ $t('restaurants.subtitle') }}</p>
+    <!-- Hero Section -->
+    <div class="restaurants-hero">
+      <div class="hero-content">
+        <h1 class="hero-title">{{ $t('restaurants.restaurants') }}</h1>
+        <p class="hero-subtitle">{{ $t('restaurants.restaurant_list') }}</p>
       </div>
+    </div>
 
-      <!-- Filtres et recherche -->
-      <div class="filters-section">
-        <div class="search-box">
-          <input
-            type="text"
-            v-model="searchQuery"
-            :placeholder="$t('restaurants.search')"
-            class="search-input"
-            @input="handleSearch"
-          />
-          <button @click="handleSearch" class="search-btn">
-            🔍
+    <!-- Search and Filters Section -->
+    <div class="search-section">
+      <div class="container">
+        <div class="search-filters">
+          <!-- Search Bar -->
+          <div class="search-bar">
+            <div class="search-input-wrapper">
+              <input
+                v-model="searchQuery"
+                type="text"
+                :placeholder="$t('restaurants.search_restaurants')"
+                class="search-input"
+                @input="handleSearch"
+              />
+              <div class="search-icon">🔍</div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filters">
+            <select v-model="selectedCuisine" class="filter-select" @change="handleFilter">
+              <option value="">{{ $t('restaurants.cuisine_types') }}</option>
+              <option value="française">Française</option>
+              <option value="italienne">Italienne</option>
+              <option value="japonaise">Japonaise</option>
+              <option value="chinoise">Chinoise</option>
+              <option value="mexicaine">Mexicaine</option>
+              <option value="indienne">Indienne</option>
+              <option value="thai">Thaï</option>
+              <option value="libanaise">Libanaise</option>
+              <option value="grecque">Grecque</option>
+              <option value="espagnole">Espagnole</option>
+            </select>
+
+            <select v-model="selectedPriceRange" class="filter-select" @change="handleFilter">
+              <option value="">{{ $t('restaurants.price_range') }}</option>
+              <option value="€">€ (Économique)</option>
+              <option value="€€">€€ (Modéré)</option>
+              <option value="€€€">€€€ (Élevé)</option>
+              <option value="€€€€">€€€€ (Luxe)</option>
+            </select>
+
+            <select v-model="selectedRating" class="filter-select" @change="handleFilter">
+              <option value="">{{ $t('restaurants.rating') }}</option>
+              <option value="4.5">4.5+ ⭐</option>
+              <option value="4.0">4.0+ ⭐</option>
+              <option value="3.5">3.5+ ⭐</option>
+              <option value="3.0">3.0+ ⭐</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Restaurants List -->
+    <div class="restaurants-section">
+      <div class="container">
+        <!-- Loading State -->
+        <div v-if="loading" class="loading-container">
+          <div class="loading-spinner"></div>
+          <p>{{ $t('common.loading') }}</p>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="error-container">
+          <div class="error-icon">⚠️</div>
+          <h3>{{ $t('common.error') }}</h3>
+          <p>{{ error }}</p>
+          <button @click="loadRestaurants" class="btn-primary">
+            {{ $t('common.retry') }}
           </button>
         </div>
 
-        <div class="filters">
-          <select v-model="selectedCuisine" @change="handleFilter" class="filter-select">
-            <option value="">Tous les types de cuisine</option>
-            <option v-for="cuisine in cuisineTypes" :key="cuisine" :value="cuisine">
-              {{ cuisine }}
-            </option>
-          </select>
-
-          <select v-model="sortBy" @change="handleSort" class="filter-select">
-            <option value="name">Trier par nom</option>
-            <option value="rating">Trier par note</option>
-            <option value="price">Trier par prix</option>
-          </select>
-        </div>
-      </div>
-
-      <!-- État de chargement -->
-      <div v-if="loading" class="loading">
-        <div class="loading-spinner"></div>
-        <p>{{ $t('restaurants.loading') }}</p>
-      </div>
-
-      <!-- Message d'erreur -->
-      <div v-else-if="error" class="error-message">
-        <p>{{ error }}</p>
-        <button @click="loadRestaurants" class="btn btn-primary">
-          Réessayer
-        </button>
-      </div>
-
-      <!-- Liste des restaurants -->
-      <div v-else class="restaurants-grid">
-        <div
-          v-for="restaurant in filteredRestaurants"
-          :key="restaurant.id"
-          class="restaurant-card"
-          @click="viewRestaurant(restaurant)"
-        >
-          <div class="restaurant-image">
-            <img
-              :src="restaurant.image_url || '/img/restaurant-placeholder.jpg'"
-              :alt="restaurant.name"
-              class="restaurant-img"
-            />
-            <div class="restaurant-rating">
-              ⭐ {{ restaurant.rating || 'N/A' }}
-            </div>
-          </div>
-
-          <div class="restaurant-info">
-            <h3 class="restaurant-name">{{ restaurant.name }}</h3>
-            <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
-            <p class="restaurant-description">{{ restaurant.description }}</p>
-            
-            <div class="restaurant-details">
-              <span class="restaurant-price">
-                {{ getPriceRange(restaurant.price_range) }}
-              </span>
-              <span class="restaurant-location">
-                📍 {{ restaurant.address }}
-              </span>
+        <!-- Restaurants Grid -->
+        <div v-else-if="filteredRestaurants.length > 0" class="restaurants-grid">
+          <div
+            v-for="restaurant in filteredRestaurants"
+            :key="restaurant.id"
+            class="restaurant-card"
+            @click="viewRestaurant(restaurant)"
+          >
+            <!-- Restaurant Image -->
+            <div class="restaurant-image">
+              <img
+                :src="restaurant.image || '/img/restaurants/placeholder.jpg'"
+                :alt="restaurant.name"
+                class="restaurant-img"
+              />
+              <div class="restaurant-overlay">
+                <div class="restaurant-badges">
+                  <span v-if="restaurant.is_featured" class="badge badge-featured">
+                    {{ $t('restaurants.featured_restaurant') }}
+                  </span>
+                  <span v-if="restaurant.is_popular" class="badge badge-popular">
+                    {{ $t('restaurants.popular_restaurant') }}
+                  </span>
+                </div>
+              </div>
             </div>
 
-            <div class="restaurant-actions">
-              <button @click.stop="viewRestaurant(restaurant)" class="btn btn-primary">
-                Voir détails
-              </button>
-              <button @click.stop="makeReservation(restaurant)" class="btn btn-outline">
-                Réserver
-              </button>
+            <!-- Restaurant Info -->
+            <div class="restaurant-info">
+              <div class="restaurant-header">
+                <h3 class="restaurant-name">{{ restaurant.name }}</h3>
+                <div class="restaurant-rating">
+                  <span class="rating-stars">
+                    {{ '⭐'.repeat(Math.floor(restaurant.rating || 0)) }}
+                  </span>
+                  <span class="rating-number">{{ restaurant.rating || 0 }}/5</span>
+                </div>
+              </div>
+
+              <div class="restaurant-details">
+                <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
+                <p class="restaurant-price">{{ restaurant.price_range }}</p>
+                <p class="restaurant-address">{{ restaurant.address }}</p>
+              </div>
+
+              <div class="restaurant-amenities">
+                <span v-if="restaurant.has_parking" class="amenity">🚗</span>
+                <span v-if="restaurant.has_wifi" class="amenity">📶</span>
+                <span v-if="restaurant.has_outdoor_seating" class="amenity">🌳</span>
+                <span v-if="restaurant.is_wheelchair_accessible" class="amenity">♿</span>
+              </div>
+
+              <div class="restaurant-actions">
+                <button class="btn-primary btn-reserve">
+                  {{ $t('restaurants.make_reservation') }}
+                </button>
+                <button class="btn-outline btn-details">
+                  {{ $t('common.details') }}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Message si aucun restaurant -->
-      <div v-if="!loading && !error && filteredRestaurants.length === 0" class="no-results">
-        <p>{{ $t('restaurants.noResults') }}</p>
-        <button @click="clearFilters" class="btn btn-primary">
-          Effacer les filtres
-        </button>
+        <!-- No Results -->
+        <div v-else class="no-results">
+          <div class="no-results-icon">🍽️</div>
+          <h3>{{ $t('restaurants.no_restaurants_found') }}</h3>
+          <p>{{ $t('restaurants.try_different_filters') }}</p>
+          <button @click="clearFilters" class="btn-primary">
+            {{ $t('common.clear_filters') }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
 export default {
   name: 'Restaurants',
   setup() {
-    const router = useRouter()
-    const { t: $t } = useI18n()
-    const loading = ref(false)
-    const error = ref('')
-    const restaurants = ref([])
-    const cuisineTypes = ref([])
+    const { t } = useI18n()
     
+    // Reactive data
+    const restaurants = ref([])
+    const loading = ref(true)
+    const error = ref(null)
     const searchQuery = ref('')
     const selectedCuisine = ref('')
-    const sortBy = ref('name')
+    const selectedPriceRange = ref('')
+    const selectedRating = ref('')
 
-    // Charger les restaurants
+    // Computed properties
+    const filteredRestaurants = computed(() => {
+      let filtered = restaurants.value
+
+      // Search filter
+      if (searchQuery.value) {
+        const query = searchQuery.value.toLowerCase()
+        filtered = filtered.filter(restaurant =>
+          restaurant.name.toLowerCase().includes(query) ||
+          restaurant.cuisine_type.toLowerCase().includes(query) ||
+          restaurant.address.toLowerCase().includes(query)
+        )
+      }
+
+      // Cuisine filter
+      if (selectedCuisine.value) {
+        filtered = filtered.filter(restaurant =>
+          restaurant.cuisine_type.toLowerCase() === selectedCuisine.value.toLowerCase()
+        )
+      }
+
+      // Price range filter
+      if (selectedPriceRange.value) {
+        filtered = filtered.filter(restaurant =>
+          restaurant.price_range === selectedPriceRange.value
+        )
+      }
+
+      // Rating filter
+      if (selectedRating.value) {
+        const minRating = parseFloat(selectedRating.value)
+        filtered = filtered.filter(restaurant =>
+          (restaurant.rating || 0) >= minRating
+        )
+      }
+
+      return filtered
+    })
+
+    // Methods
     const loadRestaurants = async () => {
-      loading.value = true
-      error.value = ''
-
       try {
-        const response = await axios.get('http://localhost:3000/api/restaurants')
-        restaurants.value = response.data
+        loading.value = true
+        error.value = null
+        
+        const response = await axios.get('http://localhost:5000/api/restaurants')
+        restaurants.value = response.data.restaurants || []
+        
+        // If no restaurants in database, add sample data
+        if (restaurants.value.length === 0) {
+          restaurants.value = getSampleRestaurants()
+        }
       } catch (err) {
         console.error('Erreur lors du chargement des restaurants:', err)
-        error.value = 'Erreur lors du chargement des restaurants'
+        error.value = t('restaurants.load_error')
+        // Use sample data as fallback
+        restaurants.value = getSampleRestaurants()
       } finally {
         loading.value = false
       }
     }
 
-    // Charger les types de cuisine
-    const loadCuisineTypes = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/restaurants/cuisine-types')
-        cuisineTypes.value = response.data
-      } catch (err) {
-        console.error('Erreur lors du chargement des types de cuisine:', err)
-      }
-    }
-
-    // Recherche
-    const handleSearch = () => {
-      // La recherche se fait automatiquement via computed
-    }
-
-    // Filtrage
-    const handleFilter = () => {
-      // Le filtrage se fait automatiquement via computed
-    }
-
-    // Tri
-    const handleSort = () => {
-      // Le tri se fait automatiquement via computed
-    }
-
-    // Filtrer et trier les restaurants
-    const filteredRestaurants = computed(() => {
-      let filtered = [...restaurants.value]
-
-      // Filtre par recherche
-      if (searchQuery.value) {
-        const query = searchQuery.value.toLowerCase()
-        filtered = filtered.filter(restaurant =>
-          restaurant.name.toLowerCase().includes(query) ||
-          restaurant.description.toLowerCase().includes(query) ||
-          restaurant.cuisine_type.toLowerCase().includes(query)
-        )
-      }
-
-      // Filtre par type de cuisine
-      if (selectedCuisine.value) {
-        filtered = filtered.filter(restaurant =>
-          restaurant.cuisine_type === selectedCuisine.value
-        )
-      }
-
-      // Tri
-      filtered.sort((a, b) => {
-        switch (sortBy.value) {
-          case 'rating':
-            return (b.rating || 0) - (a.rating || 0)
-          case 'price':
-            return (a.price_range || 0) - (b.price_range || 0)
-          default:
-            return a.name.localeCompare(b.name)
+    const getSampleRestaurants = () => {
+      return [
+        {
+          id: 1,
+          name: "Le Petit Bistrot",
+          cuisine_type: "Française",
+          address: "123 Rue de la Paix, Paris",
+          phone: "01 23 45 67 89",
+          email: "contact@petitbistrot.fr",
+          description: "Authentique cuisine française dans un cadre chaleureux",
+          price_range: "€€",
+          rating: 4.5,
+          opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30",
+          capacity: 50,
+          has_parking: true,
+          has_wifi: true,
+          has_outdoor_seating: false,
+          is_wheelchair_accessible: true,
+          is_featured: true,
+          is_popular: true
+        },
+        {
+          id: 2,
+          name: "Sakura Sushi",
+          cuisine_type: "Japonaise",
+          address: "456 Avenue des Champs, Paris",
+          phone: "01 98 76 54 32",
+          email: "info@sakurasushi.fr",
+          description: "Sushi frais et authentique dans un décor zen",
+          price_range: "€€€",
+          rating: 4.8,
+          opening_hours: "Mar-Dim: 12h-14h, 19h-23h",
+          capacity: 30,
+          has_parking: false,
+          has_wifi: true,
+          has_outdoor_seating: true,
+          is_wheelchair_accessible: false,
+          is_featured: false,
+          is_popular: true
+        },
+        {
+          id: 3,
+          name: "Trattoria Bella",
+          cuisine_type: "Italienne",
+          address: "789 Boulevard Saint-Germain, Paris",
+          phone: "01 11 22 33 44",
+          email: "reservation@trattoriabella.fr",
+          description: "Pâtes et pizzas traditionnelles italiennes",
+          price_range: "€€",
+          rating: 4.2,
+          opening_hours: "Lun-Dim: 12h-15h, 19h-23h",
+          capacity: 80,
+          has_parking: true,
+          has_wifi: true,
+          has_outdoor_seating: true,
+          is_wheelchair_accessible: true,
+          is_featured: false,
+          is_popular: false
+        },
+        {
+          id: 4,
+          name: "Spice Garden",
+          cuisine_type: "Indienne",
+          address: "321 Rue du Commerce, Paris",
+          phone: "01 55 66 77 88",
+          email: "hello@spicegarden.fr",
+          description: "Cuisine indienne épicée et colorée",
+          price_range: "€€",
+          rating: 4.0,
+          opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+          capacity: 60,
+          has_parking: false,
+          has_wifi: true,
+          has_outdoor_seating: false,
+          is_wheelchair_accessible: true,
+          is_featured: false,
+          is_popular: false
+        },
+        {
+          id: 5,
+          name: "Le Grand Restaurant",
+          cuisine_type: "Française",
+          address: "654 Champs-Élysées, Paris",
+          phone: "01 99 88 77 66",
+          email: "contact@legrandrestaurant.fr",
+          description: "Gastronomie française de luxe",
+          price_range: "€€€€",
+          rating: 4.9,
+          opening_hours: "Mar-Sam: 19h-23h",
+          capacity: 40,
+          has_parking: true,
+          has_wifi: true,
+          has_outdoor_seating: true,
+          is_wheelchair_accessible: true,
+          is_featured: true,
+          is_popular: true
+        },
+        {
+          id: 6,
+          name: "Taco Loco",
+          cuisine_type: "Mexicaine",
+          address: "987 Rue de Rivoli, Paris",
+          phone: "01 44 55 66 77",
+          email: "hola@tacoloco.fr",
+          description: "Tacos authentiques et margaritas",
+          price_range: "€",
+          rating: 3.8,
+          opening_hours: "Lun-Dim: 11h30-23h",
+          capacity: 45,
+          has_parking: false,
+          has_wifi: true,
+          has_outdoor_seating: true,
+          is_wheelchair_accessible: false,
+          is_featured: false,
+          is_popular: false
         }
-      })
-
-      return filtered
-    })
-
-    // Utilitaires
-    const getPriceRange = (priceRange) => {
-      const prices = ['€', '€€', '€€€', '€€€€']
-      return prices[priceRange - 1] || '€€'
+      ]
     }
 
-    const viewRestaurant = (restaurant) => {
-      // Pour l'instant, on affiche juste les détails dans la console
-      console.log('Voir restaurant:', restaurant)
-      // TODO: Créer une page de détails du restaurant
+    const handleSearch = () => {
+      // Search is handled by computed property
     }
 
-    const makeReservation = (restaurant) => {
-      // Rediriger vers la page de réservation
-      router.push(`/reservations/new?restaurant_id=${restaurant.id}`)
+    const handleFilter = () => {
+      // Filtering is handled by computed property
     }
 
     const clearFilters = () => {
       searchQuery.value = ''
       selectedCuisine.value = ''
-      sortBy.value = 'name'
+      selectedPriceRange.value = ''
+      selectedRating.value = ''
     }
 
-    // Charger les données au montage
+    const viewRestaurant = (restaurant) => {
+      // Navigate to restaurant details page
+      console.log('View restaurant:', restaurant)
+      // this.$router.push(`/restaurants/${restaurant.id}`)
+    }
+
+    // Lifecycle
     onMounted(() => {
       loadRestaurants()
-      loadCuisineTypes()
     })
 
     return {
+      restaurants,
       loading,
       error,
-      restaurants,
-      cuisineTypes,
       searchQuery,
       selectedCuisine,
-      sortBy,
+      selectedPriceRange,
+      selectedRating,
       filteredRestaurants,
       loadRestaurants,
       handleSearch,
       handleFilter,
-      handleSort,
-      getPriceRange,
-      viewRestaurant,
-      makeReservation,
-      clearFilters
+      clearFilters,
+      viewRestaurant
     }
   }
 }
@@ -257,92 +406,135 @@ export default {
 
 <style scoped>
 .restaurants-page {
-  padding: 2rem 0;
   min-height: 100vh;
-  background: #f8f9fa;
+  background: var(--surface-color);
+}
+
+/* Hero Section */
+.restaurants-hero {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  padding: 80px 0;
+  text-align: center;
+  color: white;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+/* Search Section */
+.search-section {
+  background: white;
+  padding: 40px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 20px;
 }
 
-.page-header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.page-title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.page-subtitle {
-  font-size: 1.1rem;
-  color: #666;
-}
-
-.filters-section {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.search-box {
+.search-filters {
   display: flex;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.search-bar {
+  flex: 1;
+}
+
+.search-input-wrapper {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .search-input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px 0 0 8px;
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 50px;
   font-size: 1rem;
+  background: white;
+  transition: all 0.3s ease;
 }
 
-.search-btn {
-  padding: 0.75rem 1rem;
-  background: #007bff;
-  color: white;
-  border: none;
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
-  font-size: 1rem;
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: var(--text-muted);
 }
 
 .filters {
   display: flex;
-  gap: 1rem;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .filter-select {
-  flex: 1;
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 12px 20px;
+  border: 2px solid var(--border-color);
+  border-radius: 25px;
   background: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 150px;
 }
 
-.loading {
+.filter-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+/* Restaurants Section */
+.restaurants-section {
+  padding: 60px 0;
+}
+
+.loading-container,
+.error-container,
+.no-results {
   text-align: center;
-  padding: 3rem;
+  padding: 60px 20px;
 }
 
 .loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #007bff;
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border-color);
+  border-top: 4px solid var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  margin: 0 auto 1rem;
+  margin: 0 auto 20px;
 }
 
 @keyframes spin {
@@ -350,33 +542,32 @@ export default {
   100% { transform: rotate(360deg); }
 }
 
-.error-message {
-  text-align: center;
-  padding: 2rem;
-  background: #f8d7da;
-  color: #721c24;
-  border-radius: 8px;
-  margin: 2rem 0;
+.error-icon,
+.no-results-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
 }
 
 .restaurants-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+  gap: 30px;
+  margin-top: 40px;
 }
 
+/* Restaurant Card */
 .restaurant-card {
   background: white;
-  border-radius: 12px;
+  border-radius: 15px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .restaurant-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 .restaurant-image {
@@ -389,90 +580,216 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-.restaurant-rating {
+.restaurant-card:hover .restaurant-img {
+  transform: scale(1.05);
+}
+
+.restaurant-overlay {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 15px;
+}
+
+.restaurant-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-featured {
+  background: var(--primary-color);
   color: white;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
+}
+
+.badge-popular {
+  background: var(--success-color);
+  color: white;
 }
 
 .restaurant-info {
-  padding: 1.5rem;
+  padding: 25px;
+}
+
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
 }
 
 .restaurant-name {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'Playfair Display', serif;
 }
 
-.restaurant-cuisine {
-  color: #007bff;
-  font-weight: 500;
-  margin-bottom: 0.5rem;
+.restaurant-rating {
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.restaurant-description {
-  color: #666;
+.rating-stars {
   font-size: 0.9rem;
-  line-height: 1.4;
-  margin-bottom: 1rem;
+}
+
+.rating-number {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 .restaurant-details {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  font-size: 0.875rem;
+  margin-bottom: 20px;
+}
+
+.restaurant-cuisine {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  font-size: 0.9rem;
 }
 
 .restaurant-price {
-  font-weight: bold;
-  color: #28a745;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin: 0 0 5px 0;
 }
 
-.restaurant-location {
-  color: #666;
+.restaurant-address {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.restaurant-amenities {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.amenity {
+  font-size: 1.2rem;
+  opacity: 0.7;
 }
 
 .restaurant-actions {
   display: flex;
-  gap: 0.5rem;
+  gap: 10px;
 }
 
-.restaurant-actions .btn {
+.btn-reserve,
+.btn-details {
   flex: 1;
-  padding: 0.5rem;
-  font-size: 0.875rem;
-}
-
-.no-results {
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
   text-align: center;
-  padding: 3rem;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
 }
 
+.btn-reserve {
+  background: var(--primary-color);
+  color: white;
+}
+
+.btn-reserve:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+.btn-details {
+  background: transparent;
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+}
+
+.btn-details:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .restaurants-grid {
-    grid-template-columns: 1fr;
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .search-filters {
+    gap: 15px;
   }
   
   .filters {
     flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-select {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .restaurants-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   
   .restaurant-actions {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .restaurants-hero {
+    padding: 60px 0;
+  }
+  
+  .hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .search-section {
+    padding: 30px 0;
+  }
+  
+  .restaurants-section {
+    padding: 40px 0;
+  }
+  
+  .restaurant-info {
+    padding: 20px;
+  }
+  
+  .restaurant-header {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 </style>
