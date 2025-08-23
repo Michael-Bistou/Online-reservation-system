@@ -637,9 +637,10 @@ export default {
           user_email: user.email || 'invite@example.com',
           date: reservationData.value.date,
           time: reservationData.value.time,
-          partySize: parseInt(reservationData.value.partySize),
-          specialRequests: reservationData.value.specialRequests,
+          party_size: parseInt(reservationData.value.partySize),
+          special_requests: reservationData.value.specialRequests,
           status: 'pending',
+          table_number: null,
           created_at: new Date().toISOString()
         }
 

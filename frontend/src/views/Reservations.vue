@@ -389,14 +389,30 @@ export default {
         loading.value = true
         error.value = null
         
+        let apiReservations = []
+        
         // Try to get from API first
         try {
           const response = await axios.get('http://localhost:5000/api/reservations')
-          reservations.value = response.data.reservations
+          apiReservations = response.data.reservations
         } catch (apiError) {
-          // Fallback to sample data
-          reservations.value = getSampleReservations()
+          // API not available, use sample data
+          apiReservations = getSampleReservations()
         }
+        
+        // Load user's reservations from localStorage
+        let userReservations = []
+        try {
+          const storedReservations = localStorage.getItem('restaurantReservations')
+          if (storedReservations) {
+            userReservations = JSON.parse(storedReservations)
+          }
+        } catch (error) {
+          console.error('Erreur lors du chargement des réservations depuis localStorage:', error)
+        }
+        
+        // Combine API/sample reservations with user reservations
+        reservations.value = [...apiReservations, ...userReservations]
         
         // Load restaurants for new reservation form
         restaurants.value = getSampleRestaurants()
@@ -547,10 +563,22 @@ export default {
       try {
         submitting.value = true
         
-        // For now, just update the status locally
+        // Update the status locally
         const reservation = reservations.value.find(r => r.id === reservationToCancel.value.id)
         if (reservation) {
           reservation.status = 'cancelled'
+          
+          // Update in localStorage
+          try {
+            const storedReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
+            const storedReservation = storedReservations.find(r => r.id === reservation.id)
+            if (storedReservation) {
+              storedReservation.status = 'cancelled'
+              localStorage.setItem('restaurantReservations', JSON.stringify(storedReservations))
+            }
+          } catch (error) {
+            console.error('Erreur lors de la mise à jour dans localStorage:', error)
+          }
         }
         
         showCancelModal.value = false
@@ -595,6 +623,15 @@ export default {
 
         // Add to reservations list
         reservations.value.unshift(newReservationData)
+        
+        // Save to localStorage
+        try {
+          const existingReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
+          existingReservations.unshift(newReservationData)
+          localStorage.setItem('restaurantReservations', JSON.stringify(existingReservations))
+        } catch (error) {
+          console.error('Erreur lors de la sauvegarde de la réservation:', error)
+        }
         
         // Reset form
         newReservation.value = {

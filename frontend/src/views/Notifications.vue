@@ -77,7 +77,7 @@
             <p>Chargement des notifications...</p>
           </div>
 
-          <div v-else-if="filteredNotifications.length === 0" class="empty-state">
+          <div v-else-if="paginatedNotifications.length === 0" class="empty-state">
             <div class="empty-icon">🔔</div>
             <h3>Aucune notification</h3>
             <p>{{ getEmptyStateMessage() }}</p>
@@ -85,7 +85,7 @@
 
           <div v-else class="notifications-list">
             <div
-              v-for="notification in filteredNotifications"
+              v-for="notification in paginatedNotifications"
               :key="notification.id"
               class="notification-card"
               :class="{ unread: !notification.read }"
@@ -220,7 +220,14 @@ export default {
     })
 
     const totalNotifications = computed(() => notifications.value.length)
-    const unreadCount = computed(() => notificationService.getUnreadCount())
+    const unreadCount = computed(() => {
+      try {
+        return notificationService.getUnreadCount()
+      } catch (error) {
+        console.error('Erreur lors du calcul des notifications non lues:', error)
+        return 0
+      }
+    })
     
     const todayCount = computed(() => {
       const today = new Date().toDateString()
@@ -239,50 +246,77 @@ export default {
 
     // Méthodes
     const loadNotifications = () => {
-      if (currentUser.value) {
-        notifications.value = notificationService.getNotificationsForUser(
-          currentUser.value.id, 
-          currentUser.value.type
-        )
+      try {
+        if (currentUser.value) {
+          notifications.value = notificationService.getNotificationsForUser(
+            currentUser.value.id, 
+            currentUser.value.type
+          )
+        } else {
+          notifications.value = []
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des notifications:', error)
+        notifications.value = []
       }
     }
 
     const markAsRead = (notificationId) => {
-      notificationService.markAsRead(notificationId)
-      loadNotifications()
+      try {
+        notificationService.markAsRead(notificationId)
+        loadNotifications()
+      } catch (error) {
+        console.error('Erreur lors du marquage comme lu:', error)
+      }
     }
 
     const markAllAsRead = () => {
-      notificationService.markAllAsRead()
-      loadNotifications()
+      try {
+        notificationService.markAllAsRead()
+        loadNotifications()
+      } catch (error) {
+        console.error('Erreur lors du marquage de toutes comme lues:', error)
+      }
     }
 
     const deleteNotification = (notificationId) => {
-      notificationService.deleteNotification(notificationId)
-      loadNotifications()
+      try {
+        notificationService.deleteNotification(notificationId)
+        loadNotifications()
+      } catch (error) {
+        console.error('Erreur lors de la suppression:', error)
+      }
     }
 
     const clearAll = () => {
       if (confirm('Êtes-vous sûr de vouloir supprimer toutes les notifications ?')) {
-        notificationService.clearAllNotifications()
-        loadNotifications()
+        try {
+          notificationService.clearAllNotifications()
+          loadNotifications()
+        } catch (error) {
+          console.error('Erreur lors de la suppression de toutes les notifications:', error)
+        }
       }
     }
 
     const handleNotificationClick = (notification) => {
-      // Marquer comme lue si pas déjà lue
-      if (!notification.read) {
-        notificationService.markAsRead(notification.id)
-        loadNotifications()
-      }
+      try {
+        // Marquer comme lue si pas déjà lue
+        if (!notification.read) {
+          notificationService.markAsRead(notification.id)
+          loadNotifications()
+        }
 
-      // Navigation selon le type
-      if (notification.type === 'new_reservation' && currentUser.value?.type === 'restaurant') {
-        router.push('/restaurant-reservations')
-      } else if (notification.type === 'reservation_status' && currentUser.value?.type === 'user') {
-        router.push('/reservations')
-      } else if (notification.type === 'reminder' && currentUser.value?.type === 'user') {
-        router.push('/reservations')
+        // Navigation selon le type
+        if (notification.type === 'new_reservation' && currentUser.value?.type === 'restaurant') {
+          router.push('/restaurant-reservations')
+        } else if (notification.type === 'reservation_status' && currentUser.value?.type === 'user') {
+          router.push('/reservations')
+        } else if (notification.type === 'reminder' && currentUser.value?.type === 'user') {
+          router.push('/reservations')
+        }
+      } catch (error) {
+        console.error('Erreur lors du clic sur la notification:', error)
       }
     }
 
@@ -340,21 +374,30 @@ export default {
     // S'abonner aux changements de notifications
     let unsubscribe
     onMounted(() => {
-      loadNotifications()
-      unsubscribe = notificationService.subscribe(() => {
+      try {
         loadNotifications()
-      })
+        unsubscribe = notificationService.subscribe(() => {
+          loadNotifications()
+        })
+      } catch (error) {
+        console.error('Erreur lors de l\'initialisation des notifications:', error)
+      }
     })
 
     onUnmounted(() => {
-      if (unsubscribe) {
-        unsubscribe()
+      try {
+        if (unsubscribe) {
+          unsubscribe()
+        }
+      } catch (error) {
+        console.error('Erreur lors du nettoyage des notifications:', error)
       }
     })
 
     return {
       loading,
-      notifications: paginatedNotifications,
+      filteredNotifications,
+      paginatedNotifications,
       selectedType,
       selectedStatus,
       currentPage,
