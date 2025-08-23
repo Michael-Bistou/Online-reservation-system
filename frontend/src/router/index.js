@@ -8,6 +8,8 @@ import RestaurantLogin from '../views/RestaurantLogin.vue'
 import RestaurantDashboard from '../views/RestaurantDashboard.vue'
 import RestaurantReservations from '../views/RestaurantReservations.vue'
 import RestaurantProfile from '../views/RestaurantProfile.vue'
+import RestaurantStats from '../views/RestaurantStats.vue'
+import RestaurantMenu from '../views/RestaurantMenu.vue'
 import Restaurants from '../views/Restaurants.vue'
 import RestaurantDetails from '../views/RestaurantDetails.vue'
 import Reservations from '../views/Reservations.vue'
@@ -61,6 +63,18 @@ const routes = [
     name: 'RestaurantProfile',
     component: RestaurantProfile,
     meta: { title: 'Modifier le Profil', requiresRestaurantAuth: true }
+  },
+  {
+    path: '/restaurant-stats',
+    name: 'RestaurantStats',
+    component: RestaurantStats,
+    meta: { title: 'Statistiques', requiresRestaurantAuth: true }
+  },
+  {
+    path: '/restaurant-menu',
+    name: 'RestaurantMenu',
+    component: RestaurantMenu,
+    meta: { title: 'Gestion du Menu', requiresRestaurantAuth: true }
   },
   {
     path: '/restaurants',

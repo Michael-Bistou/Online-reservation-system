@@ -76,14 +76,14 @@
                 <span class="action-icon">⚙️</span>
                 <span class="action-text">Modifier le profil</span>
               </router-link>
-              <button class="action-btn">
-                <span class="action-icon">📊</span>
-                <span class="action-text">Voir les statistiques</span>
-              </button>
-              <button class="action-btn">
-                <span class="action-icon">📝</span>
-                <span class="action-text">Gérer le menu</span>
-              </button>
+                        <router-link to="/restaurant-stats" class="action-btn">
+            <span class="action-icon">📊</span>
+            <span class="action-text">Voir les statistiques</span>
+          </router-link>
+          <router-link to="/restaurant-menu" class="action-btn">
+            <span class="action-icon">📝</span>
+            <span class="action-text">Gérer le menu</span>
+          </router-link>
             </div>
           </div>
 
