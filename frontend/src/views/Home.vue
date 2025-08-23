@@ -144,9 +144,9 @@
     <section class="tech-stack">
       <div class="container">
         <div class="section-header">
-          <div class="section-badge">
-            <span class="badge badge-success">Technologies</span>
-          </div>
+                     <div class="section-badge">
+             <span class="badge badge-primary">Technologies</span>
+           </div>
           <h2 class="section-title">Stack Technique Moderne</h2>
           <p class="section-subtitle">Technologies de pointe utilisées pour développer cette application de nouvelle génération</p>
         </div>
@@ -176,11 +176,11 @@
               <h3 class="tech-title">Backend</h3>
             </div>
             <ul class="tech-list">
-              <li><span class="tech-badge badge badge-success">Node.js</span> Runtime JavaScript</li>
-              <li><span class="tech-badge badge badge-success">Express.js</span> Framework web</li>
-              <li><span class="tech-badge badge badge-success">MySQL</span> Base de données</li>
-              <li><span class="tech-badge badge badge-success">JWT</span> Authentification</li>
-              <li><span class="tech-badge badge badge-success">bcryptjs</span> Chiffrement</li>
+                             <li><span class="tech-badge badge badge-primary">Node.js</span> Runtime JavaScript</li>
+               <li><span class="tech-badge badge badge-primary">Express.js</span> Framework web</li>
+               <li><span class="tech-badge badge badge-primary">MySQL</span> Base de données</li>
+               <li><span class="tech-badge badge badge-primary">JWT</span> Authentification</li>
+               <li><span class="tech-badge badge badge-primary">bcryptjs</span> Chiffrement</li>
             </ul>
           </div>
           
@@ -192,11 +192,11 @@
               <h3 class="tech-title">Outils & DevOps</h3>
             </div>
             <ul class="tech-list">
-              <li><span class="tech-badge badge badge-warning">Git</span> Version control</li>
-              <li><span class="tech-badge badge badge-warning">npm</span> Package manager</li>
-              <li><span class="tech-badge badge badge-warning">Nodemon</span> Auto-reload</li>
-              <li><span class="tech-badge badge badge-warning">Helmet</span> Sécurité</li>
-              <li><span class="tech-badge badge badge-warning">CORS</span> Cross-origin</li>
+                             <li><span class="tech-badge badge badge-primary">Git</span> Version control</li>
+               <li><span class="tech-badge badge badge-primary">npm</span> Package manager</li>
+               <li><span class="tech-badge badge badge-primary">Nodemon</span> Auto-reload</li>
+               <li><span class="tech-badge badge badge-primary">Helmet</span> Sécurité</li>
+               <li><span class="tech-badge badge badge-primary">CORS</span> Cross-origin</li>
             </ul>
           </div>
         </div>
@@ -217,9 +217,9 @@
                <span class="btn-text">Créer un compte</span>
                <span class="btn-arrow">→</span>
              </router-link>
-             <router-link to="/login" class="btn btn-outline btn-lg cta-btn">
-               <span class="btn-text">Se connecter</span>
-             </router-link>
+                           <router-link to="/login" class="btn btn-secondary btn-lg cta-btn">
+                <span class="btn-text">Se connecter</span>
+              </router-link>
           </div>
         </div>
       </div>
@@ -290,10 +290,10 @@ export default {
         }
 
         .video-fallback {
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(135deg, var(--primary-color) 0%, #1e40af 100%);
-        }
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+}
 
         .video-overlay {
           position: absolute;
@@ -338,15 +338,16 @@ export default {
           margin-bottom: 0.5rem;
         }
 
-        .title-highlight {
-          background: linear-gradient(135deg, #d4af37, #b8860b);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          display: inline-block;
-          margin: 0.5rem 0;
-          font-weight: 400;
-        }
+                 .title-highlight {
+           background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+           -webkit-background-clip: text;
+           -webkit-text-fill-color: transparent;
+           background-clip: text;
+           display: inline-block;
+           margin: 0.5rem 0;
+           font-weight: 400;
+           text-shadow: 0 0 20px var(--primary-color);
+         }
 
         .hero-subtitle {
           font-size: clamp(1.125rem, 2.5vw, 1.5rem);
@@ -373,14 +374,15 @@ export default {
   text-align: center;
 }
 
-        .stat-number {
-          font-size: 2.5rem;
-          font-weight: 300;
-          color: #d4af37;
-          display: block;
-          margin-bottom: 0.5rem;
-          font-family: 'Playfair Display', serif;
-        }
+                 .stat-number {
+           font-size: 2.5rem;
+           font-weight: 300;
+           color: var(--primary-color);
+           display: block;
+           margin-bottom: 0.5rem;
+           font-family: 'Playfair Display', serif;
+           text-shadow: 0 0 15px var(--primary-color);
+         }
 
         .stat-label {
           font-size: 0.875rem;
@@ -412,35 +414,60 @@ export default {
           min-width: 200px;
         }
 
-        .hero-btn:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-        }
+                 .hero-btn:hover {
+           transform: translateY(-3px);
+           box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+         }
 
-        .btn-primary {
-          background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
-          border: none;
-          color: #1a1a1a;
-          font-weight: 600;
-        }
+         
 
-        .btn-primary:hover {
-          background: linear-gradient(135deg, #b8860b 0%, #d4af37 100%);
-          color: #1a1a1a;
-        }
+                 .btn-primary {
+           background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+           border: none;
+           color: var(--surface-dark);
+           font-weight: 600;
+           box-shadow: var(--shadow-gold);
+         }
 
-        .btn-outline {
-          background: transparent;
-          border: 2px solid rgba(255, 255, 255, 0.8);
-          color: white;
-          backdrop-filter: blur(10px);
-        }
+         .btn-primary:hover {
+           background: linear-gradient(135deg, var(--primary-hover) 0%, var(--primary-color) 100%);
+           color: var(--surface-dark);
+           box-shadow: 0 8px 25px rgba(200, 162, 125, 0.4);
+           transform: translateY(-2px);
+         }
 
-        .btn-outline:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: white;
-          color: white;
-        }
+                 .btn-outline {
+           background: transparent;
+           border: 2px solid var(--primary-color);
+           color: var(--primary-color);
+           backdrop-filter: blur(10px);
+           transition: var(--transition-slow);
+         }
+
+                   .btn-outline:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--surface-dark);
+            box-shadow: var(--shadow-gold);
+            transform: translateY(-2px);
+          }
+
+          .btn-secondary {
+            background: var(--surface-dark);
+            border: 2px solid var(--surface-dark);
+            color: var(--primary-color);
+            backdrop-filter: blur(10px);
+            transition: var(--transition-slow);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          }
+
+          .btn-secondary:hover {
+            background: var(--surface-color);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: var(--shadow-gold);
+            transform: translateY(-2px);
+          }
 
 
 
@@ -459,7 +486,7 @@ export default {
 /* Features Section */
 .features {
   padding: 8rem 0;
-  background: var(--background-color);
+  background: var(--surface-color);
   position: relative;
 }
 
@@ -522,7 +549,7 @@ export default {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, var(--primary-color), #1e40af);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -535,23 +562,23 @@ export default {
   transform: translateY(-12px);
 }
 
-        .feature-icon-wrapper {
-          width: 80px;
-          height: 80px;
-          background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin: 0 auto 2rem;
-          transition: var(--transition);
-          box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
-        }
+                 .feature-icon-wrapper {
+           width: 80px;
+           height: 80px;
+           background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+           border-radius: 50%;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           margin: 0 auto 2rem;
+           transition: var(--transition);
+           box-shadow: var(--shadow-gold);
+         }
 
-        .feature-card:hover .feature-icon-wrapper {
-          transform: scale(1.1);
-          box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
-        }
+                 .feature-card:hover .feature-icon-wrapper {
+           transform: scale(1.1);
+           box-shadow: 0 12px 35px rgba(200, 162, 125, 0.4);
+         }
 
         .feature-icon {
           font-size: 2rem;
@@ -596,6 +623,8 @@ export default {
   transform: translateX(4px);
 }
 
+
+
 /* Tech Stack Section */
 .tech-stack {
   padding: 8rem 0;
@@ -610,7 +639,7 @@ export default {
   left: 0;
   right: 0;
   height: 100px;
-  background: linear-gradient(to bottom, var(--background-color), transparent);
+  background: linear-gradient(to bottom, var(--surface-color), transparent);
 }
 
 .tech-grid {
@@ -632,7 +661,7 @@ export default {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, var(--success-color), #059669);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -653,16 +682,18 @@ export default {
 .tech-icon-wrapper {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, var(--success-color), #059669);
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: var(--transition);
+  box-shadow: var(--shadow-gold);
 }
 
 .tech-card:hover .tech-icon-wrapper {
   transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(200, 162, 125, 0.4);
 }
 
 .tech-icon {
@@ -708,15 +739,15 @@ export default {
   text-align: center;
 }
 
-        /* CTA Section */
-        .cta {
-          padding: 8rem 0;
-          background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
-          color: white;
-          text-align: center;
-          position: relative;
-          overflow: hidden;
-        }
+                 /* CTA Section */
+         .cta {
+           padding: 8rem 0;
+           background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+           color: var(--surface-dark);
+           text-align: center;
+           position: relative;
+           overflow: hidden;
+         }
 
 .cta::before {
   content: '';

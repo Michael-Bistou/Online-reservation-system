@@ -98,16 +98,19 @@ export default {
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  background: var(--surface-color);
+  border: 2px solid var(--primary-color);
   transition: all 0.3s;
   min-width: 120px;
+  box-shadow: 0 2px 8px rgba(200, 162, 125, 0.2);
 }
 
 .current-language:hover {
-  background: #e9ecef;
-  border-color: #dee2e6;
+  background: var(--primary-color);
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(200, 162, 125, 0.3);
 }
 
 .flag {
@@ -116,15 +119,17 @@ export default {
 
 .name {
   font-size: 0.9rem;
-  font-weight: 500;
-  color: #333;
+  font-weight: 600;
+  color: var(--primary-color);
   flex: 1;
+  text-shadow: 0 0 8px var(--primary-color);
 }
 
 .arrow {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--primary-color);
   transition: transform 0.3s;
+  font-weight: bold;
 }
 
 .arrow.rotated {
@@ -136,10 +141,10 @@ export default {
   top: 100%;
   left: 0;
   right: 0;
-  background: white;
-  border: 1px solid #e9ecef;
-  border-radius: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--surface-color);
+  border: 2px solid var(--primary-color);
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(200, 162, 125, 0.3);
   z-index: 1000;
   margin-top: 0.25rem;
   overflow: hidden;
@@ -156,12 +161,14 @@ export default {
 }
 
 .language-option:hover {
-  background: #f8f9fa;
+  background: var(--primary-color);
+  color: var(--surface-dark);
 }
 
 .language-option.active {
-  background: #e3f2fd;
-  color: #1976d2;
+  background: var(--primary-color);
+  color: var(--surface-dark);
+  font-weight: bold;
 }
 
 .language-option .flag {
@@ -170,12 +177,13 @@ export default {
 
 .language-option .name {
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   flex: 1;
+  color: var(--text-primary);
 }
 
 .language-option .check {
-  color: #1976d2;
+  color: var(--surface-dark);
   font-weight: bold;
   font-size: 0.9rem;
 }

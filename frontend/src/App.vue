@@ -15,7 +15,7 @@ export default {
     <main class="main-content">
       <router-view />
     </main>
-  </div>
+    </div>
 </template>
 
 <style>
@@ -24,29 +24,288 @@ export default {
 
 /* Reset et variables CSS globales */
 :root {
-  /* Couleurs principales - Style restaurant sombre et élégant */
-  --primary-color: #d4af37;
-  --primary-hover: #b8860b;
-  --secondary-color: #2c3e50;
-  --success-color: #27ae60;
-  --warning-color: #f39c12;
-  --error-color: #e74c3c;
-  --background-color: #0f0f0f;
-  --surface-color: #1a1a1a;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
-  --border-color: #333333;
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Palette élégante inspirée de la gastronomie */
+  --primary-color: #c8a27d; /* Or chaud sophistiqué */
+  --primary-hover: #b8946a; /* Or plus foncé au hover */
+  --primary-light: #e6d4b8; /* Or clair pour les accents */
+  --primary-dark: #8b7355; /* Or foncé pour les contrastes */
+  
+  /* Couleurs secondaires élégantes */
+  --secondary-color: #2d1810; /* Brun chaud profond */
+  --secondary-light: #4a2c1a; /* Brun plus clair */
+  --accent-color: #d2691e; /* Orange chaud pour les accents */
+  
+  /* Couleurs de statut raffinées */
+  --success-color: #c8a27d; /* Or doré pour le succès */
+  --success-light: #e6d4b8; /* Or clair pour le succès */
+  --warning-color: #d4af37; /* Or pour les avertissements */
+  --error-color: #8b0000; /* Rouge foncé sophistiqué */
+  
+  /* Couleurs de fond sophistiquées */
+  --background-color: #0a0a0a; /* Noir profond */
+  --surface-color: #1a1a1a; /* Gris très foncé */
+  --surface-light: #2a2a2a; /* Gris plus clair */
+  --surface-dark: #0f0f0f; /* Noir plus clair */
+  
+  /* Couleurs de texte élégantes */
+  --text-primary: #f5f5f5; /* Blanc cassé */
+  --text-secondary: #b8b8b8; /* Gris clair */
+  --text-muted: #8a8a8a; /* Gris moyen */
+  --text-gold: #d4af37; /* Or pour les accents de texte */
+  
+  /* Bordures et ombres raffinées */
+  --border-color: #333333; /* Gris foncé */
+  --border-light: #4a4a4a; /* Gris plus clair */
+  --border-gold: #c8a27d; /* Bordure dorée */
+  
+  /* Ombres sophistiquées */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --shadow-gold: 0 4px 12px rgba(200, 162, 125, 0.3);
+  
+  /* Effets de transparence */
+  --overlay-dark: rgba(10, 10, 10, 0.8);
+  --overlay-gold: rgba(200, 162, 125, 0.1);
+  
+  /* Autres variables */
   --border-radius: 8px;
+  --border-radius-lg: 12px;
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Suppression complète des outlines bleus/verts par défaut */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Suppression pour tous les éléments interactifs */
+a:focus,
+a:focus-visible,
+button:focus,
+button:focus-visible,
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible,
+.router-link-active:focus,
+.router-link-active:focus-visible,
+.router-link-exact-active:focus,
+.router-link-exact-active:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Suppression des outlines sur tous les éléments interactifs */
+button:focus,
+a:focus,
+input:focus,
+textarea:focus,
+select:focus,
+.router-link-active:focus,
+.nav-link:focus,
+.nav-logo:focus,
+.user-link:focus,
+.nav-toggle:focus,
+.hero-btn:focus,
+.feature-link:focus,
+.cta-btn:focus,
+.current-language:focus,
+.language-option:focus,
+.btn:focus,
+.btn-outline:focus,
+.btn-primary:focus,
+.btn-secondary:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.router-link-active:focus-visible,
+.nav-link:focus-visible,
+.nav-logo:focus-visible,
+.user-link:focus-visible,
+.nav-toggle:focus-visible,
+.hero-btn:focus-visible,
+.feature-link:focus-visible,
+.cta-btn:focus-visible,
+.current-language:focus-visible,
+.language-option:focus-visible,
+.btn:focus-visible,
+.btn-outline:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Suppression des outlines sur les éléments Vue Router */
+.router-link-active,
+.router-link-exact-active,
+.router-link-active:focus,
+.router-link-exact-active:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Suppression des outlines sur les éléments de navigation */
+.nav-logo,
+.nav-link,
+.user-link,
+.nav-toggle,
+.nav-logo:focus,
+.nav-link:focus,
+.user-link:focus,
+.nav-toggle:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Suppression des outlines sur les boutons */
+.btn,
+.hero-btn,
+.cta-btn,
+.btn:focus,
+.hero-btn:focus,
+.cta-btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Suppression des outlines sur les liens */
+.feature-link,
+.current-language,
+.language-option,
+.feature-link:focus,
+.current-language:focus,
+.language-option:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Suppression spécifique pour tous les éléments de navigation */
+nav *:focus,
+nav *:focus-visible,
+header *:focus,
+header *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Suppression pour tous les liens et boutons */
+a:focus,
+a:focus-visible,
+button:focus,
+button:focus-visible,
+.btn:focus,
+.btn:focus-visible,
+.btn-outline:focus,
+.btn-outline:focus-visible,
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-secondary:focus,
+.btn-secondary:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Suppression spécifique pour la navigation */
+.nav-logo:focus,
+.nav-logo:focus-visible,
+.nav-link:focus,
+.nav-link:focus-visible,
+.nav-toggle:focus,
+.nav-toggle:focus-visible,
+.user-link:focus,
+.user-link:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Suppression pour tous les éléments de navigation */
+nav a:focus,
+nav a:focus-visible,
+nav button:focus,
+nav button:focus-visible,
+header a:focus,
+header a:focus-visible,
+header button:focus,
+header button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Suppression radicale pour tous les éléments */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Suppression spécifique pour les éléments de navigation */
+.nav-logo,
+.nav-link,
+.nav-toggle,
+.user-link,
+.btn,
+.btn-outline,
+.btn-primary,
+.btn-secondary {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.nav-logo:focus,
+.nav-logo:focus-visible,
+.nav-link:focus,
+.nav-link:focus-visible,
+.nav-toggle:focus,
+.nav-toggle:focus-visible,
+.user-link:focus,
+.user-link:focus-visible,
+.btn:focus,
+.btn:focus-visible,
+.btn-outline:focus,
+.btn-outline:focus-visible,
+.btn-primary:focus,
+.btn-primary:focus-visible,
+.btn-secondary:focus,
+.btn-secondary:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 html, body {
@@ -284,27 +543,27 @@ body {
 }
 
 .alert-success {
-  background: #ecfdf5;
-  color: #065f46;
-  border-color: #a7f3d0;
+  background: rgba(200, 162, 125, 0.1);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 .alert-warning {
-  background: #fffbeb;
-  color: #92400e;
-  border-color: #fcd34d;
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--warning-color);
+  border-color: var(--warning-color);
 }
 
 .alert-error {
-  background: #fef2f2;
-  color: #991b1b;
-  border-color: #fca5a5;
+  background: rgba(139, 0, 0, 0.1);
+  color: var(--error-color);
+  border-color: var(--error-color);
 }
 
 .alert-info {
-  background: #eff6ff;
-  color: #1e40af;
-  border-color: #93c5fd;
+  background: rgba(200, 162, 125, 0.1);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
 }
 
 /* Badges */

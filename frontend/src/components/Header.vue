@@ -115,12 +115,12 @@ import LanguageSelector from './LanguageSelector.vue'
 <style scoped>
         .header {
           background: var(--surface-color);
-          box-shadow: var(--shadow-sm);
-          border-bottom: 1px solid var(--border-color);
+          box-shadow: var(--shadow-md);
+          border-bottom: 1px solid var(--border-gold);
           position: sticky;
           top: 0;
           z-index: 100;
-          backdrop-filter: blur(8px);
+          backdrop-filter: blur(12px);
           background: rgba(26, 26, 26, 0.95);
         }
 
@@ -145,12 +145,34 @@ import LanguageSelector from './LanguageSelector.vue'
           font-weight: 700;
           font-size: 1.25rem;
           transition: var(--transition);
+          outline: none !important;
+          box-shadow: none !important;
+        }
+
+        .nav-logo:focus,
+        .nav-logo:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+
+        /* Suppression globale pour tous les éléments de navigation */
+        .header *:focus,
+        .header *:focus-visible,
+        .nav *:focus,
+        .nav *:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+          border: none !important;
         }
 
         .nav-logo:hover {
           color: var(--primary-color);
           transform: translateY(-1px);
+          text-shadow: 0 0 10px var(--primary-color);
         }
+
+
 
 .logo-icon {
   font-size: 1.5rem;
@@ -172,6 +194,8 @@ import LanguageSelector from './LanguageSelector.vue'
   gap: 2rem;
   flex: 1;
   justify-content: center;
+  margin-left: 8%;
+  min-width: 200px;
 }
 
         .nav-link {
@@ -182,15 +206,30 @@ import LanguageSelector from './LanguageSelector.vue'
           transition: var(--transition);
           position: relative;
           padding: 0.5rem 0;
+          text-align: center;
+          min-width: 80px;
+          outline: none !important;
+          box-shadow: none !important;
+        }
+
+        .nav-link:focus,
+        .nav-link:focus-visible {
+          outline: none !important;
+          box-shadow: none !important;
+          border: none !important;
         }
 
         .nav-link:hover {
           color: var(--primary-color);
+          text-shadow: 0 0 8px var(--primary-color);
         }
 
         .nav-link.router-link-active {
           color: var(--primary-color);
+          text-shadow: 0 0 8px var(--primary-color);
         }
+
+
 
 .nav-link.router-link-active::after {
   content: '';
@@ -226,7 +265,9 @@ import LanguageSelector from './LanguageSelector.vue'
 }
 
 .user-link:hover {
-  background: var(--background-color);
+  background: var(--surface-color);
+  color: var(--primary-color);
+  text-shadow: 0 0 8px var(--primary-color);
 }
 
 .user-avatar {
@@ -254,11 +295,22 @@ import LanguageSelector from './LanguageSelector.vue'
   padding: 0.5rem;
   border-radius: var(--border-radius);
   transition: var(--transition);
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.nav-toggle:focus,
+.nav-toggle:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .nav-toggle:hover {
-  background: var(--background-color);
+  background: var(--surface-color);
 }
+
+
 
 .nav-toggle span {
   width: 20px;
