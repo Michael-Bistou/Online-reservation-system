@@ -6,6 +6,8 @@ import Register from '../views/Register.vue'
 import RestaurantRegister from '../views/RestaurantRegister.vue'
 import RestaurantLogin from '../views/RestaurantLogin.vue'
 import RestaurantDashboard from '../views/RestaurantDashboard.vue'
+import RestaurantReservations from '../views/RestaurantReservations.vue'
+import RestaurantProfile from '../views/RestaurantProfile.vue'
 import Restaurants from '../views/Restaurants.vue'
 import RestaurantDetails from '../views/RestaurantDetails.vue'
 import Reservations from '../views/Reservations.vue'
@@ -47,6 +49,18 @@ const routes = [
     name: 'RestaurantDashboard',
     component: RestaurantDashboard,
     meta: { title: 'Dashboard Restaurant', requiresRestaurantAuth: true }
+  },
+  {
+    path: '/restaurant-reservations',
+    name: 'RestaurantReservations',
+    component: RestaurantReservations,
+    meta: { title: 'Gestion des Réservations', requiresRestaurantAuth: true }
+  },
+  {
+    path: '/restaurant-profile',
+    name: 'RestaurantProfile',
+    component: RestaurantProfile,
+    meta: { title: 'Modifier le Profil', requiresRestaurantAuth: true }
   },
   {
     path: '/restaurants',

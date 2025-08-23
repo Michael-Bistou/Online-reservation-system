@@ -68,14 +68,14 @@
           <div class="dashboard-card">
             <h3 class="card-title">Actions rapides</h3>
             <div class="actions-grid">
-              <button class="action-btn">
+              <router-link to="/restaurant-reservations" class="action-btn">
                 <span class="action-icon">📅</span>
                 <span class="action-text">Gérer les réservations</span>
-              </button>
-              <button class="action-btn">
+              </router-link>
+              <router-link to="/restaurant-profile" class="action-btn">
                 <span class="action-icon">⚙️</span>
                 <span class="action-text">Modifier le profil</span>
-              </button>
+              </router-link>
               <button class="action-btn">
                 <span class="action-icon">📊</span>
                 <span class="action-text">Voir les statistiques</span>
