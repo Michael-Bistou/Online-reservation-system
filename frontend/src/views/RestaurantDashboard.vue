@@ -84,11 +84,11 @@
             <h3 class="card-title">Statistiques</h3>
             <div class="stats-grid">
               <div class="stat-item">
-                <div class="stat-number">0</div>
+                <div class="stat-number">{{ todayReservations }}</div>
                 <div class="stat-label">Réservations aujourd'hui</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number">0</div>
+                <div class="stat-number">{{ pendingReservations }}</div>
                 <div class="stat-label">Réservations en attente</div>
               </div>
               <div class="stat-item">
@@ -96,7 +96,7 @@
                 <div class="stat-label">Capacité totale</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number">0</div>
+                <div class="stat-number">{{ confirmedReservations }}</div>
                 <div class="stat-label">Réservations confirmées</div>
               </div>
             </div>
@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onActivated } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -160,6 +160,40 @@ export default {
   setup() {
     const router = useRouter()
     const restaurant = ref(null)
+    const todayReservations = ref(0)
+    const pendingReservations = ref(0)
+    const confirmedReservations = ref(0)
+
+    const calculateStats = () => {
+      try {
+        // Récupérer toutes les réservations
+        const allReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
+        
+        // Filtrer les réservations pour ce restaurant
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        const restaurantReservations = allReservations.filter(reservation => 
+          reservation.restaurant_id === currentRestaurant.restaurant_name
+        )
+
+        // Calculer les statistiques
+        const today = new Date().toISOString().split('T')[0]
+        
+        todayReservations.value = restaurantReservations.filter(reservation => 
+          reservation.date === today
+        ).length
+
+        pendingReservations.value = restaurantReservations.filter(reservation => 
+          reservation.status === 'pending'
+        ).length
+
+        confirmedReservations.value = restaurantReservations.filter(reservation => 
+          reservation.status === 'confirmed'
+        ).length
+
+      } catch (error) {
+        console.error('Erreur lors du calcul des statistiques:', error)
+      }
+    }
 
     onMounted(() => {
       // Vérifier si le restaurant est connecté
@@ -174,6 +208,14 @@ export default {
       if (restaurantData) {
         restaurant.value = JSON.parse(restaurantData)
       }
+
+      // Calculer les statistiques
+      calculateStats()
+    })
+
+    // Recalculer les statistiques quand on revient sur la page
+    onActivated(() => {
+      calculateStats()
     })
 
     const logout = () => {
@@ -184,6 +226,9 @@ export default {
 
     return {
       restaurant,
+      todayReservations,
+      pendingReservations,
+      confirmedReservations,
       logout
     }
   }
