@@ -262,7 +262,7 @@ export default {
       totalReservations.value = filteredReservations.length
       
       if (totalReservations.value > 0) {
-        const totalPartySize = filteredReservations.reduce((sum, r) => sum + r.partySize, 0)
+        const totalPartySize = filteredReservations.reduce((sum, r) => sum + r.party_size, 0)
         averagePartySize.value = Math.round((totalPartySize / totalReservations.value) * 10) / 10
         
         const confirmedCount = filteredReservations.filter(r => r.status === 'confirmed').length

@@ -297,6 +297,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+import { validateReservation } from '../utils/validation.js'
 
 export default {
   name: 'Reservations',
@@ -600,9 +601,21 @@ export default {
         submitting.value = true
         
         // Validate form
-        if (!newReservation.value.restaurant_id || !newReservation.value.date || 
-            !newReservation.value.time || !newReservation.value.party_size) {
-          alert(t('common.please_fill_all_fields'))
+        const validation = validateReservation({
+          date: newReservation.value.date,
+          time: newReservation.value.time,
+          party_size: newReservation.value.party_size,
+          special_requests: newReservation.value.special_requests
+        })
+
+        if (!validation.isValid) {
+          const errorMessages = Object.values(validation.errors).join('\n')
+          alert(`Erreurs de validation:\n${errorMessages}`)
+          return
+        }
+
+        if (!newReservation.value.restaurant_id) {
+          alert('Veuillez sélectionner un restaurant')
           return
         }
 

@@ -212,9 +212,9 @@ export default {
         clientPhone: '01 23 45 67 89',
         date: '2024-01-15',
         time: '19:30',
-        partySize: 4,
+        party_size: 4,
         status: 'pending',
-        specialRequests: 'Table près de la fenêtre si possible'
+        special_requests: 'Table près de la fenêtre si possible'
       },
       {
         id: 2,
@@ -223,9 +223,9 @@ export default {
         clientPhone: '01 98 76 54 32',
         date: '2024-01-15',
         time: '20:00',
-        partySize: 2,
+        party_size: 2,
         status: 'confirmed',
-        specialRequests: ''
+        special_requests: ''
       },
       {
         id: 3,
@@ -234,9 +234,9 @@ export default {
         clientPhone: '01 11 22 33 44',
         date: '2024-01-16',
         time: '12:30',
-        partySize: 6,
+        party_size: 6,
         status: 'pending',
-        specialRequests: 'Allergie aux fruits de mer'
+        special_requests: 'Allergie aux fruits de mer'
       }
     ]
 
@@ -421,7 +421,7 @@ export default {
         
         // Créer une notification pour l'utilisateur
         const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
-        notificationService.createReservationStatusNotification(reservation, 'confirmed', currentRestaurant.restaurant_name)
+        notificationService.createReservationStatusNotification(reservation, 'confirmed', currentRestaurant.restaurant_name, currentRestaurant.restaurant_name)
       }
     }
 
@@ -443,7 +443,7 @@ export default {
         
         // Créer une notification pour l'utilisateur
         const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
-        notificationService.createReservationStatusNotification(reservation, 'cancelled', currentRestaurant.restaurant_name)
+        notificationService.createReservationStatusNotification(reservation, 'cancelled', currentRestaurant.restaurant_name, currentRestaurant.restaurant_name)
       }
     }
 
@@ -465,7 +465,7 @@ export default {
         
         // Créer une notification pour l'utilisateur
         const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
-        notificationService.createReservationStatusNotification(reservation, 'completed', currentRestaurant.restaurant_name)
+        notificationService.createReservationStatusNotification(reservation, 'completed', currentRestaurant.restaurant_name, currentRestaurant.restaurant_name)
       }
     }
 
@@ -487,7 +487,7 @@ export default {
         
         // Créer une notification pour l'utilisateur
         const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
-        notificationService.createReservationStatusNotification(reservation, 'cancelled', currentRestaurant.restaurant_name)
+        notificationService.createReservationStatusNotification(reservation, 'cancelled', currentRestaurant.restaurant_name, currentRestaurant.restaurant_name)
       }
     }
 

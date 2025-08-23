@@ -299,6 +299,7 @@ import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 import authService from '../services/auth.js'
 import notificationService from '../services/notificationService.js'
+import { validateReservation } from '../utils/validation.js'
 
 export default {
   name: 'RestaurantDetails',
@@ -369,7 +370,7 @@ export default {
         
         // Convertir au format attendu
         return {
-          id: `registered_${Date.now()}`,
+          id: data.restaurant_name, // Utiliser le nom comme ID pour les notifications
           name: data.restaurant_name,
           cuisine_type: data.cuisine_type,
           address: data.address,
@@ -608,8 +609,16 @@ export default {
         submitting.value = true
         
         // Validate form
-        if (!reservationData.value.date || !reservationData.value.time || !reservationData.value.partySize) {
-          alert(t('common.please_fill_all_fields'))
+        const validation = validateReservation({
+          date: reservationData.value.date,
+          time: reservationData.value.time,
+          party_size: reservationData.value.partySize,
+          special_requests: reservationData.value.specialRequests
+        })
+
+        if (!validation.isValid) {
+          const errorMessages = Object.values(validation.errors).join('\n')
+          alert(`Erreurs de validation:\n${errorMessages}`)
           return
         }
 
@@ -683,7 +692,7 @@ export default {
         localStorage.setItem('restaurantReservations', JSON.stringify(existingReservations))
         
         // Créer une notification pour le restaurant
-        notificationService.createReservationNotification(reservation, restaurant.value.name)
+        notificationService.createReservationNotification(reservation, restaurant.value.name, restaurant.value.id)
         
         console.log('Réservation sauvegardée:', reservation)
       } catch (err) {

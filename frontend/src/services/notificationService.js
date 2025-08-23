@@ -145,14 +145,14 @@ class NotificationService {
   }
 
   // Méthodes spécifiques pour différents types de notifications
-  createReservationNotification(reservation, restaurantName) {
+  createReservationNotification(reservation, restaurantName, restaurantId = null) {
     return this.createNotification(
       'new_reservation',
       'Nouvelle réservation',
-      `Nouvelle réservation pour ${reservation.partySize} personnes le ${new Date(reservation.date).toLocaleDateString('fr-FR')} à ${reservation.time}`,
+      `Nouvelle réservation pour ${reservation.party_size} personnes le ${new Date(reservation.date).toLocaleDateString('fr-FR')} à ${reservation.time}`,
       {
         reservationId: reservation.id,
-        restaurantId: reservation.restaurant_id,
+        restaurantId: restaurantId || reservation.restaurant_id,
         restaurantName,
         userId: reservation.user_id,
         userName: reservation.user_name
@@ -160,7 +160,7 @@ class NotificationService {
     )
   }
 
-  createReservationStatusNotification(reservation, status, restaurantName) {
+  createReservationStatusNotification(reservation, status, restaurantName, restaurantId = null) {
     const statusMessages = {
       confirmed: 'Votre réservation a été confirmée',
       cancelled: 'Votre réservation a été annulée',
@@ -173,7 +173,7 @@ class NotificationService {
       `${statusMessages[status]} - ${restaurantName}`,
       {
         reservationId: reservation.id,
-        restaurantId: reservation.restaurant_id,
+        restaurantId: restaurantId || reservation.restaurant_id,
         restaurantName,
         userId: reservation.user_id,
         status
