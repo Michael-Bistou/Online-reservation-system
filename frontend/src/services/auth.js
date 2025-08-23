@@ -81,6 +81,7 @@ class AuthService {
       
       // Stocker le token et les infos utilisateur
       localStorage.setItem('token', token)
+      localStorage.setItem('userData', JSON.stringify(user))
       this.token = token
       this.user = user
 
@@ -103,6 +104,7 @@ class AuthService {
       
       // Stocker le token et les infos utilisateur
       localStorage.setItem('token', token)
+      localStorage.setItem('userData', JSON.stringify(user))
       this.token = token
       this.user = user
 
@@ -179,7 +181,22 @@ class AuthService {
 
   // Obtenir les informations utilisateur actuelles
   getCurrentUser() {
-    return this.user
+    if (this.user) {
+      return this.user
+    }
+    
+    // Fallback vers localStorage si this.user est null
+    try {
+      const userData = localStorage.getItem('userData')
+      if (userData) {
+        this.user = JSON.parse(userData)
+        return this.user
+      }
+    } catch (error) {
+      console.error('Erreur lors du parsing des données utilisateur:', error)
+    }
+    
+    return null
   }
 
   // Vérifier les permissions utilisateur

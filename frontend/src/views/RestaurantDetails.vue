@@ -297,6 +297,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+import authService from '../services/auth.js'
 import notificationService from '../services/notificationService.js'
 
 export default {
@@ -613,23 +614,27 @@ export default {
         }
 
         // Récupérer les informations de l'utilisateur connecté
-        const userData = localStorage.getItem('userData')
-        if (!userData) {
+        if (!authService.isAuthenticated()) {
           alert('Vous devez être connecté pour faire une réservation')
           router.push('/login')
           return
         }
 
-        const user = JSON.parse(userData)
+        const user = authService.getCurrentUser()
+        if (!user) {
+          alert('Erreur lors de la récupération des données utilisateur')
+          router.push('/login')
+          return
+        }
 
         // Create reservation
         const reservation = {
           id: Date.now(), // ID unique
           restaurant_id: restaurant.value.id,
           restaurant_name: restaurant.value.name,
-          clientName: `${user.firstName} ${user.lastName}`,
-          clientEmail: user.email,
-          clientPhone: user.phone || 'Non renseigné',
+          user_id: user.id || 'guest_user',
+          user_name: user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.username || 'Invité',
+          user_email: user.email || 'invite@example.com',
           date: reservationData.value.date,
           time: reservationData.value.time,
           partySize: parseInt(reservationData.value.partySize),
