@@ -870,6 +870,59 @@
       "load_error": "Error loading emails"
     }
   },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Manage your notifications and stay informed",
+    "filters": {
+      "all_types": "All types",
+      "all_statuses": "All statuses"
+    },
+    "notification_types": {
+      "new_reservation": "New reservations",
+      "reservation_status": "Reservation status",
+      "reminder": "Reminders"
+    },
+    "statuses": {
+      "unread": "Unread",
+      "read": "Read"
+    },
+    "actions": {
+      "mark_all_read": "Mark all as read",
+      "clear_all": "Clear all",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "stats": {
+      "total": "Total",
+      "unread": "Unread",
+      "today": "Today",
+      "this_week": "This week"
+    },
+    "loading": "Loading notifications...",
+    "empty_state": {
+      "title": "No notifications",
+      "filtered_message": "No notifications match your filters.",
+      "no_notifications_message": "You don't have any notifications yet."
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "of"
+    },
+    "confirmation": {
+      "clear_all": "Are you sure you want to delete all notifications?"
+    },
+    "messages": {
+      "unread_count_error": "Error calculating unread notifications",
+      "load_error": "Error loading notifications",
+      "mark_read_error": "Error marking as read",
+      "mark_all_read_error": "Error marking all as read",
+      "delete_error": "Error deleting notification",
+      "clear_all_error": "Error clearing all notifications",
+      "init_error": "Error initializing notifications",
+      "cleanup_error": "Error cleaning up notifications",
+      "click_error": "Error clicking on notification"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",

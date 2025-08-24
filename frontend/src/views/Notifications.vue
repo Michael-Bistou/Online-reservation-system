@@ -2,8 +2,8 @@
   <div class="notifications-page">
     <div class="page-header">
       <div class="container">
-        <h1 class="page-title">Notifications</h1>
-        <p class="page-subtitle">Gérez vos notifications et restez informé</p>
+        <h1 class="page-title">{{ $t('notifications.title') }}</h1>
+        <p class="page-subtitle">{{ $t('notifications.subtitle') }}</p>
       </div>
     </div>
 
@@ -14,24 +14,24 @@
           <div class="actions-row">
             <div class="filter-group">
               <select v-model="selectedType" class="filter-select">
-                <option value="">Tous les types</option>
-                <option value="new_reservation">Nouvelles réservations</option>
-                <option value="reservation_status">Statuts de réservation</option>
-                <option value="reminder">Rappels</option>
+                <option value="">{{ $t('notifications.filters.all_types') }}</option>
+                <option value="new_reservation">{{ $t('notifications.notification_types.new_reservation') }}</option>
+                <option value="reservation_status">{{ $t('notifications.notification_types.reservation_status') }}</option>
+                <option value="reminder">{{ $t('notifications.notification_types.reminder') }}</option>
               </select>
             </div>
             <div class="filter-group">
               <select v-model="selectedStatus" class="filter-select">
-                <option value="">Tous les statuts</option>
-                <option value="unread">Non lues</option>
-                <option value="read">Lues</option>
+                <option value="">{{ $t('notifications.filters.all_statuses') }}</option>
+                <option value="unread">{{ $t('notifications.statuses.unread') }}</option>
+                <option value="read">{{ $t('notifications.statuses.read') }}</option>
               </select>
             </div>
             <button v-if="unreadCount > 0" @click="markAllAsRead" class="btn btn-primary">
-              Tout marquer comme lu
+              {{ $t('notifications.actions.mark_all_read') }}
             </button>
             <button @click="clearAll" class="btn btn-outline">
-              Tout effacer
+              {{ $t('notifications.actions.clear_all') }}
             </button>
           </div>
         </div>
@@ -43,28 +43,28 @@
               <div class="stat-icon">🔔</div>
               <div class="stat-content">
                 <div class="stat-number">{{ totalNotifications }}</div>
-                <div class="stat-label">Total</div>
+                <div class="stat-label">{{ $t('notifications.stats.total') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">📬</div>
               <div class="stat-content">
                 <div class="stat-number">{{ unreadCount }}</div>
-                <div class="stat-label">Non lues</div>
+                <div class="stat-label">{{ $t('notifications.stats.unread') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">📅</div>
               <div class="stat-content">
                 <div class="stat-number">{{ todayCount }}</div>
-                <div class="stat-label">Aujourd'hui</div>
+                <div class="stat-label">{{ $t('notifications.stats.today') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">📊</div>
               <div class="stat-content">
                 <div class="stat-number">{{ thisWeekCount }}</div>
-                <div class="stat-label">Cette semaine</div>
+                <div class="stat-label">{{ $t('notifications.stats.this_week') }}</div>
               </div>
             </div>
           </div>
@@ -74,12 +74,12 @@
         <div class="notifications-section">
           <div v-if="loading" class="loading-state">
             <div class="loading-spinner"></div>
-            <p>Chargement des notifications...</p>
+            <p>{{ $t('notifications.loading') }}</p>
           </div>
 
           <div v-else-if="paginatedNotifications.length === 0" class="empty-state">
             <div class="empty-icon">🔔</div>
-            <h3>Aucune notification</h3>
+            <h3>{{ $t('notifications.empty_state.title') }}</h3>
             <p>{{ getEmptyStateMessage() }}</p>
           </div>
 
@@ -136,17 +136,17 @@
               :disabled="currentPage === 1"
               class="pagination-btn"
             >
-              ← Précédent
+              ← {{ $t('notifications.actions.previous') }}
             </button>
             <span class="pagination-info">
-              Page {{ currentPage }} sur {{ totalPages }}
+              {{ $t('notifications.pagination.page') }} {{ currentPage }} {{ $t('notifications.pagination.of') }} {{ totalPages }}
             </span>
             <button
               @click="nextPage"
               :disabled="currentPage === totalPages"
               class="pagination-btn"
             >
-              Suivant →
+              {{ $t('notifications.actions.next') }} →
             </button>
           </div>
         </div>
@@ -156,13 +156,15 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import notificationService from '../services/notificationService.js'
 
 export default {
   name: 'Notifications',
   setup() {
+    const { t } = useI18n()
     const router = useRouter()
     const loading = ref(false)
     const notifications = ref([])
@@ -224,7 +226,7 @@ export default {
       try {
         return notificationService.getUnreadCount()
       } catch (error) {
-        console.error('Erreur lors du calcul des notifications non lues:', error)
+        console.error(t('notifications.messages.unread_count_error'), error)
         return 0
       }
     })
@@ -256,7 +258,7 @@ export default {
           notifications.value = []
         }
       } catch (error) {
-        console.error('Erreur lors du chargement des notifications:', error)
+        console.error(t('notifications.messages.load_error'), error)
         notifications.value = []
       }
     }
@@ -266,7 +268,7 @@ export default {
         notificationService.markAsRead(notificationId)
         loadNotifications()
       } catch (error) {
-        console.error('Erreur lors du marquage comme lu:', error)
+        console.error(t('notifications.messages.mark_read_error'), error)
       }
     }
 
@@ -275,7 +277,7 @@ export default {
         notificationService.markAllAsRead()
         loadNotifications()
       } catch (error) {
-        console.error('Erreur lors du marquage de toutes comme lues:', error)
+        console.error(t('notifications.messages.mark_all_read_error'), error)
       }
     }
 
@@ -284,17 +286,17 @@ export default {
         notificationService.deleteNotification(notificationId)
         loadNotifications()
       } catch (error) {
-        console.error('Erreur lors de la suppression:', error)
+        console.error(t('notifications.messages.delete_error'), error)
       }
     }
 
     const clearAll = () => {
-      if (confirm('Êtes-vous sûr de vouloir supprimer toutes les notifications ?')) {
+      if (confirm(t('notifications.confirmation.clear_all'))) {
         try {
           notificationService.clearAllNotifications()
           loadNotifications()
         } catch (error) {
-          console.error('Erreur lors de la suppression de toutes les notifications:', error)
+          console.error(t('notifications.messages.clear_all_error'), error)
         }
       }
     }
@@ -316,7 +318,7 @@ export default {
           router.push('/reservations')
         }
       } catch (error) {
-        console.error('Erreur lors du clic sur la notification:', error)
+        console.error(t('notifications.messages.click_error'), error)
       }
     }
 
@@ -345,18 +347,18 @@ export default {
 
     const getTypeLabel = (type) => {
       const labels = {
-        new_reservation: 'Nouvelle réservation',
-        reservation_status: 'Statut réservation',
-        reminder: 'Rappel'
+        new_reservation: t('notifications.notification_types.new_reservation'),
+        reservation_status: t('notifications.notification_types.reservation_status'),
+        reminder: t('notifications.notification_types.reminder')
       }
       return labels[type] || type
     }
 
     const getEmptyStateMessage = () => {
       if (selectedType.value || selectedStatus.value) {
-        return 'Aucune notification ne correspond à vos filtres.'
+        return t('notifications.empty_state.filtered_message')
       }
-      return 'Vous n\'avez pas encore de notifications.'
+      return t('notifications.empty_state.no_notifications_message')
     }
 
     const previousPage = () => {
@@ -371,6 +373,13 @@ export default {
       }
     }
 
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+
     // S'abonner aux changements de notifications
     let unsubscribe
     onMounted(() => {
@@ -379,8 +388,10 @@ export default {
         unsubscribe = notificationService.subscribe(() => {
           loadNotifications()
         })
+        // Listen for language changes
+        window.addEventListener('languageChanged', handleLanguageChange)
       } catch (error) {
-        console.error('Erreur lors de l\'initialisation des notifications:', error)
+        console.error(t('notifications.messages.init_error'), error)
       }
     })
 
@@ -389,8 +400,10 @@ export default {
         if (unsubscribe) {
           unsubscribe()
         }
+        // Clean up event listener
+        window.removeEventListener('languageChanged', handleLanguageChange)
       } catch (error) {
-        console.error('Erreur lors du nettoyage des notifications:', error)
+        console.error(t('notifications.messages.cleanup_error'), error)
       }
     })
 

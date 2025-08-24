@@ -873,6 +873,59 @@
       "load_error": "Erreur lors du chargement des emails"
     }
   },
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "Gérez vos notifications et restez informé",
+    "filters": {
+      "all_types": "Tous les types",
+      "all_statuses": "Tous les statuts"
+    },
+    "notification_types": {
+      "new_reservation": "Nouvelles réservations",
+      "reservation_status": "Statuts de réservation",
+      "reminder": "Rappels"
+    },
+    "statuses": {
+      "unread": "Non lues",
+      "read": "Lues"
+    },
+    "actions": {
+      "mark_all_read": "Tout marquer comme lu",
+      "clear_all": "Tout effacer",
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "stats": {
+      "total": "Total",
+      "unread": "Non lues",
+      "today": "Aujourd'hui",
+      "this_week": "Cette semaine"
+    },
+    "loading": "Chargement des notifications...",
+    "empty_state": {
+      "title": "Aucune notification",
+      "filtered_message": "Aucune notification ne correspond à vos filtres.",
+      "no_notifications_message": "Vous n'avez pas encore de notifications."
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "sur"
+    },
+    "confirmation": {
+      "clear_all": "Êtes-vous sûr de vouloir supprimer toutes les notifications ?"
+    },
+    "messages": {
+      "unread_count_error": "Erreur lors du calcul des notifications non lues",
+      "load_error": "Erreur lors du chargement des notifications",
+      "mark_read_error": "Erreur lors du marquage comme lu",
+      "mark_all_read_error": "Erreur lors du marquage de toutes comme lues",
+      "delete_error": "Erreur lors de la suppression",
+      "clear_all_error": "Erreur lors de la suppression de toutes les notifications",
+      "init_error": "Erreur lors de l'initialisation des notifications",
+      "cleanup_error": "Erreur lors du nettoyage des notifications",
+      "click_error": "Erreur lors du clic sur la notification"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",
