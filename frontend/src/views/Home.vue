@@ -309,7 +309,7 @@ export default {
         cuisine_type: "Française",
         price_range: "€€",
         rating: 4.8,
-        address: "123 Rue de la Paix, Paris",
+        address: "123 Rue de la Paix, 75001 Paris",
         image: "/img/restaurants/french-bistrot.jpg"
       },
       {
@@ -318,7 +318,7 @@ export default {
         cuisine_type: "Japonaise",
         price_range: "€€€",
         rating: 4.9,
-        address: "456 Avenue des Champs, Paris",
+        address: "456 Avenue des Champs, 75008 Paris",
         image: "/img/restaurants/japanese-sushi.jpg"
       },
       {
@@ -327,7 +327,7 @@ export default {
         cuisine_type: "Italienne",
         price_range: "€€",
         rating: 4.7,
-        address: "789 Boulevard Saint-Germain, Paris",
+        address: "789 Boulevard Saint-Germain, 75006 Paris",
         image: "/img/restaurants/italian-trattoria.jpg"
       },
       {
@@ -336,7 +336,7 @@ export default {
         cuisine_type: "Indienne",
         price_range: "€€",
         rating: 4.0,
-        address: "321 Rue du Commerce, Paris",
+        address: "321 Rue du Commerce, 75015 Paris",
         image: "/img/restaurants/indian-spice.jpg"
       },
       {
@@ -345,7 +345,7 @@ export default {
         cuisine_type: "Française",
         price_range: "€€€€",
         rating: 4.9,
-        address: "654 Champs-Élysées, Paris",
+        address: "654 Champs-Élysées, 75008 Paris",
         image: "/img/restaurants/french-luxury.jpg"
       },
       {
@@ -354,7 +354,7 @@ export default {
         cuisine_type: "Mexicaine",
         price_range: "€",
         rating: 3.8,
-        address: "987 Rue de Rivoli, Paris",
+        address: "987 Rue de Rivoli, 75001 Paris",
         image: "/img/restaurants/mexican-tacos.jpeg"
       },
       {
@@ -363,7 +363,7 @@ export default {
         cuisine_type: "Chinoise",
         price_range: "€€",
         rating: 4.3,
-        address: "147 Rue de la Roquette, Paris",
+        address: "147 Rue de la Roquette, 75011 Paris",
         image: "/img/restaurants/chinese-bamboo.jpg"
       },
       {
@@ -372,7 +372,7 @@ export default {
         cuisine_type: "Grecque",
         price_range: "€€",
         rating: 4.1,
-        address: "258 Rue du Faubourg Saint-Antoine, Paris",
+        address: "258 Rue du Faubourg Saint-Antoine, 75012 Paris",
         image: "/img/restaurants/greek-ouzeri.jpg"
       },
       {
@@ -381,7 +381,7 @@ export default {
         cuisine_type: "Espagnole",
         price_range: "€€",
         rating: 4.4,
-        address: "369 Avenue de la République, Paris",
+        address: "369 Avenue de la République, 75011 Paris",
         image: "/img/restaurants/spanish-tapas.jpg"
       },
       {
@@ -390,7 +390,7 @@ export default {
         cuisine_type: "Thaï",
         price_range: "€€",
         rating: 4.6,
-        address: "741 Rue de Charonne, Paris",
+        address: "741 Rue de Charonne, 75011 Paris",
         image: "/img/restaurants/thai-siam.jpg"
       }
     ])

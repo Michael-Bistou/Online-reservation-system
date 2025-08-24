@@ -425,14 +425,8 @@ export default {
         if (restaurantId.startsWith('registered_')) {
           restaurant.value = getRegisteredRestaurant()
         } else {
-          // Try to get from API first
-          try {
-            const response = await axios.get(`http://localhost:5000/api/restaurants/${restaurantId}`)
-            restaurant.value = response.data.restaurant
-          } catch (apiError) {
-            // Fallback to sample data
-            restaurant.value = getSampleRestaurant(restaurantId)
-          }
+          // Utiliser directement les données du carrousel (données complètes)
+          restaurant.value = getSampleRestaurant(restaurantId)
         }
         
         if (!restaurant.value) {
@@ -488,19 +482,19 @@ export default {
           id: 1,
           name: "Le Petit Bistrot",
           cuisine_type: "Française",
-          address: "123 Rue de la Paix, Paris",
-          phone: "01 23 45 67 89",
-          email: "contact@petitbistrot.fr",
-          description: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
+          address: "123 Rue de la Paix, 75001 Paris",
+          phone: "01 42 86 17 18",
+          email: "contact@lepetitbistrot.fr",
+          description: "Un charmant bistrot français au cœur de Paris, proposant une cuisine traditionnelle française dans une ambiance chaleureuse et authentique. Notre chef prépare des plats avec des ingrédients frais et locaux.",
           descriptions: {
-            fr: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
-            en: "Authentic French cuisine in a warm setting. Our chef offers traditional dishes revisited with fresh, seasonal products. The atmosphere is friendly and the service is attentive."
+            fr: "Un charmant bistrot français au cœur de Paris, proposant une cuisine traditionnelle française dans une ambiance chaleureuse et authentique. Notre chef prépare des plats avec des ingrédients frais et locaux.",
+            en: "A charming French bistro in the heart of Paris, offering traditional French cuisine in a warm and authentic atmosphere. Our chef prepares dishes with fresh, local ingredients."
           },
           image: "/img/restaurants/french-bistrot.jpg",
           price_range: "€€",
-          rating: 4.5,
+          rating: 4.8,
           review_count: 127,
-          opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30",
+          opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30 | Dim: 19h-22h",
           capacity: 50,
           has_parking: true,
           has_wifi: true,
@@ -513,69 +507,69 @@ export default {
           id: 2,
           name: "Sakura Sushi",
           cuisine_type: "Japonaise",
-          address: "456 Avenue des Champs, Paris",
-          phone: "01 98 76 54 32",
-          email: "info@sakurasushi.fr",
-          description: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
+          address: "456 Avenue des Champs, 75008 Paris",
+          phone: "01 45 62 33 44",
+          email: "reservations@sakurasushi.fr",
+          description: "Restaurant japonais spécialisé dans les sushis et sashimis, offrant une expérience culinaire authentique du Japon avec des ingrédients frais et de qualité. Notre chef maître sushi prépare chaque plat avec précision.",
           descriptions: {
-            fr: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
-            en: "Fresh and authentic sushi in a zen setting. Our sushi masters prepare each dish with care using the finest ingredients imported directly from Japan."
+            fr: "Restaurant japonais spécialisé dans les sushis et sashimis, offrant une expérience culinaire authentique du Japon avec des ingrédients frais et de qualité. Notre chef maître sushi prépare chaque plat avec précision.",
+            en: "Japanese restaurant specializing in sushi and sashimi, offering an authentic Japanese culinary experience with fresh, quality ingredients. Our master sushi chef prepares each dish with precision."
           },
           image: "/img/restaurants/japanese-sushi.jpg",
           price_range: "€€€",
-          rating: 4.8,
+          rating: 4.9,
           review_count: 89,
-          opening_hours: "Mar-Dim: 12h-14h, 19h-23h",
+          opening_hours: "Lun-Sam: 11h30-14h, 18h-22h | Dim: 18h-21h",
           capacity: 30,
           has_parking: false,
           has_wifi: true,
           has_outdoor_seating: true,
           is_wheelchair_accessible: false,
-          is_featured: false,
+          is_featured: true,
           is_popular: true
         },
         '3': {
           id: 3,
           name: "Trattoria Bella",
           cuisine_type: "Italienne",
-          address: "789 Boulevard Saint-Germain, Paris",
-          phone: "01 11 22 33 44",
-          email: "reservation@trattoriabella.fr",
-          description: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
+          address: "789 Boulevard Saint-Germain, 75006 Paris",
+          phone: "01 43 25 67 89",
+          email: "info@trattoriabella.fr",
+          description: "Une trattoria italienne authentique où vous pourrez déguster des plats traditionnels italiens préparés avec des ingrédients frais et de qualité. Notre pizza est cuite au feu de bois et nos pâtes sont faites maison.",
           descriptions: {
-            fr: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
-            en: "Traditional Italian pasta and pizzas in a family atmosphere. Our authentic recipes passed down from generation to generation will take you to Italy."
+            fr: "Une trattoria italienne authentique où vous pourrez déguster des plats traditionnels italiens préparés avec des ingrédients frais et de qualité. Notre pizza est cuite au feu de bois et nos pâtes sont faites maison.",
+            en: "An authentic Italian trattoria where you can enjoy traditional Italian dishes prepared with fresh, quality ingredients. Our pizza is wood-fired and our pasta is homemade."
           },
           image: "/img/restaurants/italian-trattoria.jpg",
           price_range: "€€",
-          rating: 4.2,
+          rating: 4.7,
           review_count: 156,
-          opening_hours: "Lun-Dim: 12h-15h, 19h-23h",
+          opening_hours: "Mar-Dim: 12h-15h, 19h-23h | Lun: Fermé",
           capacity: 80,
           has_parking: true,
           has_wifi: true,
           has_outdoor_seating: true,
           is_wheelchair_accessible: true,
-          is_featured: false,
-          is_popular: false
+          is_featured: true,
+          is_popular: true
         },
         '4': {
           id: 4,
           name: "Spice Garden",
           cuisine_type: "Indienne",
-          address: "321 Rue du Commerce, Paris",
-          phone: "01 55 66 77 88",
-          email: "hello@spicegarden.fr",
-          description: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
+          address: "321 Rue du Commerce, 75015 Paris",
+          phone: "01 48 56 78 90",
+          email: "reservations@spicegarden.fr",
+          description: "Restaurant indien proposant une cuisine raffinée avec des épices authentiques et des plats traditionnels du nord et du sud de l'Inde. Nos currys sont préparés avec des épices fraîchement moulues.",
           descriptions: {
-            fr: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
-            en: "Spicy and colorful Indian cuisine. Discover the authentic flavors of India with our curries, tandooris and fresh naans."
+            fr: "Restaurant indien proposant une cuisine raffinée avec des épices authentiques et des plats traditionnels du nord et du sud de l'Inde. Nos currys sont préparés avec des épices fraîchement moulues.",
+            en: "Indian restaurant offering refined cuisine with authentic spices and traditional dishes from north and south India. Our curries are prepared with freshly ground spices."
           },
           image: "/img/restaurants/indian-spice.jpg",
           price_range: "€€",
           rating: 4.0,
           review_count: 94,
-          opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+          opening_hours: "Lun-Dim: 12h-15h, 19h-23h30",
           capacity: 60,
           has_parking: false,
           has_wifi: true,
@@ -588,19 +582,19 @@ export default {
           id: 5,
           name: "Le Grand Restaurant",
           cuisine_type: "Française",
-          address: "654 Champs-Élysées, Paris",
-          phone: "01 99 88 77 66",
-          email: "contact@legrandrestaurant.fr",
-          description: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
+          address: "654 Champs-Élysées, 75008 Paris",
+          phone: "01 42 65 43 21",
+          email: "reservations@legrandrestaurant.fr",
+          description: "Restaurant gastronomique français de haute cuisine, proposant des plats raffinés et une expérience culinaire exceptionnelle. Notre chef étoilé crée des menus saisonniers d'exception.",
           descriptions: {
-            fr: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
-            en: "Luxury French gastronomy in a sumptuous setting. Our starred chef offers you an exceptional culinary experience with exceptional products."
+            fr: "Restaurant gastronomique français de haute cuisine, proposant des plats raffinés et une expérience culinaire exceptionnelle. Notre chef étoilé crée des menus saisonniers d'exception.",
+            en: "French gastronomic restaurant of haute cuisine, offering refined dishes and an exceptional culinary experience. Our starred chef creates exceptional seasonal menus."
           },
           image: "/img/restaurants/french-luxury.jpg",
           price_range: "€€€€",
           rating: 4.9,
           review_count: 203,
-          opening_hours: "Mar-Sam: 19h-23h",
+          opening_hours: "Mar-Sam: 19h-22h30 | Dim-Lun: Fermé",
           capacity: 40,
           has_parking: true,
           has_wifi: true,
@@ -613,19 +607,19 @@ export default {
           id: 6,
           name: "Taco Loco",
           cuisine_type: "Mexicaine",
-          address: "987 Rue de Rivoli, Paris",
-          phone: "01 44 55 66 77",
+          address: "987 Rue de Rivoli, 75001 Paris",
+          phone: "01 40 20 30 40",
           email: "hola@tacoloco.fr",
-          description: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
+          description: "Restaurant mexicain authentique avec des saveurs épicées et des plats traditionnels comme les tacos, enchiladas et guacamole fait maison. Notre ambiance festive vous transporte au Mexique.",
           descriptions: {
-            fr: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
-            en: "Authentic tacos and margaritas in a festive atmosphere. Come discover the flavors of Mexico with our homemade tortillas and spicy salsas."
+            fr: "Restaurant mexicain authentique avec des saveurs épicées et des plats traditionnels comme les tacos, enchiladas et guacamole fait maison. Notre ambiance festive vous transporte au Mexique.",
+            en: "Authentic Mexican restaurant with spicy flavors and traditional dishes like tacos, enchiladas and homemade guacamole. Our festive atmosphere transports you to Mexico."
           },
           image: "/img/restaurants/mexican-tacos.jpeg",
           price_range: "€",
           rating: 3.8,
           review_count: 67,
-          opening_hours: "Lun-Dim: 11h30-23h",
+          opening_hours: "Mar-Dim: 12h-16h, 18h-23h | Lun: Fermé",
           capacity: 45,
           has_parking: false,
           has_wifi: true,
@@ -638,19 +632,19 @@ export default {
           id: 7,
           name: "Bamboo Palace",
           cuisine_type: "Chinoise",
-          address: "147 Rue de la Roquette, Paris",
-          phone: "01 33 44 55 66",
+          address: "147 Rue de la Roquette, 75011 Paris",
+          phone: "01 47 00 11 22",
           email: "info@bamboopalace.fr",
-          description: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
+          description: "Restaurant chinois traditionnel proposant une large gamme de plats authentiques, des dim sum aux plats principaux en passant par les soupes. Notre cuisine reflète la diversité de la gastronomie chinoise.",
           descriptions: {
-            fr: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
-            en: "Traditional and modern Chinese cuisine. Our dim sum, Peking duck and stir-fried noodles will introduce you to the authenticity of Chinese gastronomy."
+            fr: "Restaurant chinois traditionnel proposant une large gamme de plats authentiques, des dim sum aux plats principaux en passant par les soupes. Notre cuisine reflète la diversité de la gastronomie chinoise.",
+            en: "Traditional Chinese restaurant offering a wide range of authentic dishes, from dim sum to main courses and soups. Our cuisine reflects the diversity of Chinese gastronomy."
           },
           image: "/img/restaurants/chinese-bamboo.jpg",
           price_range: "€€",
           rating: 4.3,
           review_count: 112,
-          opening_hours: "Mar-Dim: 12h-15h, 18h30-23h",
+          opening_hours: "Lun-Dim: 11h-23h",
           capacity: 70,
           has_parking: true,
           has_wifi: true,
@@ -663,19 +657,19 @@ export default {
           id: 8,
           name: "Ouzeri Athina",
           cuisine_type: "Grecque",
-          address: "258 Rue du Faubourg Saint-Antoine, Paris",
-          phone: "01 66 77 88 99",
-          email: "contact@ouzeriathina.fr",
-          description: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
+          address: "258 Rue du Faubourg Saint-Antoine, 75012 Paris",
+          phone: "01 43 44 55 66",
+          email: "info@ouzeriathina.fr",
+          description: "Restaurant grec authentique avec des plats traditionnels, des vins grecs et une ambiance chaleureuse. Nos mezzés et nos plats de poisson frais vous feront voyager en Grèce.",
           descriptions: {
-            fr: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
-            en: "Authentic Greek cuisine with mezze, souvlaki and moussaka. The warm atmosphere and Mediterranean flavors will transport you to Greece."
+            fr: "Restaurant grec authentique avec des plats traditionnels, des vins grecs et une ambiance chaleureuse. Nos mezzés et nos plats de poisson frais vous feront voyager en Grèce.",
+            en: "Authentic Greek restaurant with traditional dishes, Greek wines and a warm atmosphere. Our mezze and fresh fish dishes will take you to Greece."
           },
           image: "/img/restaurants/greek-ouzeri.jpg",
           price_range: "€€",
           rating: 4.1,
           review_count: 78,
-          opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+          opening_hours: "Lun-Dim: 12h-16h, 19h-23h30",
           capacity: 55,
           has_parking: false,
           has_wifi: true,
@@ -688,19 +682,19 @@ export default {
           id: 9,
           name: "Tapas Barcelona",
           cuisine_type: "Espagnole",
-          address: "369 Avenue de la République, Paris",
-          phone: "01 77 88 99 00",
+          address: "369 Avenue de la République, 75011 Paris",
+          phone: "01 48 05 06 07",
           email: "hola@tapasbarcelona.fr",
-          description: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
+          description: "Restaurant espagnol authentique proposant une large sélection de tapas traditionnelles et des plats catalans. Notre paella et nos tapas vous feront découvrir les saveurs de l'Espagne.",
           descriptions: {
-            fr: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
-            en: "Authentic tapas and paella in a Spanish atmosphere. Enjoy our patatas bravas, Iberian ham and homemade sangria."
+            fr: "Restaurant espagnol authentique proposant une large sélection de tapas traditionnelles et des plats catalans. Notre paella et nos tapas vous feront découvrir les saveurs de l'Espagne.",
+            en: "Authentic Spanish restaurant offering a wide selection of traditional tapas and Catalan dishes. Our paella and tapas will introduce you to the flavors of Spain."
           },
           image: "/img/restaurants/spanish-tapas.jpg",
           price_range: "€€",
           rating: 4.4,
           review_count: 145,
-          opening_hours: "Lun-Sam: 12h-15h, 19h-23h",
+          opening_hours: "Mar-Dim: 12h-15h, 19h-23h | Lun: Fermé",
           capacity: 65,
           has_parking: true,
           has_wifi: true,
@@ -713,19 +707,19 @@ export default {
           id: 10,
           name: "Siam Garden",
           cuisine_type: "Thaï",
-          address: "741 Rue de Charonne, Paris",
-          phone: "01 88 99 00 11",
-          email: "sawadee@siamgarden.fr",
-          description: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
+          address: "741 Rue de Charonne, 75011 Paris",
+          phone: "01 43 67 89 01",
+          email: "hello@siamgarden.fr",
+          description: "Restaurant thaïlandais authentique avec des plats épicés et aromatiques, des currys traditionnels et des desserts exotiques. Notre cuisine vous fera découvrir les saveurs authentiques de la Thaïlande.",
           descriptions: {
-            fr: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
-            en: "Authentic Thai cuisine with pad thai, green curry and tom yum. The exotic and spicy flavors will take you to Thailand."
+            fr: "Restaurant thaïlandais authentique avec des plats épicés et aromatiques, des currys traditionnels et des desserts exotiques. Notre cuisine vous fera découvrir les saveurs authentiques de la Thaïlande.",
+            en: "Authentic Thai restaurant with spicy and aromatic dishes, traditional curries and exotic desserts. Our cuisine will introduce you to the authentic flavors of Thailand."
           },
           image: "/img/restaurants/thai-siam.jpg",
           price_range: "€€",
           rating: 4.6,
           review_count: 98,
-          opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+          opening_hours: "Lun-Dim: 11h-22h",
           capacity: 50,
           has_parking: false,
           has_wifi: true,

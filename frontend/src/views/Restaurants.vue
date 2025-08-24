@@ -29,32 +29,32 @@
           <!-- Filters -->
           <div class="filters">
                                     <select v-model="selectedCuisine" class="filter-select" @change="handleFilter">
-                          <option value="">{{ $t('restaurants.cuisine_types') }}</option>
-                          <option value="Française">{{ $t('restaurants.cuisine_options.french') }}</option>
-                          <option value="Italienne">{{ $t('restaurants.cuisine_options.italian') }}</option>
-                          <option value="Japonaise">{{ $t('restaurants.cuisine_options.japanese') }}</option>
-                          <option value="Chinoise">{{ $t('restaurants.cuisine_options.chinese') }}</option>
-                          <option value="Mexicaine">{{ $t('restaurants.cuisine_options.mexican') }}</option>
-                          <option value="Indienne">{{ $t('restaurants.cuisine_options.indian') }}</option>
-                          <option value="Thaï">{{ $t('restaurants.cuisine_options.thai') }}</option>
-                          <option value="Grecque">{{ $t('restaurants.cuisine_options.greek') }}</option>
-                          <option value="Espagnole">{{ $t('restaurants.cuisine_options.spanish') }}</option>
+                          <option value="">Type de cuisine</option>
+                          <option value="Française">Française</option>
+                          <option value="Italienne">Italienne</option>
+                          <option value="Japonaise">Japonaise</option>
+                          <option value="Chinoise">Chinoise</option>
+                          <option value="Mexicaine">Mexicaine</option>
+                          <option value="Indienne">Indienne</option>
+                          <option value="Thaï">Thaï</option>
+                          <option value="Grecque">Grecque</option>
+                          <option value="Espagnole">Espagnole</option>
                         </select>
 
             <select v-model="selectedPriceRange" class="filter-select" @change="handleFilter">
-              <option value="">{{ $t('restaurants.price_range') }}</option>
-              <option value="€">{{ $t('restaurants.price_options.economic') }}</option>
-              <option value="€€">{{ $t('restaurants.price_options.moderate') }}</option>
-              <option value="€€€">{{ $t('restaurants.price_options.expensive') }}</option>
-              <option value="€€€€">{{ $t('restaurants.price_options.luxury') }}</option>
+              <option value="">Gamme de prix</option>
+              <option value="€">Économique (€)</option>
+              <option value="€€">Modérée (€€)</option>
+              <option value="€€€">Élevée (€€€)</option>
+              <option value="€€€€">Luxe (€€€€)</option>
             </select>
 
             <select v-model="selectedRating" class="filter-select" @change="handleFilter">
-              <option value="">{{ $t('restaurants.rating') }}</option>
-              <option value="4.5">{{ $t('restaurants.rating_options.4.5') }}</option>
-              <option value="4.0">{{ $t('restaurants.rating_options.4.0') }}</option>
-              <option value="3.5">{{ $t('restaurants.rating_options.3.5') }}</option>
-              <option value="3.0">{{ $t('restaurants.rating_options.3.0') }}</option>
+              <option value="">Note minimum</option>
+              <option value="4.5">4.5 étoiles et plus</option>
+              <option value="4.0">4.0 étoiles et plus</option>
+              <option value="3.5">3.5 étoiles et plus</option>
+              <option value="3.0">3.0 étoiles et plus</option>
             </select>
           </div>
         </div>
@@ -116,6 +116,7 @@
                     {{ '⭐'.repeat(Math.floor(restaurant.rating || 0)) }}
                   </span>
                   <span class="rating-number">{{ restaurant.rating || 0 }}/5</span>
+                  <span v-if="restaurant.review_count" class="review-count">({{ restaurant.review_count }} avis)</span>
                 </div>
               </div>
 
@@ -136,7 +137,7 @@
                 <button class="btn-primary btn-reserve">
                   {{ $t('restaurants.make_reservation') }}
                 </button>
-                <button class="btn-outline btn-details">
+                <button @click.stop="viewRestaurant(restaurant)" class="btn-outline btn-details">
                   {{ $t('common.details') }}
                 </button>
               </div>
@@ -242,30 +243,17 @@ export default {
         loading.value = true
         error.value = null
         
-        // Charger les restaurants depuis l'API
-        let apiRestaurants = []
-        try {
-          const response = await axios.get('http://localhost:5000/api/restaurants')
-          apiRestaurants = response.data.restaurants || []
-        } catch (err) {
-          console.log('API non disponible, utilisation des données locales')
-        }
+        // Utiliser directement les restaurants du carrousel (données complètes)
+        restaurants.value = getSampleRestaurants()
         
         // Charger les restaurants inscrits depuis localStorage
         const registeredRestaurants = getRegisteredRestaurants()
         
-        // Combiner les restaurants de l'API et les restaurants inscrits
-        restaurants.value = [...apiRestaurants, ...registeredRestaurants]
-        
-        // Si aucun restaurant de l'API, ajouter les restaurants d'exemple
-        if (apiRestaurants.length === 0) {
-          restaurants.value = [...getSampleRestaurants(), ...registeredRestaurants]
+        // Ajouter les restaurants inscrits
+        if (registeredRestaurants.length > 0) {
+          restaurants.value = [...restaurants.value, ...registeredRestaurants]
         }
         
-        // Si toujours aucun restaurant, utiliser seulement les données d'exemple
-        if (restaurants.value.length === 0) {
-          restaurants.value = getSampleRestaurants()
-        }
       } catch (err) {
         console.error('Erreur lors du chargement des restaurants:', err)
         error.value = t('restaurants.load_error')
@@ -318,15 +306,15 @@ export default {
                       id: 1,
                       name: "Le Petit Bistrot",
                       cuisine_type: "Française",
-                      address: "123 Rue de la Paix, Paris",
-                      phone: "01 23 45 67 89",
-                      email: "contact@petitbistrot.fr",
-                      description: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
+                      address: "123 Rue de la Paix, 75001 Paris",
+                      phone: "01 42 86 17 18",
+                      email: "contact@lepetitbistrot.fr",
+                      description: "Un charmant bistrot français au cœur de Paris, proposant une cuisine traditionnelle française dans une ambiance chaleureuse et authentique. Notre chef prépare des plats avec des ingrédients frais et locaux.",
                       image: "/img/restaurants/french-bistrot.jpg",
                       price_range: "€€",
-                      rating: 4.5,
+                      rating: 4.8,
                       review_count: 127,
-                      opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30",
+                      opening_hours: "Lun-Sam: 12h-14h30, 19h-22h30 | Dim: 19h-22h",
                       capacity: 50,
                       has_parking: true,
                       has_wifi: true,
@@ -339,57 +327,57 @@ export default {
                       id: 2,
                       name: "Sakura Sushi",
                       cuisine_type: "Japonaise",
-                      address: "456 Avenue des Champs, Paris",
-                      phone: "01 98 76 54 32",
-                      email: "info@sakurasushi.fr",
-                      description: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
+                      address: "456 Avenue des Champs, 75008 Paris",
+                      phone: "01 45 62 33 44",
+                      email: "reservations@sakurasushi.fr",
+                      description: "Restaurant japonais spécialisé dans les sushis et sashimis, offrant une expérience culinaire authentique du Japon avec des ingrédients frais et de qualité. Notre chef maître sushi prépare chaque plat avec précision.",
                       image: "/img/restaurants/japanese-sushi.jpg",
                       price_range: "€€€",
-                      rating: 4.8,
+                      rating: 4.9,
                       review_count: 89,
-                      opening_hours: "Mar-Dim: 12h-14h, 19h-23h",
+                      opening_hours: "Lun-Sam: 11h30-14h, 18h-22h | Dim: 18h-21h",
                       capacity: 30,
                       has_parking: false,
                       has_wifi: true,
                       has_outdoor_seating: true,
                       is_wheelchair_accessible: false,
-                      is_featured: false,
+                      is_featured: true,
                       is_popular: true
                     },
                     {
                       id: 3,
                       name: "Trattoria Bella",
                       cuisine_type: "Italienne",
-                      address: "789 Boulevard Saint-Germain, Paris",
-                      phone: "01 11 22 33 44",
-                      email: "reservation@trattoriabella.fr",
-                      description: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
+                      address: "789 Boulevard Saint-Germain, 75006 Paris",
+                      phone: "01 43 25 67 89",
+                      email: "info@trattoriabella.fr",
+                      description: "Une trattoria italienne authentique où vous pourrez déguster des plats traditionnels italiens préparés avec des ingrédients frais et de qualité. Notre pizza est cuite au feu de bois et nos pâtes sont faites maison.",
                       image: "/img/restaurants/italian-trattoria.jpg",
                       price_range: "€€",
-                      rating: 4.2,
+                      rating: 4.7,
                       review_count: 156,
-                      opening_hours: "Lun-Dim: 12h-15h, 19h-23h",
+                      opening_hours: "Mar-Dim: 12h-15h, 19h-23h | Lun: Fermé",
                       capacity: 80,
                       has_parking: true,
                       has_wifi: true,
                       has_outdoor_seating: true,
                       is_wheelchair_accessible: true,
-                      is_featured: false,
-                      is_popular: false
+                      is_featured: true,
+                      is_popular: true
                     },
                     {
                       id: 4,
                       name: "Spice Garden",
                       cuisine_type: "Indienne",
-                      address: "321 Rue du Commerce, Paris",
-                      phone: "01 55 66 77 88",
-                      email: "hello@spicegarden.fr",
-                      description: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
+                      address: "321 Rue du Commerce, 75015 Paris",
+                      phone: "01 48 56 78 90",
+                      email: "reservations@spicegarden.fr",
+                      description: "Restaurant indien proposant une cuisine raffinée avec des épices authentiques et des plats traditionnels du nord et du sud de l'Inde. Nos currys sont préparés avec des épices fraîchement moulues.",
                       image: "/img/restaurants/indian-spice.jpg",
                       price_range: "€€",
                       rating: 4.0,
                       review_count: 94,
-                      opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+                      opening_hours: "Lun-Dim: 12h-15h, 19h-23h30",
                       capacity: 60,
                       has_parking: false,
                       has_wifi: true,
@@ -402,15 +390,15 @@ export default {
                       id: 5,
                       name: "Le Grand Restaurant",
                       cuisine_type: "Française",
-                      address: "654 Champs-Élysées, Paris",
-                      phone: "01 99 88 77 66",
-                      email: "contact@legrandrestaurant.fr",
-                      description: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
+                      address: "654 Champs-Élysées, 75008 Paris",
+                      phone: "01 42 65 43 21",
+                      email: "reservations@legrandrestaurant.fr",
+                      description: "Restaurant gastronomique français de haute cuisine, proposant des plats raffinés et une expérience culinaire exceptionnelle. Notre chef étoilé crée des menus saisonniers d'exception.",
                       image: "/img/restaurants/french-luxury.jpg",
                       price_range: "€€€€",
                       rating: 4.9,
                       review_count: 203,
-                      opening_hours: "Mar-Sam: 19h-23h",
+                      opening_hours: "Mar-Sam: 19h-22h30 | Dim-Lun: Fermé",
                       capacity: 40,
                       has_parking: true,
                       has_wifi: true,
@@ -423,15 +411,15 @@ export default {
                       id: 6,
                       name: "Taco Loco",
                       cuisine_type: "Mexicaine",
-                      address: "987 Rue de Rivoli, Paris",
-                      phone: "01 44 55 66 77",
+                      address: "987 Rue de Rivoli, 75001 Paris",
+                      phone: "01 40 20 30 40",
                       email: "hola@tacoloco.fr",
-                      description: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
+                      description: "Restaurant mexicain authentique avec des saveurs épicées et des plats traditionnels comme les tacos, enchiladas et guacamole fait maison. Notre ambiance festive vous transporte au Mexique.",
                       image: "/img/restaurants/mexican-tacos.jpeg",
                       price_range: "€",
                       rating: 3.8,
                       review_count: 67,
-                      opening_hours: "Lun-Dim: 11h30-23h",
+                      opening_hours: "Mar-Dim: 12h-16h, 18h-23h | Lun: Fermé",
                       capacity: 45,
                       has_parking: false,
                       has_wifi: true,
@@ -444,15 +432,15 @@ export default {
                       id: 7,
                       name: "Bamboo Palace",
                       cuisine_type: "Chinoise",
-                      address: "147 Rue de la Roquette, Paris",
-                      phone: "01 33 44 55 66",
+                      address: "147 Rue de la Roquette, 75011 Paris",
+                      phone: "01 47 00 11 22",
                       email: "info@bamboopalace.fr",
-                      description: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
+                      description: "Restaurant chinois traditionnel proposant une large gamme de plats authentiques, des dim sum aux plats principaux en passant par les soupes. Notre cuisine reflète la diversité de la gastronomie chinoise.",
                       image: "/img/restaurants/chinese-bamboo.jpg",
                       price_range: "€€",
                       rating: 4.3,
                       review_count: 112,
-                      opening_hours: "Mar-Dim: 12h-15h, 18h30-23h",
+                      opening_hours: "Lun-Dim: 11h-23h",
                       capacity: 70,
                       has_parking: true,
                       has_wifi: true,
@@ -465,15 +453,15 @@ export default {
                       id: 8,
                       name: "Ouzeri Athina",
                       cuisine_type: "Grecque",
-                      address: "258 Rue du Faubourg Saint-Antoine, Paris",
-                      phone: "01 66 77 88 99",
-                      email: "contact@ouzeriathina.fr",
-                      description: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
+                      address: "258 Rue du Faubourg Saint-Antoine, 75012 Paris",
+                      phone: "01 43 44 55 66",
+                      email: "info@ouzeriathina.fr",
+                      description: "Restaurant grec authentique avec des plats traditionnels, des vins grecs et une ambiance chaleureuse. Nos mezzés et nos plats de poisson frais vous feront voyager en Grèce.",
                       image: "/img/restaurants/greek-ouzeri.jpg",
                       price_range: "€€",
                       rating: 4.1,
                       review_count: 78,
-                      opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+                      opening_hours: "Lun-Dim: 12h-16h, 19h-23h30",
                       capacity: 55,
                       has_parking: false,
                       has_wifi: true,
@@ -486,15 +474,15 @@ export default {
                       id: 9,
                       name: "Tapas Barcelona",
                       cuisine_type: "Espagnole",
-                      address: "369 Avenue de la République, Paris",
-                      phone: "01 77 88 99 00",
+                      address: "369 Avenue de la République, 75011 Paris",
+                      phone: "01 48 05 06 07",
                       email: "hola@tapasbarcelona.fr",
-                      description: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
+                      description: "Restaurant espagnol authentique proposant une large sélection de tapas traditionnelles et des plats catalans. Notre paella et nos tapas vous feront découvrir les saveurs de l'Espagne.",
                       image: "/img/restaurants/spanish-tapas.jpg",
                       price_range: "€€",
                       rating: 4.4,
                       review_count: 145,
-                      opening_hours: "Lun-Sam: 12h-15h, 19h-23h",
+                      opening_hours: "Mar-Dim: 12h-15h, 19h-23h | Lun: Fermé",
                       capacity: 65,
                       has_parking: true,
                       has_wifi: true,
@@ -507,15 +495,15 @@ export default {
                       id: 10,
                       name: "Siam Garden",
                       cuisine_type: "Thaï",
-                      address: "741 Rue de Charonne, Paris",
-                      phone: "01 88 99 00 11",
-                      email: "sawadee@siamgarden.fr",
-                      description: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
+                      address: "741 Rue de Charonne, 75011 Paris",
+                      phone: "01 43 67 89 01",
+                      email: "hello@siamgarden.fr",
+                      description: "Restaurant thaïlandais authentique avec des plats épicés et aromatiques, des currys traditionnels et des desserts exotiques. Notre cuisine vous fera découvrir les saveurs authentiques de la Thaïlande.",
                       image: "/img/restaurants/thai-siam.jpg",
                       price_range: "€€",
                       rating: 4.6,
                       review_count: 98,
-                      opening_hours: "Mar-Dim: 12h-14h30, 19h-22h30",
+                      opening_hours: "Lun-Dim: 11h-22h",
                       capacity: 50,
                       has_parking: false,
                       has_wifi: true,
@@ -544,6 +532,7 @@ export default {
 
     const viewRestaurant = (restaurant) => {
       // Navigate to restaurant details page
+      console.log('Navigating to restaurant:', restaurant.id, restaurant.name)
       router.push(`/restaurants/${restaurant.id}`)
     }
 
@@ -742,6 +731,9 @@ export default {
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
 }
 
 .restaurant-card:hover {
@@ -804,6 +796,9 @@ export default {
 
 .restaurant-info {
   padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .restaurant-header {
@@ -835,6 +830,12 @@ export default {
   font-size: 0.8rem;
   color: #7f8c8d;
   font-weight: 600;
+}
+
+.review-count {
+  font-size: 0.75rem;
+  color: #95a5a6;
+  font-weight: 400;
 }
 
 .restaurant-details {
@@ -875,6 +876,7 @@ export default {
 .restaurant-actions {
   display: flex;
   gap: 10px;
+  margin-top: auto;
 }
 
 .btn-reserve,
