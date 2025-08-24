@@ -40,48 +40,48 @@
         <div v-else class="profile-content">
           <!-- Mon Activité Section -->
           <div class="activity-section light-bg">
-            <h2 class="section-title">Mon activité</h2>
+            <h2 class="section-title">{{ $t('profile.stats.title') }}</h2>
             <div class="activity-grid">
               <div class="activity-card light-bg">
                 <div class="activity-icon">📅</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.totalReservations }}</div>
-                  <div class="activity-label">Réservations totales</div>
+                  <div class="activity-label">{{ $t('profile.activity.total_reservations') }}</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">✅</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.confirmedReservations }}</div>
-                  <div class="activity-label">Réservations confirmées</div>
+                  <div class="activity-label">{{ $t('profile.activity.confirmed_reservations') }}</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">❌</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.cancelledReservations }}</div>
-                  <div class="activity-label">Réservations annulées</div>
+                  <div class="activity-label">{{ $t('profile.activity.cancelled_reservations') }}</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">🏪</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.uniqueRestaurants }}</div>
-                  <div class="activity-label">Restaurants visités</div>
+                  <div class="activity-label">{{ $t('profile.activity.unique_restaurants') }}</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">💰</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.totalSpent }}</div>
-                  <div class="activity-label">Total dépensé</div>
+                  <div class="activity-label">{{ $t('profile.activity.total_spent') }}</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">📧</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.totalEmails }}</div>
-                  <div class="activity-label">Emails reçus</div>
+                  <div class="activity-label">{{ $t('profile.activity.total_emails') }}</div>
                 </div>
               </div>
             </div>
@@ -644,11 +644,19 @@ export default {
         }
       }
       
-      window.addEventListener('storage', handleStorageChange)
+      // Écouter les changements de langue
+      const handleLanguageChange = () => {
+        console.log('🌍 Langue changée, mise à jour du profil...')
+        // Le composant se mettra à jour automatiquement grâce aux $t()
+      }
       
-      // Nettoyer l'écouteur lors du démontage
+      window.addEventListener('storage', handleStorageChange)
+      window.addEventListener('languageChanged', handleLanguageChange)
+      
+      // Nettoyer les écouteurs lors du démontage
       return () => {
         window.removeEventListener('storage', handleStorageChange)
+        window.removeEventListener('languageChanged', handleLanguageChange)
       }
     })
 

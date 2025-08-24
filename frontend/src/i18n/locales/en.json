@@ -45,10 +45,49 @@
     "hero": {
       "title": "Find and book your ideal restaurant",
       "subtitle": "Thousands of restaurants at your disposal",
-      "cta": "Start Booking"
+      "cta": "Start Now",
+      "explore": "Explore Restaurants",
+      "title_line1": "Discover",
+      "title_highlight": "Culinary Art",
+      "title_line2": "in a Few Clicks",
+      "subtitle": "Book your table at the best restaurants in your area. A unique gastronomic experience awaits you.",
+      "stats": {
+        "restaurants": "500+",
+        "restaurants_label": "Restaurants",
+        "reservations": "10k+",
+        "reservations_label": "Reservations",
+        "rating": "4.8★",
+        "rating_label": "Average Rating"
+      }
     },
     "features": {
-      "title": "Why choose us?",
+      "badge": "Features",
+      "title": "A Unique Experience",
+      "subtitle": "Discover the features that make our platform the ideal solution for your gastronomic reservations",
+      "instant": {
+        "title": "Instant Reservations",
+        "description": "Book your table in just a few clicks, 24/7. Intuitive interface and simplified process for a smooth experience."
+      },
+      "security": {
+        "title": "Maximum Security",
+        "description": "JWT authentication, encrypted data and complete protection of your personal information. Your security is our priority."
+      },
+      "multilingual": {
+        "title": "Multilingual & Accessible",
+        "description": "Interface available in French and English. Complete support for internationalization and universal accessibility."
+      },
+      "responsive": {
+        "title": "Responsive Design",
+        "description": "Interface perfectly adapted to all devices: desktop, tablet and mobile. An optimal experience everywhere."
+      },
+      "performance": {
+        "title": "Optimal Performance",
+        "description": "Application optimized with Vite and Vue.js 3 for ultra-fast loading times and smooth experience."
+      },
+      "architecture": {
+        "title": "Modern Architecture",
+        "description": "REST API backend, SPA frontend and MySQL database for a scalable and maintainable solution."
+      },
       "easy": {
         "title": "Easy Booking",
         "description": "Book your table in just a few clicks"
@@ -61,6 +100,51 @@
         "title": "Reliable Service",
         "description": "Instant confirmation of your reservations"
       }
+    },
+    "featured_restaurants": {
+      "badge": "Restaurants",
+      "title": "Featured Restaurants",
+      "subtitle": "Discover our most popular restaurants and book your table now",
+      "featured_badge": "Featured",
+      "view_details": "View details",
+      "book_now": "Book now",
+      "view_all": "View all restaurants"
+    },
+    "tech_stack": {
+      "badge": "Technologies",
+      "title": "Modern Tech Stack",
+      "subtitle": "Cutting-edge technologies used to develop this next-generation application",
+      "frontend": {
+        "title": "Frontend",
+        "vuejs": "Vue.js 3 Composition API",
+        "router": "Vue Router SPA Navigation",
+        "axios": "Axios HTTP Client",
+        "i18n": "i18next Internationalization",
+        "vite": "Vite Build Tool"
+      },
+      "backend": {
+        "title": "Backend",
+        "nodejs": "Node.js JavaScript Runtime",
+        "express": "Express.js Web Framework",
+        "mysql": "MySQL Database",
+        "jwt": "JWT Authentication",
+        "bcrypt": "bcryptjs Encryption"
+      },
+      "tools": {
+        "title": "Tools & DevOps",
+        "git": "Git Version Control",
+        "npm": "npm Package Manager",
+        "nodemon": "Nodemon Auto-reload",
+        "helmet": "Helmet Security",
+        "cors": "CORS Cross-origin"
+      }
+    },
+    "cta": {
+      "badge": "Ready?",
+      "title": "Ready to experience it?",
+      "subtitle": "Join our platform and discover a new way to book your favorite restaurants",
+      "create_account": "Create account",
+      "login": "Sign in"
     },
     "technologies": {
       "title": "Technologies Used",
@@ -186,11 +270,20 @@
     "title": "My Profile",
     "subtitle": "Manage your personal information",
     "stats": {
-      "title": "My Statistics",
+      "title": "My Activity",
       "totalReservations": "Total reservations",
       "confirmedReservations": "Confirmed reservations",
       "favoriteRestaurants": "Favorite restaurants",
       "memberSince": "Member since"
+    },
+    "activity": {
+      "title": "My Activity",
+      "total_reservations": "Total reservations",
+      "confirmed_reservations": "Confirmed reservations",
+      "cancelled_reservations": "Cancelled reservations",
+      "unique_restaurants": "Unique restaurants",
+      "total_spent": "Total spent",
+      "total_emails": "Emails sent"
     },
     "personalInfo": {
       "title": "Personal Information",

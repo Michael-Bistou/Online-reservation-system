@@ -53,10 +53,49 @@
     "hero": {
       "title": "Trouvez et réservez votre restaurant idéal",
       "subtitle": "Des milliers de restaurants à votre disposition",
-      "cta": "Commencer à réserver"
+      "cta": "Commencer maintenant",
+      "explore": "Explorer les restaurants",
+      "title_line1": "Découvrez",
+      "title_highlight": "l'Art Culinaire",
+      "title_line2": "en Quelques Clics",
+      "subtitle": "Réservez votre table dans les meilleurs restaurants de votre région. Une expérience gastronomique unique vous attend.",
+      "stats": {
+        "restaurants": "500+",
+        "restaurants_label": "Restaurants",
+        "reservations": "10k+",
+        "reservations_label": "Réservations",
+        "rating": "4.8★",
+        "rating_label": "Note moyenne"
+      }
     },
     "features": {
-      "title": "Pourquoi nous choisir ?",
+      "badge": "Fonctionnalités",
+      "title": "Une Expérience Unique",
+      "subtitle": "Découvrez les fonctionnalités qui font de notre plateforme la solution idéale pour vos réservations gastronomiques",
+      "instant": {
+        "title": "Réservations Instantanées",
+        "description": "Réservez votre table en quelques clics, 24h/24 et 7j/7. Interface intuitive et processus simplifié pour une expérience fluide."
+      },
+      "security": {
+        "title": "Sécurité Maximale",
+        "description": "Authentification JWT, données chiffrées et protection complète de vos informations personnelles. Votre sécurité est notre priorité."
+      },
+      "multilingual": {
+        "title": "Multilingue & Accessible",
+        "description": "Interface disponible en français et anglais. Support complet pour l'internationalisation et accessibilité universelle."
+      },
+      "responsive": {
+        "title": "Design Responsive",
+        "description": "Interface parfaitement adaptée à tous les appareils : desktop, tablette et mobile. Une expérience optimale partout."
+      },
+      "performance": {
+        "title": "Performance Optimale",
+        "description": "Application optimisée avec Vite et Vue.js 3 pour des temps de chargement ultra-rapides et une expérience fluide."
+      },
+      "architecture": {
+        "title": "Architecture Moderne",
+        "description": "Backend API REST, frontend SPA et base de données MySQL pour une solution évolutive et maintenable."
+      },
       "easy": {
         "title": "Réservation facile",
         "description": "En quelques clics, réservez votre table"
@@ -69,6 +108,51 @@
         "title": "Service fiable",
         "description": "Confirmation instantanée de vos réservations"
       }
+    },
+    "featured_restaurants": {
+      "badge": "Restaurants",
+      "title": "Restaurants Vedettes",
+      "subtitle": "Découvrez nos restaurants les plus populaires et réservez votre table dès maintenant",
+      "featured_badge": "Vedette",
+      "view_details": "Voir détails",
+      "book_now": "Réserver",
+      "view_all": "Voir tous les restaurants"
+    },
+    "tech_stack": {
+      "badge": "Technologies",
+      "title": "Stack Technique Moderne",
+      "subtitle": "Technologies de pointe utilisées pour développer cette application de nouvelle génération",
+      "frontend": {
+        "title": "Frontend",
+        "vuejs": "Vue.js 3 Composition API",
+        "router": "Vue Router Navigation SPA",
+        "axios": "Axios Client HTTP",
+        "i18n": "i18next Internationalisation",
+        "vite": "Vite Build tool"
+      },
+      "backend": {
+        "title": "Backend",
+        "nodejs": "Node.js Runtime JavaScript",
+        "express": "Express.js Framework web",
+        "mysql": "MySQL Base de données",
+        "jwt": "JWT Authentification",
+        "bcrypt": "bcryptjs Chiffrement"
+      },
+      "tools": {
+        "title": "Outils & DevOps",
+        "git": "Git Version control",
+        "npm": "npm Package manager",
+        "nodemon": "Nodemon Auto-reload",
+        "helmet": "Helmet Sécurité",
+        "cors": "CORS Cross-origin"
+      }
+    },
+    "cta": {
+      "badge": "Prêt ?",
+      "title": "Prêt à vivre l'expérience ?",
+      "subtitle": "Rejoignez notre plateforme et découvrez une nouvelle façon de réserver vos restaurants préférés",
+      "create_account": "Créer un compte",
+      "login": "Se connecter"
     },
     "technologies": {
       "title": "Technologies utilisées",

@@ -16,38 +16,37 @@
 
           
           <h1 class="hero-title">
-            <span class="title-line">Découvrez</span>
-            <span class="title-highlight">l'Art Culinaire</span>
-            <span class="title-line">en Quelques Clics</span>
+            <span class="title-line">{{ $t('home.hero.title_line1') }}</span>
+            <span class="title-highlight">{{ $t('home.hero.title_highlight') }}</span>
+            <span class="title-line">{{ $t('home.hero.title_line2') }}</span>
           </h1>
           
           <p class="hero-subtitle">
-            Réservez votre table dans les meilleurs restaurants de votre région. 
-            Une expérience gastronomique unique vous attend.
+            {{ $t('home.hero.subtitle') }}
           </p>
           
           <div class="hero-stats">
             <div class="stat-item">
-              <div class="stat-number">500+</div>
-              <div class="stat-label">Restaurants</div>
+              <div class="stat-number">{{ $t('home.hero.stats.restaurants') }}</div>
+              <div class="stat-label">{{ $t('home.hero.stats.restaurants_label') }}</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">10k+</div>
-              <div class="stat-label">Réservations</div>
+              <div class="stat-number">{{ $t('home.hero.stats.reservations') }}</div>
+              <div class="stat-label">{{ $t('home.hero.stats.reservations_label') }}</div>
             </div>
             <div class="stat-item">
-              <div class="stat-number">4.8★</div>
-              <div class="stat-label">Note moyenne</div>
+              <div class="stat-number">{{ $t('home.hero.stats.rating') }}</div>
+              <div class="stat-label">{{ $t('home.hero.stats.rating_label') }}</div>
             </div>
           </div>
           
                      <div class="hero-actions">
              <router-link to="/register" class="btn btn-primary btn-lg hero-btn">
-               <span class="btn-text">Commencer maintenant</span>
+               <span class="btn-text">{{ $t('home.hero.cta') }}</span>
                <span class="btn-arrow">→</span>
              </router-link>
              <router-link to="/restaurants" class="btn btn-outline btn-lg hero-btn" v-if="isAuthenticated">
-               <span class="btn-text">Explorer les restaurants</span>
+               <span class="btn-text">{{ $t('home.hero.explore') }}</span>
              </router-link>
            </div>
         </div>
@@ -58,10 +57,10 @@
       <div class="container">
         <div class="section-header">
           <div class="section-badge">
-            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">Fonctionnalités</span>
+            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">{{ $t('home.features.badge') }}</span>
           </div>
-          <h2 class="section-title">Une Expérience Unique</h2>
-          <p class="section-subtitle">Découvrez les fonctionnalités qui font de notre plateforme la solution idéale pour vos réservations gastronomiques</p>
+          <h2 class="section-title">{{ $t('home.features.title') }}</h2>
+          <p class="section-subtitle">{{ $t('home.features.subtitle') }}</p>
         </div>
         
         <div class="features-grid">
@@ -69,48 +68,48 @@
                          <div class="feature-icon-wrapper">
                <div class="feature-icon">R</div>
              </div>
-            <h3 class="feature-title">Réservations Instantanées</h3>
-            <p class="feature-description">Réservez votre table en quelques clics, 24h/24 et 7j/7. Interface intuitive et processus simplifié pour une expérience fluide.</p>
+            <h3 class="feature-title">{{ $t('home.features.instant.title') }}</h3>
+            <p class="feature-description">{{ $t('home.features.instant.description') }}</p>
           </div>
           
           <div class="feature-card card">
                          <div class="feature-icon-wrapper">
                <div class="feature-icon">S</div>
              </div>
-            <h3 class="feature-title">Sécurité Maximale</h3>
-            <p class="feature-description">Authentification JWT, données chiffrées et protection complète de vos informations personnelles. Votre sécurité est notre priorité.</p>
+            <h3 class="feature-title">{{ $t('home.features.security.title') }}</h3>
+            <p class="feature-description">{{ $t('home.features.security.description') }}</p>
           </div>
           
           <div class="feature-card card">
                          <div class="feature-icon-wrapper">
                <div class="feature-icon">M</div>
              </div>
-            <h3 class="feature-title">Multilingue & Accessible</h3>
-            <p class="feature-description">Interface disponible en français et anglais. Support complet pour l'internationalisation et accessibilité universelle.</p>
+            <h3 class="feature-title">{{ $t('home.features.multilingual.title') }}</h3>
+            <p class="feature-description">{{ $t('home.features.multilingual.description') }}</p>
           </div>
           
           <div class="feature-card card">
                          <div class="feature-icon-wrapper">
                <div class="feature-icon">D</div>
              </div>
-            <h3 class="feature-title">Design Responsive</h3>
-            <p class="feature-description">Interface parfaitement adaptée à tous les appareils : desktop, tablette et mobile. Une expérience optimale partout.</p>
+            <h3 class="feature-title">{{ $t('home.features.responsive.title') }}</h3>
+            <p class="feature-description">{{ $t('home.features.responsive.description') }}</p>
           </div>
           
           <div class="feature-card card">
                          <div class="feature-icon-wrapper">
                <div class="feature-icon">P</div>
              </div>
-            <h3 class="feature-title">Performance Optimale</h3>
-            <p class="feature-description">Application optimisée avec Vite et Vue.js 3 pour des temps de chargement ultra-rapides et une expérience fluide.</p>
+            <h3 class="feature-title">{{ $t('home.features.performance.title') }}</h3>
+            <p class="feature-description">{{ $t('home.features.performance.description') }}</p>
           </div>
           
           <div class="feature-card card">
                          <div class="feature-icon-wrapper">
                <div class="feature-icon">A</div>
              </div>
-            <h3 class="feature-title">Architecture Moderne</h3>
-            <p class="feature-description">Backend API REST, frontend SPA et base de données MySQL pour une solution évolutive et maintenable.</p>
+            <h3 class="feature-title">{{ $t('home.features.architecture.title') }}</h3>
+            <p class="feature-description">{{ $t('home.features.architecture.description') }}</p>
           </div>
         </div>
       </div>
@@ -121,10 +120,10 @@
       <div class="container">
         <div class="section-header">
           <div class="section-badge">
-            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">Restaurants</span>
+            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">{{ $t('home.featured_restaurants.badge') }}</span>
           </div>
-          <h2 class="section-title">Restaurants Vedettes</h2>
-          <p class="section-subtitle">Découvrez nos restaurants les plus populaires et réservez votre table dès maintenant</p>
+          <h2 class="section-title">{{ $t('home.featured_restaurants.title') }}</h2>
+          <p class="section-subtitle">{{ $t('home.featured_restaurants.subtitle') }}</p>
         </div>
         
         <div class="restaurants-grid">
@@ -133,7 +132,7 @@
               <img :src="restaurant.image" :alt="restaurant.name" class="restaurant-img">
               <div class="restaurant-overlay">
                 <div class="restaurant-badges">
-                  <span class="badge badge-featured">Vedette</span>
+                  <span class="badge badge-featured">{{ $t('home.featured_restaurants.featured_badge') }}</span>
                   <span class="badge badge-rating">{{ restaurant.rating }}★</span>
                 </div>
               </div>
@@ -153,10 +152,10 @@
               </div>
               <div class="restaurant-actions">
                 <router-link :to="`/restaurants/${restaurant.id}`" class="btn btn-primary btn-sm">
-                  Voir détails
+                  {{ $t('home.featured_restaurants.view_details') }}
                 </router-link>
                 <router-link :to="`/restaurants/${restaurant.id}`" class="btn btn-outline btn-sm">
-                  Réserver
+                  {{ $t('home.featured_restaurants.book_now') }}
                 </router-link>
               </div>
             </div>
@@ -165,7 +164,7 @@
         
         <div class="section-actions">
           <router-link to="/restaurants" class="btn btn-primary btn-lg">
-            Voir tous les restaurants
+            {{ $t('home.featured_restaurants.view_all') }}
             <span class="btn-arrow">→</span>
           </router-link>
         </div>
@@ -177,10 +176,10 @@
       <div class="container">
         <div class="section-header">
                                <div class="section-badge">
-            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">Technologies</span>
+            <span class="badge badge-primary" style="background: #d4af37; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600;">{{ $t('home.tech_stack.badge') }}</span>
           </div>
-          <h2 class="section-title">Stack Technique Moderne</h2>
-          <p class="section-subtitle">Technologies de pointe utilisées pour développer cette application de nouvelle génération</p>
+          <h2 class="section-title">{{ $t('home.tech_stack.title') }}</h2>
+          <p class="section-subtitle">{{ $t('home.tech_stack.subtitle') }}</p>
         </div>
         
         <div class="tech-grid">
@@ -189,14 +188,14 @@
                              <div class="tech-icon-wrapper">
                  <div class="tech-icon">F</div>
                </div>
-              <h3 class="tech-title">Frontend</h3>
+              <h3 class="tech-title">{{ $t('home.tech_stack.frontend.title') }}</h3>
             </div>
             <ul class="tech-list">
-              <li><span class="tech-badge badge badge-primary">Vue.js 3</span> Composition API</li>
-              <li><span class="tech-badge badge badge-primary">Vue Router</span> Navigation SPA</li>
-              <li><span class="tech-badge badge badge-primary">Axios</span> Client HTTP</li>
-              <li><span class="tech-badge badge badge-primary">i18next</span> Internationalisation</li>
-              <li><span class="tech-badge badge badge-primary">Vite</span> Build tool</li>
+              <li><span class="tech-badge badge badge-primary">Vue.js 3</span> {{ $t('home.tech_stack.frontend.vuejs') }}</li>
+              <li><span class="tech-badge badge badge-primary">Vue Router</span> {{ $t('home.tech_stack.frontend.router') }}</li>
+              <li><span class="tech-badge badge badge-primary">Axios</span> {{ $t('home.tech_stack.frontend.axios') }}</li>
+              <li><span class="tech-badge badge badge-primary">i18next</span> {{ $t('home.tech_stack.frontend.i18n') }}</li>
+              <li><span class="tech-badge badge badge-primary">Vite</span> {{ $t('home.tech_stack.frontend.vite') }}</li>
             </ul>
           </div>
           
@@ -205,14 +204,14 @@
                              <div class="tech-icon-wrapper">
                  <div class="tech-icon">B</div>
                </div>
-              <h3 class="tech-title">Backend</h3>
+              <h3 class="tech-title">{{ $t('home.tech_stack.backend.title') }}</h3>
             </div>
             <ul class="tech-list">
-                             <li><span class="tech-badge badge badge-primary">Node.js</span> Runtime JavaScript</li>
-               <li><span class="tech-badge badge badge-primary">Express.js</span> Framework web</li>
-               <li><span class="tech-badge badge badge-primary">MySQL</span> Base de données</li>
-               <li><span class="tech-badge badge badge-primary">JWT</span> Authentification</li>
-               <li><span class="tech-badge badge badge-primary">bcryptjs</span> Chiffrement</li>
+                             <li><span class="tech-badge badge badge-primary">Node.js</span> {{ $t('home.tech_stack.backend.nodejs') }}</li>
+               <li><span class="tech-badge badge badge-primary">Express.js</span> {{ $t('home.tech_stack.backend.express') }}</li>
+               <li><span class="tech-badge badge badge-primary">MySQL</span> {{ $t('home.tech_stack.backend.mysql') }}</li>
+               <li><span class="tech-badge badge badge-primary">JWT</span> {{ $t('home.tech_stack.backend.jwt') }}</li>
+               <li><span class="tech-badge badge badge-primary">bcryptjs</span> {{ $t('home.tech_stack.backend.bcrypt') }}</li>
             </ul>
           </div>
           
@@ -221,14 +220,14 @@
                              <div class="tech-icon-wrapper">
                  <div class="tech-icon">T</div>
                </div>
-              <h3 class="tech-title">Outils & DevOps</h3>
+              <h3 class="tech-title">{{ $t('home.tech_stack.tools.title') }}</h3>
             </div>
             <ul class="tech-list">
-                             <li><span class="tech-badge badge badge-primary">Git</span> Version control</li>
-               <li><span class="tech-badge badge badge-primary">npm</span> Package manager</li>
-               <li><span class="tech-badge badge badge-primary">Nodemon</span> Auto-reload</li>
-               <li><span class="tech-badge badge badge-primary">Helmet</span> Sécurité</li>
-               <li><span class="tech-badge badge badge-primary">CORS</span> Cross-origin</li>
+                             <li><span class="tech-badge badge badge-primary">Git</span> {{ $t('home.tech_stack.tools.git') }}</li>
+               <li><span class="tech-badge badge badge-primary">npm</span> {{ $t('home.tech_stack.tools.npm') }}</li>
+               <li><span class="tech-badge badge badge-primary">Nodemon</span> {{ $t('home.tech_stack.tools.nodemon') }}</li>
+               <li><span class="tech-badge badge badge-primary">Helmet</span> {{ $t('home.tech_stack.tools.helmet') }}</li>
+               <li><span class="tech-badge badge badge-primary">CORS</span> {{ $t('home.tech_stack.tools.cors') }}</li>
             </ul>
           </div>
         </div>
@@ -240,17 +239,17 @@
       <div class="container">
         <div class="cta-content">
           <div class="cta-badge">
-            <span class="badge badge-primary" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.3);">Prêt ?</span>
+            <span class="badge badge-primary" style="background: rgba(255, 255, 255, 0.2); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.3);">{{ $t('home.cta.badge') }}</span>
           </div>
-          <h2 class="cta-title">Prêt à vivre l'expérience ?</h2>
-          <p class="cta-subtitle">Rejoignez notre plateforme et découvrez une nouvelle façon de réserver vos restaurants préférés</p>
+          <h2 class="cta-title">{{ $t('home.cta.title') }}</h2>
+          <p class="cta-subtitle">{{ $t('home.cta.subtitle') }}</p>
           <div class="cta-actions">
                          <router-link to="/register" class="btn btn-primary btn-lg cta-btn">
-               <span class="btn-text">Créer un compte</span>
+               <span class="btn-text">{{ $t('home.cta.create_account') }}</span>
                <span class="btn-arrow">→</span>
              </router-link>
                            <router-link to="/login" class="btn btn-secondary btn-lg cta-btn">
-                <span class="btn-text">Se connecter</span>
+                <span class="btn-text">{{ $t('home.cta.login') }}</span>
               </router-link>
           </div>
         </div>
@@ -260,7 +259,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 import authService from '../services/auth.js'
 
 export default {
@@ -301,6 +300,21 @@ export default {
 
     onMounted(() => {
       isAuthenticated.value = authService.isAuthenticated()
+      
+      // Écouter les changements de langue
+      const handleLanguageChange = () => {
+        // Forcer la mise à jour du composant
+        nextTick(() => {
+          // Le composant se mettra à jour automatiquement grâce aux $t()
+        })
+      }
+      
+      window.addEventListener('languageChanged', handleLanguageChange)
+      
+      // Nettoyer l'écouteur
+      onUnmounted(() => {
+        window.removeEventListener('languageChanged', handleLanguageChange)
+      })
     })
 
     return {
