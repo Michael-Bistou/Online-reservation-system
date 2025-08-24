@@ -49,11 +49,11 @@
                     {{ '⭐'.repeat(Math.floor(restaurant.rating || 0)) }}
                   </span>
                   <span class="rating-number">{{ restaurant.rating || 0 }}/5</span>
-                  <span class="rating-count">({{ restaurant.review_count || 0 }} avis)</span>
+                                      <span class="rating-count">({{ restaurant.review_count || 0 }} {{ $t('restaurants.reviews') }})</span>
                 </div>
                 
                 <div class="cuisine-price">
-                  <span class="cuisine-type">{{ restaurant.cuisine_type }}</span>
+                  <span class="cuisine-type">{{ translateCuisineType(restaurant.cuisine_type) }}</span>
                   <span class="price-range">{{ restaurant.price_range }}</span>
                 </div>
               </div>
@@ -80,7 +80,7 @@
               <!-- Description -->
               <section class="info-section">
                 <h2 class="section-title">{{ $t('restaurants.description') }}</h2>
-                <p class="description">{{ restaurant.description }}</p>
+                <p class="description">{{ getTranslatedDescription(restaurant) }}</p>
               </section>
 
               <!-- Contact & Location -->
@@ -186,7 +186,7 @@
                     <label class="form-label">{{ $t('reservations.party_size') }}</label>
                     <select v-model="reservationData.partySize" class="form-input" required>
                       <option value="">{{ $t('common.select') }}</option>
-                      <option v-for="i in 10" :key="i" :value="i">{{ i }} {{ i === 1 ? 'personne' : 'personnes' }}</option>
+                      <option v-for="i in 10" :key="i" :value="i">{{ i }} {{ i === 1 ? $t('restaurants.person') : $t('common.people') }}</option>
                     </select>
                   </div>
 
@@ -262,7 +262,7 @@
               <label class="form-label">{{ $t('reservations.party_size') }}</label>
               <select v-model="reservationData.partySize" class="form-input" required>
                 <option value="">{{ $t('common.select') }}</option>
-                <option v-for="i in 10" :key="i" :value="i">{{ i }} {{ i === 1 ? 'personne' : 'personnes' }}</option>
+                <option v-for="i in 10" :key="i" :value="i">{{ i }} {{ i === 1 ? $t('restaurants.person') : $t('common.people') }}</option>
               </select>
             </div>
 
@@ -282,7 +282,7 @@
               </button>
               <button type="submit" class="btn-primary" :disabled="submitting">
                 <span v-if="submitting" class="loading-spinner-small"></span>
-                {{ submitting ? $t('common.submitting') : 'Continuer vers le paiement' }}
+                {{ submitting ? $t('common.submitting') : $t('payment.continue_to_payment') }}
               </button>
             </div>
           </form>
@@ -294,7 +294,7 @@
     <div v-if="showPaymentModal" class="modal-overlay payment-modal">
       <div class="modal-content payment-modal-content" @click.stop>
         <div class="modal-header">
-          <h3>💳 Paiement de l'acompte</h3>
+          <h3>{{ $t('payment.deposit_payment') }}</h3>
           <button @click="handlePaymentCancel" class="modal-close">×</button>
         </div>
         <div class="modal-body">
@@ -320,7 +320,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
@@ -338,6 +338,58 @@ export default {
     const route = useRoute()
     const router = useRouter()
     const { t } = useI18n()
+    
+    // Function to translate cuisine types
+    const translateCuisineType = (cuisineType) => {
+      const cuisineMap = {
+        'Française': 'french',
+        'Italienne': 'italian',
+        'Japonaise': 'japanese',
+        'Chinoise': 'chinese',
+        'Mexicaine': 'mexican',
+        'Indienne': 'indian',
+        'Thaï': 'thai',
+        'Grecque': 'greek',
+        'Espagnole': 'spanish'
+      }
+      
+      const key = cuisineMap[cuisineType]
+      return key ? t(`restaurants.cuisine_options.${key}`) : cuisineType
+    }
+    
+    // Function to get translated description
+    const getTranslatedDescription = (restaurant) => {
+      if (!restaurant) return ''
+      
+      try {
+        // Obtenir la langue actuelle depuis localStorage
+        const currentLang = localStorage.getItem('i18nextLng') || 'fr'
+        const descriptions = restaurant.descriptions || {}
+        
+        console.log('🔍 Langue actuelle:', currentLang)
+        console.log('🔍 Descriptions disponibles:', Object.keys(descriptions))
+        console.log('🔍 Description pour cette langue:', descriptions[currentLang])
+        
+        // Si on a une description traduite pour la langue actuelle, l'utiliser
+        if (descriptions[currentLang]) {
+          return descriptions[currentLang]
+        }
+        
+        // Sinon, utiliser la description par défaut
+        return restaurant.description || ''
+      } catch (error) {
+        console.error('Erreur dans getTranslatedDescription:', error)
+        return restaurant.description || ''
+      }
+    }
+    
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      // Force re-render when language changes
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
     
     // Reactive data
     const restaurant = ref(null)
@@ -440,6 +492,10 @@ export default {
           phone: "01 23 45 67 89",
           email: "contact@petitbistrot.fr",
           description: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
+          descriptions: {
+            fr: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
+            en: "Authentic French cuisine in a warm setting. Our chef offers traditional dishes revisited with fresh, seasonal products. The atmosphere is friendly and the service is attentive."
+          },
           price_range: "€€",
           rating: 4.5,
           review_count: 127,
@@ -460,6 +516,10 @@ export default {
           phone: "01 98 76 54 32",
           email: "info@sakurasushi.fr",
           description: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
+          descriptions: {
+            fr: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
+            en: "Fresh and authentic sushi in a zen setting. Our sushi masters prepare each dish with care using the finest ingredients imported directly from Japan."
+          },
           price_range: "€€€",
           rating: 4.8,
           review_count: 89,
@@ -480,6 +540,10 @@ export default {
           phone: "01 11 22 33 44",
           email: "reservation@trattoriabella.fr",
           description: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
+          descriptions: {
+            fr: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
+            en: "Traditional Italian pasta and pizzas in a family atmosphere. Our authentic recipes passed down from generation to generation will take you to Italy."
+          },
           price_range: "€€",
           rating: 4.2,
           review_count: 156,
@@ -500,6 +564,10 @@ export default {
           phone: "01 55 66 77 88",
           email: "hello@spicegarden.fr",
           description: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
+          descriptions: {
+            fr: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
+            en: "Spicy and colorful Indian cuisine. Discover the authentic flavors of India with our curries, tandooris and fresh naans."
+          },
           price_range: "€€",
           rating: 4.0,
           review_count: 94,
@@ -520,6 +588,10 @@ export default {
           phone: "01 99 88 77 66",
           email: "contact@legrandrestaurant.fr",
           description: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
+          descriptions: {
+            fr: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
+            en: "Luxury French gastronomy in a sumptuous setting. Our starred chef offers you an exceptional culinary experience with exceptional products."
+          },
           price_range: "€€€€",
           rating: 4.9,
           review_count: 203,
@@ -540,6 +612,10 @@ export default {
           phone: "01 44 55 66 77",
           email: "hola@tacoloco.fr",
           description: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
+          descriptions: {
+            fr: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
+            en: "Authentic tacos and margaritas in a festive atmosphere. Come discover the flavors of Mexico with our homemade tortillas and spicy salsas."
+          },
           price_range: "€",
           rating: 3.8,
           review_count: 67,
@@ -560,6 +636,10 @@ export default {
           phone: "01 33 44 55 66",
           email: "info@bamboopalace.fr",
           description: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
+          descriptions: {
+            fr: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
+            en: "Traditional and modern Chinese cuisine. Our dim sum, Peking duck and stir-fried noodles will introduce you to the authenticity of Chinese gastronomy."
+          },
           price_range: "€€",
           rating: 4.3,
           review_count: 112,
@@ -580,6 +660,10 @@ export default {
           phone: "01 66 77 88 99",
           email: "contact@ouzeriathina.fr",
           description: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
+          descriptions: {
+            fr: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
+            en: "Authentic Greek cuisine with mezze, souvlaki and moussaka. The warm atmosphere and Mediterranean flavors will transport you to Greece."
+          },
           price_range: "€€",
           rating: 4.1,
           review_count: 78,
@@ -600,6 +684,10 @@ export default {
           phone: "01 77 88 99 00",
           email: "hola@tapasbarcelona.fr",
           description: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
+          descriptions: {
+            fr: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
+            en: "Authentic tapas and paella in a Spanish atmosphere. Enjoy our patatas bravas, Iberian ham and homemade sangria."
+          },
           price_range: "€€",
           rating: 4.4,
           review_count: 145,
@@ -620,6 +708,10 @@ export default {
           phone: "01 88 99 00 11",
           email: "sawadee@siamgarden.fr",
           description: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
+          descriptions: {
+            fr: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
+            en: "Authentic Thai cuisine with pad thai, green curry and tom yum. The exotic and spicy flavors will take you to Thailand."
+          },
           price_range: "€€",
           rating: 4.6,
           review_count: 98,
@@ -784,6 +876,13 @@ export default {
     // Lifecycle
     onMounted(() => {
       loadRestaurant()
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {
@@ -796,6 +895,8 @@ export default {
       currentReservation,
       reservationData,
       today,
+      translateCuisineType,
+      getTranslatedDescription,
       loadRestaurant,
       handleReservation,
       handlePaymentSuccess,

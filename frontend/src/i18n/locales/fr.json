@@ -264,6 +264,8 @@
     "outdoor_seating": "Terrasse",
     "wheelchair_accessible": "Accessible PMR",
     "capacity": "Capacité",
+    "reviews": "avis",
+    "person": "personne",
     "filters": {
       "title": "Filtres",
       "cuisine": "Type de cuisine",
@@ -430,5 +432,9 @@
     "french": "Français",
     "english": "English",
     "change": "Changer de langue"
+  },
+  "payment": {
+    "deposit_payment": "💳 Paiement de l'acompte",
+    "continue_to_payment": "Continuer vers le paiement"
   }
 }
