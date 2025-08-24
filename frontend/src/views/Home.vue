@@ -276,7 +276,7 @@ export default {
         price_range: "€€",
         rating: 4.8,
         address: "123 Rue de la Paix, Paris",
-        image: "/img/restaurants/restaurant1.jpg"
+        image: "/img/restaurants/french-bistrot.jpg"
       },
       {
         id: 2,
@@ -285,7 +285,7 @@ export default {
         price_range: "€€€",
         rating: 4.9,
         address: "456 Avenue des Champs, Paris",
-        image: "/img/restaurants/restaurant2.jpg"
+        image: "/img/restaurants/japanese-sushi.jpg"
       },
       {
         id: 3,
@@ -294,7 +294,7 @@ export default {
         price_range: "€€",
         rating: 4.7,
         address: "789 Boulevard Saint-Germain, Paris",
-        image: "/img/restaurants/restaurant3.jpg"
+        image: "/img/restaurants/italian-trattoria.jpg"
       }
     ])
 

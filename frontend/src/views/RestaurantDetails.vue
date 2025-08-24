@@ -496,6 +496,7 @@ export default {
             fr: "Authentique cuisine française dans un cadre chaleureux. Notre chef vous propose des plats traditionnels revisités avec des produits frais et de saison. L'ambiance est conviviale et le service attentionné.",
             en: "Authentic French cuisine in a warm setting. Our chef offers traditional dishes revisited with fresh, seasonal products. The atmosphere is friendly and the service is attentive."
           },
+          image: "/img/restaurants/french-bistrot.jpg",
           price_range: "€€",
           rating: 4.5,
           review_count: 127,
@@ -520,6 +521,7 @@ export default {
             fr: "Sushi frais et authentique dans un décor zen. Nos maîtres sushi préparent chaque plat avec soin en utilisant les meilleurs ingrédients importés directement du Japon.",
             en: "Fresh and authentic sushi in a zen setting. Our sushi masters prepare each dish with care using the finest ingredients imported directly from Japan."
           },
+          image: "/img/restaurants/japanese-sushi.jpg",
           price_range: "€€€",
           rating: 4.8,
           review_count: 89,
@@ -544,6 +546,7 @@ export default {
             fr: "Pâtes et pizzas traditionnelles italiennes dans une ambiance familiale. Nos recettes authentiques transmises de génération en génération vous feront voyager en Italie.",
             en: "Traditional Italian pasta and pizzas in a family atmosphere. Our authentic recipes passed down from generation to generation will take you to Italy."
           },
+          image: "/img/restaurants/italian-trattoria.jpg",
           price_range: "€€",
           rating: 4.2,
           review_count: 156,
@@ -568,6 +571,7 @@ export default {
             fr: "Cuisine indienne épicée et colorée. Découvrez les saveurs authentiques de l'Inde avec nos currys, tandooris et naans frais du jour.",
             en: "Spicy and colorful Indian cuisine. Discover the authentic flavors of India with our curries, tandooris and fresh naans."
           },
+          image: "/img/restaurants/indian-spice.jpg",
           price_range: "€€",
           rating: 4.0,
           review_count: 94,
@@ -592,6 +596,7 @@ export default {
             fr: "Gastronomie française de luxe dans un cadre somptueux. Notre chef étoilé vous propose une expérience culinaire exceptionnelle avec des produits d'exception.",
             en: "Luxury French gastronomy in a sumptuous setting. Our starred chef offers you an exceptional culinary experience with exceptional products."
           },
+          image: "/img/restaurants/french-luxury.jpg",
           price_range: "€€€€",
           rating: 4.9,
           review_count: 203,
@@ -616,6 +621,7 @@ export default {
             fr: "Tacos authentiques et margaritas dans une ambiance festive. Venez découvrir les saveurs du Mexique avec nos tortillas faites maison et nos salsas piquantes.",
             en: "Authentic tacos and margaritas in a festive atmosphere. Come discover the flavors of Mexico with our homemade tortillas and spicy salsas."
           },
+          image: "/img/restaurants/mexican-tacos.jpeg",
           price_range: "€",
           rating: 3.8,
           review_count: 67,
@@ -640,6 +646,7 @@ export default {
             fr: "Cuisine chinoise traditionnelle et moderne. Nos dim sum, canard laqué et nouilles sautées vous feront découvrir l'authenticité de la gastronomie chinoise.",
             en: "Traditional and modern Chinese cuisine. Our dim sum, Peking duck and stir-fried noodles will introduce you to the authenticity of Chinese gastronomy."
           },
+          image: "/img/restaurants/chinese-bamboo.jpg",
           price_range: "€€",
           rating: 4.3,
           review_count: 112,
@@ -664,6 +671,7 @@ export default {
             fr: "Cuisine grecque authentique avec mezze, souvlaki et moussaka. L'ambiance chaleureuse et les saveurs méditerranéennes vous transporteront en Grèce.",
             en: "Authentic Greek cuisine with mezze, souvlaki and moussaka. The warm atmosphere and Mediterranean flavors will transport you to Greece."
           },
+          image: "/img/restaurants/greek-ouzeri.jpg",
           price_range: "€€",
           rating: 4.1,
           review_count: 78,
@@ -688,6 +696,7 @@ export default {
             fr: "Tapas authentiques et paella dans une ambiance espagnole. Dégustez nos patatas bravas, jamón ibérico et sangria maison.",
             en: "Authentic tapas and paella in a Spanish atmosphere. Enjoy our patatas bravas, Iberian ham and homemade sangria."
           },
+          image: "/img/restaurants/spanish-tapas.jpg",
           price_range: "€€",
           rating: 4.4,
           review_count: 145,
@@ -712,6 +721,7 @@ export default {
             fr: "Cuisine thaïlandaise authentique avec pad thai, curry vert et tom yum. Les saveurs exotiques et épicées vous feront voyager en Thaïlande.",
             en: "Authentic Thai cuisine with pad thai, green curry and tom yum. The exotic and spicy flavors will take you to Thailand."
           },
+          image: "/img/restaurants/thai-siam.jpg",
           price_range: "€€",
           rating: 4.6,
           review_count: 98,
