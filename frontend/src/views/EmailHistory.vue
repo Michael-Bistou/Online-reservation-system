@@ -2,8 +2,8 @@
   <div class="email-history-page">
     <div class="page-header">
       <div class="container">
-        <h1 class="page-title">Historique des Emails</h1>
-        <p class="page-subtitle">Consultez tous les emails envoyés par le système</p>
+        <h1 class="page-title">{{ $t('email_history.title') }}</h1>
+        <p class="page-subtitle">{{ $t('email_history.subtitle') }}</p>
       </div>
     </div>
 
@@ -13,31 +13,31 @@
         <div class="filters-section">
           <div class="filter-row">
             <div class="filter-group">
-              <label class="filter-label">Type d'email</label>
+              <label class="filter-label">{{ $t('email_history.filters.email_type') }}</label>
               <select v-model="selectedType" class="filter-select">
-                <option value="">Tous les types</option>
-                <option value="confirmation">Confirmation</option>
-                <option value="new_reservation">Nouvelle réservation</option>
-                <option value="reminder">Rappel</option>
-                <option value="cancellation">Annulation</option>
+                <option value="">{{ $t('email_history.filters.all_types') }}</option>
+                <option value="confirmation">{{ $t('email_history.email_types.confirmation') }}</option>
+                <option value="new_reservation">{{ $t('email_history.email_types.new_reservation') }}</option>
+                <option value="reminder">{{ $t('email_history.email_types.reminder') }}</option>
+                <option value="cancellation">{{ $t('email_history.email_types.cancellation') }}</option>
               </select>
             </div>
             <div class="filter-group">
-              <label class="filter-label">Statut</label>
+              <label class="filter-label">{{ $t('email_history.filters.status') }}</label>
               <select v-model="selectedStatus" class="filter-select">
-                <option value="">Tous les statuts</option>
-                <option value="sent">Envoyé</option>
-                <option value="failed">Échec</option>
-                <option value="pending">En attente</option>
+                <option value="">{{ $t('email_history.filters.all_statuses') }}</option>
+                <option value="sent">{{ $t('email_history.statuses.sent') }}</option>
+                <option value="failed">{{ $t('email_history.statuses.failed') }}</option>
+                <option value="pending">{{ $t('email_history.statuses.pending') }}</option>
               </select>
             </div>
             <div class="filter-group">
-              <label class="filter-label">Recherche</label>
+              <label class="filter-label">{{ $t('email_history.filters.search') }}</label>
               <input 
                 v-model="searchQuery" 
                 type="text" 
                 class="filter-input" 
-                placeholder="Rechercher par destinataire ou sujet..."
+                :placeholder="$t('email_history.filters.search_placeholder')"
               />
             </div>
           </div>
@@ -48,19 +48,19 @@
           <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-number">{{ totalEmails }}</div>
-              <div class="stat-label">Total emails</div>
+              <div class="stat-label">{{ $t('email_history.stats.total_emails') }}</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">{{ sentEmails }}</div>
-              <div class="stat-label">Envoyés</div>
+              <div class="stat-label">{{ $t('email_history.stats.sent') }}</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">{{ confirmationEmails }}</div>
-              <div class="stat-label">Confirmations</div>
+              <div class="stat-label">{{ $t('email_history.stats.confirmations') }}</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">{{ reminderEmails }}</div>
-              <div class="stat-label">Rappels</div>
+              <div class="stat-label">{{ $t('email_history.stats.reminders') }}</div>
             </div>
           </div>
         </div>
@@ -68,21 +68,21 @@
         <!-- Liste des emails -->
         <div class="emails-section">
           <div class="section-header">
-            <h2>Emails envoyés</h2>
+            <h2>{{ $t('email_history.section.title') }}</h2>
             <button @click="refreshEmails" class="btn btn-outline btn-sm">
-              🔄 Actualiser
+              🔄 {{ $t('email_history.section.refresh') }}
             </button>
           </div>
 
           <div v-if="loading" class="loading-container">
             <div class="loading-spinner"></div>
-            <p>Chargement des emails...</p>
+            <p>{{ $t('email_history.loading') }}</p>
           </div>
 
           <div v-else-if="filteredEmails.length === 0" class="empty-state">
             <div class="empty-icon">📧</div>
-            <h3>Aucun email trouvé</h3>
-            <p>Aucun email ne correspond à vos critères de recherche.</p>
+            <h3>{{ $t('email_history.empty_state.title') }}</h3>
+            <p>{{ $t('email_history.empty_state.message') }}</p>
           </div>
 
           <div v-else class="emails-list">
@@ -174,7 +174,7 @@
               <strong>Type :</strong> {{ getTypeLabel(selectedEmail?.type) }}
             </div>
             <div class="detail-row">
-              <strong>Statut :</strong> {{ getStatusLabel(selectedEmail?.status) }}
+              <strong>{{ $t('email_history.email_details.status') }}</strong> {{ getStatusLabel(selectedEmail?.status) }}
             </div>
             <div class="detail-row">
               <strong>Date :</strong> {{ formatDate(selectedEmail?.timestamp) }}
@@ -190,7 +190,7 @@
         <div class="modal-footer">
           <button @click="closeEmailModal" class="btn btn-outline">Fermer</button>
           <button @click="resendEmail(selectedEmail)" class="btn btn-primary">
-            📤 Renvoyer
+            📤 {{ $t('email_history.email_details.resend') }}
           </button>
         </div>
       </div>
@@ -199,11 +199,13 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'EmailHistory',
   setup() {
+    const { t } = useI18n()
     const emails = ref([])
     const loading = ref(false)
     const selectedType = ref('')
@@ -260,7 +262,7 @@ export default {
         const stored = localStorage.getItem('emailHistory')
         emails.value = stored ? JSON.parse(stored) : []
       } catch (error) {
-        console.error('Erreur lors du chargement des emails:', error)
+        console.error(t('email_history.messages.load_error'), error)
         emails.value = []
       }
       loading.value = false
@@ -272,19 +274,19 @@ export default {
 
     const getTypeLabel = (type) => {
       const labels = {
-        confirmation: 'Confirmation',
-        new_reservation: 'Nouvelle réservation',
-        reminder: 'Rappel',
-        cancellation: 'Annulation'
+        confirmation: t('email_history.email_types.confirmation'),
+        new_reservation: t('email_history.email_types.new_reservation'),
+        reminder: t('email_history.email_types.reminder'),
+        cancellation: t('email_history.email_types.cancellation')
       }
       return labels[type] || type
     }
 
     const getStatusLabel = (status) => {
       const labels = {
-        sent: 'Envoyé',
-        failed: 'Échec',
-        pending: 'En attente'
+        sent: t('email_history.statuses.sent'),
+        failed: t('email_history.statuses.failed'),
+        pending: t('email_history.statuses.pending')
       }
       return labels[status] || status
     }
@@ -310,12 +312,26 @@ export default {
     const resendEmail = (email) => {
       // Simuler le renvoi
       console.log(`📧 Renvoi de l'email à ${email.to}`)
-      alert(`Email renvoyé à ${email.to}`)
+      alert(`${t('email_history.email_details.resend_success')} ${email.to}`)
+    }
+
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
     }
 
     // Lifecycle
     onMounted(() => {
       loadEmails()
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {

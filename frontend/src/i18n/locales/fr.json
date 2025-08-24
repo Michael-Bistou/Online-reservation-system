@@ -827,6 +827,52 @@
       "register_error": "Erreur d'inscription restaurant"
     }
   },
+  "email_history": {
+    "title": "Historique des Emails",
+    "subtitle": "Consultez tous les emails envoyés par le système",
+    "filters": {
+      "email_type": "Type d'email",
+      "all_types": "Tous les types",
+      "status": "Statut",
+      "all_statuses": "Tous les statuts",
+      "search": "Recherche",
+      "search_placeholder": "Rechercher par destinataire ou sujet..."
+    },
+    "email_types": {
+      "confirmation": "Confirmation",
+      "new_reservation": "Nouvelle réservation",
+      "reminder": "Rappel",
+      "cancellation": "Annulation"
+    },
+    "statuses": {
+      "sent": "Envoyé",
+      "failed": "Échec",
+      "pending": "En attente"
+    },
+    "stats": {
+      "total_emails": "Total emails",
+      "sent": "Envoyés",
+      "confirmations": "Confirmations",
+      "reminders": "Rappels"
+    },
+    "section": {
+      "title": "Emails envoyés",
+      "refresh": "Actualiser"
+    },
+    "loading": "Chargement des emails...",
+    "empty_state": {
+      "title": "Aucun email trouvé",
+      "message": "Aucun email ne correspond à vos critères de recherche."
+    },
+    "email_details": {
+      "status": "Statut :",
+      "resend": "Renvoyer",
+      "resend_success": "Email renvoyé à"
+    },
+    "messages": {
+      "load_error": "Erreur lors du chargement des emails"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",

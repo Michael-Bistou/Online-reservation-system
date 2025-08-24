@@ -824,6 +824,52 @@
       "register_error": "Restaurant registration error"
     }
   },
+  "email_history": {
+    "title": "Email History",
+    "subtitle": "View all emails sent by the system",
+    "filters": {
+      "email_type": "Email type",
+      "all_types": "All types",
+      "status": "Status",
+      "all_statuses": "All statuses",
+      "search": "Search",
+      "search_placeholder": "Search by recipient or subject..."
+    },
+    "email_types": {
+      "confirmation": "Confirmation",
+      "new_reservation": "New reservation",
+      "reminder": "Reminder",
+      "cancellation": "Cancellation"
+    },
+    "statuses": {
+      "sent": "Sent",
+      "failed": "Failed",
+      "pending": "Pending"
+    },
+    "stats": {
+      "total_emails": "Total emails",
+      "sent": "Sent",
+      "confirmations": "Confirmations",
+      "reminders": "Reminders"
+    },
+    "section": {
+      "title": "Sent emails",
+      "refresh": "Refresh"
+    },
+    "loading": "Loading emails...",
+    "empty_state": {
+      "title": "No emails found",
+      "message": "No emails match your search criteria."
+    },
+    "email_details": {
+      "status": "Status:",
+      "resend": "Resend",
+      "resend_success": "Email resent to"
+    },
+    "messages": {
+      "load_error": "Error loading emails"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",
