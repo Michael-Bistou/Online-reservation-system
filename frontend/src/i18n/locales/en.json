@@ -693,6 +693,37 @@
       "capacity_min": "Capacity must be greater than 0"
     }
   },
+  "restaurant_login": {
+    "title": "Restaurant Login",
+    "subtitle": "Access your restaurant space",
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "placeholders": {
+      "email": "contact@restaurant.com",
+      "password": "Your password"
+    },
+    "actions": {
+      "login": "Login",
+      "logging_in": "Logging in..."
+    },
+    "footer": {
+      "or": "or",
+      "no_account": "Don't have a restaurant account yet?",
+      "register": "Register my restaurant"
+    },
+    "validation": {
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email format",
+      "password_required": "Password is required"
+    },
+    "messages": {
+      "no_restaurant": "No restaurant found with these credentials",
+      "invalid_credentials": "Email or password incorrect",
+      "login_error": "Restaurant login error"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",

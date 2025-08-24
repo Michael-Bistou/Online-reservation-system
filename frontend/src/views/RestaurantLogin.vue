@@ -3,32 +3,32 @@
     <div class="login-container">
       <div class="login-card">
         <div class="login-header">
-          <h1 class="login-title">Connexion Restaurant</h1>
-          <p class="login-subtitle">Accédez à votre espace restaurant</p>
+          <h1 class="login-title">{{ $t('restaurant_login.title') }}</h1>
+          <p class="login-subtitle">{{ $t('restaurant_login.subtitle') }}</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="login-form">
           <div class="form-group">
-            <label class="form-label">Email</label>
+            <label class="form-label">{{ $t('restaurant_login.fields.email') }}</label>
             <input
               v-model="form.email"
               type="email"
               class="form-input"
               :class="{ 'error': errors.email }"
-              placeholder="contact@restaurant.fr"
+              :placeholder="$t('restaurant_login.placeholders.email')"
               required
             />
             <span v-if="errors.email" class="form-error">{{ errors.email }}</span>
           </div>
 
           <div class="form-group">
-            <label class="form-label">Mot de passe</label>
+            <label class="form-label">{{ $t('restaurant_login.fields.password') }}</label>
             <input
               v-model="form.password"
               type="password"
               class="form-input"
               :class="{ 'error': errors.password }"
-              placeholder="Votre mot de passe"
+              :placeholder="$t('restaurant_login.placeholders.password')"
               required
             />
             <span v-if="errors.password" class="form-error">{{ errors.password }}</span>
@@ -49,19 +49,19 @@
           <button type="submit" class="btn btn-primary btn-full" :disabled="loading">
             <div class="btn-content">
               <span v-if="loading" class="loading-spinner"></span>
-              <span v-if="loading">Connexion en cours...</span>
-              <span v-else>Se connecter</span>
+              <span v-if="loading">{{ $t('restaurant_login.actions.logging_in') }}</span>
+              <span v-else>{{ $t('restaurant_login.actions.login') }}</span>
             </div>
           </button>
         </form>
 
         <div class="login-footer">
           <div class="divider">
-            <span class="divider-text">ou</span>
+            <span class="divider-text">{{ $t('restaurant_login.footer.or') }}</span>
           </div>
-          <p class="footer-text">Vous n'avez pas encore de compte restaurant ?</p>
+          <p class="footer-text">{{ $t('restaurant_login.footer.no_account') }}</p>
           <router-link to="/restaurant-register" class="btn btn-outline btn-full">
-            Inscrire mon restaurant
+            {{ $t('restaurant_login.footer.register') }}
           </router-link>
         </div>
       </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -78,7 +78,7 @@ export default {
   name: 'RestaurantLogin',
   setup() {
     const router = useRouter()
-    const { t: $t } = useI18n()
+    const { t } = useI18n()
     const loading = ref(false)
     const errorMessage = ref('')
     const successMessage = ref('')
@@ -104,16 +104,16 @@ export default {
       // Validation email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!form.email) {
-        errors.email = 'L\'email est requis'
+        errors.email = t('restaurant_login.validation.email_required')
         isValid = false
       } else if (!emailRegex.test(form.email)) {
-        errors.email = 'Format d\'email invalide'
+        errors.email = t('restaurant_login.validation.email_invalid')
         isValid = false
       }
 
       // Validation mot de passe
       if (!form.password) {
-        errors.password = 'Le mot de passe est requis'
+        errors.password = t('restaurant_login.validation.password_required')
         isValid = false
       }
 
@@ -132,7 +132,7 @@ export default {
         const restaurantData = localStorage.getItem('restaurantData')
         
         if (!restaurantData) {
-          errorMessage.value = 'Aucun restaurant trouvé avec ces identifiants'
+          errorMessage.value = t('restaurant_login.messages.no_restaurant')
           return
         }
 
@@ -154,16 +154,33 @@ export default {
           }, 2000)
           
         } else {
-          errorMessage.value = 'Email ou mot de passe incorrect'
+          errorMessage.value = t('restaurant_login.messages.invalid_credentials')
         }
         
       } catch (err) {
-        console.error('Erreur de connexion restaurant:', err)
+        console.error(t('restaurant_login.messages.login_error'), err)
         errorMessage.value = 'Une erreur inattendue s\'est produite'
       } finally {
         loading.value = false
       }
     }
+
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+
+    onMounted(() => {
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
+    })
 
     return {
       form,
