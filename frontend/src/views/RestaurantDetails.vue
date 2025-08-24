@@ -640,7 +640,7 @@ export default {
         const reservation = {
           id: Date.now(), // ID unique
           restaurant_id: restaurant.value.id,
-          restaurant_name: restaurant.value.name,
+          restaurant_name: restaurant.value.name || restaurant.value.restaurant_name,
           user_id: user.id || 'guest_user',
           user_name: user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.username || 'Invité',
           user_email: user.email || 'invite@example.com',
@@ -692,9 +692,12 @@ export default {
         localStorage.setItem('restaurantReservations', JSON.stringify(existingReservations))
         
         // Créer une notification pour le restaurant
-        notificationService.createReservationNotification(reservation, restaurant.value.name, restaurant.value.id)
+        const restaurantName = restaurant.value.name || restaurant.value.restaurant_name
+        const restaurantId = restaurant.value.id || restaurant.value.restaurant_name
+        notificationService.createReservationNotification(reservation, restaurantName, restaurantId)
         
         console.log('Réservation sauvegardée:', reservation)
+        console.log('Nom du restaurant:', restaurantName)
       } catch (err) {
         console.error('Erreur lors de la sauvegarde de la réservation:', err)
       }

@@ -169,11 +169,19 @@ export default {
         // Récupérer toutes les réservations
         const allReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
         
-        // Filtrer les réservations pour ce restaurant
+        // Récupérer le restaurant actuel
         const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
-        const restaurantReservations = allReservations.filter(reservation => 
-          reservation.restaurant_id === currentRestaurant.restaurant_name
-        )
+        const restaurantData = JSON.parse(localStorage.getItem('restaurantData') || '{}')
+        
+        // Utiliser le restaurant connecté ou les données du restaurant
+        const restaurantName = currentRestaurant.restaurant_name || restaurantData.restaurant_name
+        
+        // Filtrer les réservations pour ce restaurant (comparaison insensible à la casse)
+        const restaurantReservations = allReservations.filter(reservation => {
+          const reservationName = reservation.restaurant_name?.trim().toLowerCase()
+          const currentName = restaurantName?.trim().toLowerCase()
+          return reservationName === currentName
+        })
 
         // Calculer les statistiques
         const today = new Date().toISOString().split('T')[0]

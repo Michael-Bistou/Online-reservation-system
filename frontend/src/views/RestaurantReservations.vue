@@ -352,11 +352,17 @@ export default {
           
           // Récupérer les données du restaurant connecté
           const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+          const restaurantData = JSON.parse(localStorage.getItem('restaurantData') || '{}')
           
-          // Filtrer les réservations pour ce restaurant
-          const restaurantReservations = allReservations.filter(reservation => 
-            reservation.restaurant_name === currentRestaurant.restaurant_name
-          )
+          // Utiliser le restaurant connecté ou les données du restaurant
+          const restaurantName = currentRestaurant.restaurant_name || restaurantData.restaurant_name
+          
+          // Filtrer les réservations pour ce restaurant (comparaison insensible à la casse)
+          const restaurantReservations = allReservations.filter(reservation => {
+            const reservationName = reservation.restaurant_name?.trim().toLowerCase()
+            const currentName = restaurantName?.trim().toLowerCase()
+            return reservationName === currentName
+          })
           
           reservations.value = restaurantReservations.length > 0 ? restaurantReservations : mockReservations
         } else {

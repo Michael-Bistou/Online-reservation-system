@@ -229,7 +229,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onActivated } from 'vue'
 
 export default {
   name: 'RestaurantStats',
@@ -274,16 +274,44 @@ export default {
       loading.value = true
       
       try {
+        // Récupérer toutes les réservations
         const storedReservations = localStorage.getItem('restaurantReservations')
+        let allReservations = []
+        
         if (storedReservations) {
-          const allReservations = JSON.parse(storedReservations)
-          const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
-          
-          // Filtrer les réservations pour ce restaurant
-          reservations.value = allReservations.filter(reservation => 
-            reservation.restaurant_name === currentRestaurant.restaurant_name
-          )
+          allReservations = JSON.parse(storedReservations)
         }
+        
+        // Récupérer le restaurant actuel
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        const restaurantData = JSON.parse(localStorage.getItem('restaurantData') || '{}')
+        
+        // Utiliser le restaurant connecté ou les données du restaurant
+        const restaurantName = currentRestaurant.restaurant_name || restaurantData.restaurant_name
+        
+        // Debug: Afficher les informations (commenté pour production)
+        // console.log('=== DEBUG RESTAURANT STATS ===')
+        // console.log('Toutes les réservations:', allReservations)
+        // console.log('Restaurant actuel:', currentRestaurant)
+        // console.log('Données restaurant:', restaurantData)
+        // console.log('Nom du restaurant recherché:', restaurantName)
+        
+        if (restaurantName) {
+          // Filtrer les réservations pour ce restaurant (comparaison insensible à la casse)
+          reservations.value = allReservations.filter(reservation => {
+            const reservationName = reservation.restaurant_name?.trim().toLowerCase()
+            const currentName = restaurantName.trim().toLowerCase()
+            const matches = reservationName === currentName
+            // console.log(`Comparaison: "${reservationName}" === "${currentName}" = ${matches}`)
+            return matches
+          })
+          
+          // console.log('Réservations filtrées:', reservations.value)
+        } else {
+          reservations.value = []
+          // console.log('Aucun nom de restaurant trouvé')
+        }
+        
       } catch (err) {
         console.error('Erreur lors du chargement des réservations:', err)
         reservations.value = []
@@ -291,6 +319,79 @@ export default {
       
       loading.value = false
       calculateStats()
+    }
+
+    const calculateChanges = (currentPeriodReservations) => {
+      try {
+        const days = parseInt(selectedPeriod.value)
+        const currentEnd = new Date()
+        const currentStart = new Date()
+        currentStart.setDate(currentStart.getDate() - days)
+        
+        const previousEnd = new Date(currentStart)
+        const previousStart = new Date()
+        previousStart.setDate(previousStart.getDate() - (days * 2))
+        
+        // Réservations de la période précédente
+        const previousPeriodReservations = reservations.value.filter(r => {
+          const reservationDate = new Date(r.date)
+          return reservationDate >= previousStart && reservationDate < currentStart
+        })
+        
+        // Calculer les changements
+        const currentCount = currentPeriodReservations.length
+        const previousCount = previousPeriodReservations.length
+        
+        if (previousCount > 0) {
+          reservationChange.value = Math.round(((currentCount - previousCount) / previousCount) * 100)
+        } else {
+          reservationChange.value = currentCount > 0 ? 100 : 0
+        }
+        
+        // Changement de la taille moyenne des groupes
+        const currentAvgParty = currentPeriodReservations.length > 0 
+          ? currentPeriodReservations.reduce((sum, r) => sum + r.party_size, 0) / currentPeriodReservations.length 
+          : 0
+        const previousAvgParty = previousPeriodReservations.length > 0 
+          ? previousPeriodReservations.reduce((sum, r) => sum + r.party_size, 0) / previousPeriodReservations.length 
+          : 0
+        
+        if (previousAvgParty > 0) {
+          partySizeChange.value = Math.round(((currentAvgParty - previousAvgParty) / previousAvgParty) * 100)
+        } else {
+          partySizeChange.value = currentAvgParty > 0 ? 100 : 0
+        }
+        
+        // Changement du taux de confirmation
+        const currentConfirmed = currentPeriodReservations.filter(r => r.status === 'confirmed').length
+        const previousConfirmed = previousPeriodReservations.filter(r => r.status === 'confirmed').length
+        
+        const currentConfRate = currentPeriodReservations.length > 0 ? (currentConfirmed / currentPeriodReservations.length) * 100 : 0
+        const previousConfRate = previousPeriodReservations.length > 0 ? (previousConfirmed / previousPeriodReservations.length) * 100 : 0
+        
+        if (previousConfRate > 0) {
+          confirmationChange.value = Math.round(currentConfRate - previousConfRate)
+        } else {
+          confirmationChange.value = currentConfRate > 0 ? 100 : 0
+        }
+        
+        // Changement des réservations par jour
+        const currentDaily = days > 0 ? currentCount / days : 0
+        const previousDaily = days > 0 ? previousCount / days : 0
+        
+        if (previousDaily > 0) {
+          dailyChange.value = Math.round(((currentDaily - previousDaily) / previousDaily) * 100)
+        } else {
+          dailyChange.value = currentDaily > 0 ? 100 : 0
+        }
+        
+      } catch (error) {
+        console.error('Erreur lors du calcul des changements:', error)
+        reservationChange.value = 0
+        partySizeChange.value = 0
+        confirmationChange.value = 0
+        dailyChange.value = 0
+      }
     }
 
     const calculateStats = () => {
@@ -310,11 +411,8 @@ export default {
         averageReservationsPerDay.value = Math.round((totalReservations.value / daysDiff) * 10) / 10
       }
 
-      // Calculer les changements (simulation)
-      reservationChange.value = Math.floor(Math.random() * 20) - 10
-      partySizeChange.value = Math.floor(Math.random() * 15) - 7
-      confirmationChange.value = Math.floor(Math.random() * 25) - 12
-      dailyChange.value = Math.floor(Math.random() * 18) - 9
+      // Calculer les changements par rapport à la période précédente
+      calculateChanges(filteredReservations)
 
       // Statistiques par jour
       calculateDailyStats(filteredReservations)
@@ -329,26 +427,40 @@ export default {
     const getFilteredReservations = () => {
       let filtered = reservations.value
       
-      if (startDate.value && endDate.value) {
-        filtered = filtered.filter(r => {
-          const reservationDate = new Date(r.date)
-          const start = new Date(startDate.value)
-          const end = new Date(endDate.value)
-          return reservationDate >= start && reservationDate <= end
-        })
+      // console.log('=== FILTRAGE PAR DATE ===')
+      // console.log('Réservations avant filtrage:', filtered)
+      // console.log('Date de début:', startDate.value)
+      // console.log('Date de fin:', endDate.value)
+      // console.log('Période sélectionnée:', selectedPeriod.value)
+      
+              if (startDate.value && endDate.value) {
+          filtered = filtered.filter(r => {
+            const reservationDate = new Date(r.date)
+            const start = new Date(startDate.value)
+            const end = new Date(endDate.value)
+            const isInRange = reservationDate >= start && reservationDate <= end
+            // console.log(`Réservation ${r.date}: ${reservationDate} >= ${start} && ${reservationDate} <= ${end} = ${isInRange}`)
+            return isInRange
+          })
       } else {
-        // Utiliser la période sélectionnée
+        // Utiliser la période sélectionnée - inclure les réservations futures
         const days = parseInt(selectedPeriod.value)
         const end = new Date()
+        end.setDate(end.getDate() + 30) // Inclure 30 jours dans le futur
         const start = new Date()
         start.setDate(start.getDate() - days)
         
+        // console.log('Période calculée:', { start: start.toISOString(), end: end.toISOString() })
+        
         filtered = filtered.filter(r => {
           const reservationDate = new Date(r.date)
-          return reservationDate >= start && reservationDate <= end
+          const isInRange = reservationDate >= start && reservationDate <= end
+          // console.log(`Réservation ${r.date}: ${reservationDate} >= ${start} && ${reservationDate} <= ${end} = ${isInRange}`)
+          return isInRange
         })
       }
       
+      // console.log('Réservations après filtrage par date:', filtered)
       return filtered
     }
 
@@ -429,8 +541,9 @@ export default {
     }
 
     onMounted(() => {
-      // Initialiser les dates
+      // Initialiser les dates - inclure les réservations futures
       const end = new Date()
+      end.setDate(end.getDate() + 30) // Inclure 30 jours dans le futur
       const start = new Date()
       start.setDate(start.getDate() - parseInt(selectedPeriod.value))
       
@@ -439,6 +552,17 @@ export default {
       
       loadReservations()
     })
+
+    // Recharger les données quand on revient sur la page
+    onActivated(() => {
+      loadReservations()
+    })
+
+    // Fonction de debug pour forcer le rechargement
+    const debugReload = () => {
+      console.log('=== FORCE RELOAD ===')
+      loadReservations()
+    }
 
     const logout = () => {
       localStorage.removeItem('restaurantLoggedIn')
@@ -474,6 +598,7 @@ export default {
       getChangeClass,
       formatDayLabel,
       getPeakClass,
+      debugReload,
       logout
     }
   }
