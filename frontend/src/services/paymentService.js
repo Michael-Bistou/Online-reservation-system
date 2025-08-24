@@ -50,6 +50,27 @@ class PaymentService {
         throw new Error('Données de paiement invalides')
       }
 
+      // Validation spécifique de la carte
+      const cardNumber = paymentData.cardNumber.replace(/\s/g, '')
+      if (!this.validateCardNumber(cardNumber)) {
+        throw new Error('Numéro de carte invalide')
+      }
+
+      // Gestion des cartes de test spécifiques
+      const rejectedTestCards = {
+        '4000000000000002': 'Carte refusée par la banque',
+        '4000000000009995': 'Carte refusée par la banque',
+        '4000000000009987': 'Carte refusée par la banque',
+        '4000000000009979': 'Carte refusée par la banque',
+        '4000000000003220': 'Authentification 3D Secure requise',
+        '4000000000003063': 'Carte bloquée',
+        '4000000000003055': 'Carte expirée'
+      }
+
+      if (rejectedTestCards[cardNumber]) {
+        throw new Error(rejectedTestCards[cardNumber])
+      }
+
       // Simuler un échec de paiement (5% de chance)
       if (Math.random() < 0.05) {
         throw new Error('Paiement refusé par la banque')
@@ -235,12 +256,28 @@ class PaymentService {
     return `**** **** **** ${cardNumber.slice(-4)}`
   }
 
-  // Valider un numéro de carte (algorithme de Luhn)
+  // Valider un numéro de carte (algorithme de Luhn + cartes de test)
   validateCardNumber(cardNumber) {
     if (!cardNumber) return false
     
     const digits = cardNumber.replace(/\D/g, '')
     if (digits.length < 13 || digits.length > 19) return false
+    
+    // Liste des cartes de test qui doivent être rejetées
+    const rejectedTestCards = [
+      '4000000000000002', // Carte refusée
+      '4000000000009995', // Carte refusée
+      '4000000000009987', // Carte refusée
+      '4000000000009979', // Carte refusée
+      '4000000000003220', // 3D Secure requis
+      '4000000000003063', // Carte bloquée
+      '4000000000003055'  // Carte expirée
+    ]
+    
+    // Vérifier si c'est une carte de test rejetée
+    if (rejectedTestCards.includes(digits)) {
+      return false
+    }
     
     let sum = 0
     let isEven = false

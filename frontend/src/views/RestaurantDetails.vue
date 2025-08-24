@@ -1231,7 +1231,7 @@ export default {
   margin: 0;
   font-size: 1.3rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #333;
 }
 
 .modal-close {

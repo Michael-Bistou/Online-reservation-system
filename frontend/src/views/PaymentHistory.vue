@@ -679,7 +679,14 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.3rem;
+  font-weight: 700;
 }
 
 .modal-close {
@@ -687,7 +694,7 @@ export default {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--text-secondary);
+  color: #666;
 }
 
 .modal-body {
@@ -702,6 +709,7 @@ export default {
   margin: 0 0 15px 0;
   color: #333;
   font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .detail-grid {
@@ -712,6 +720,14 @@ export default {
 .detail-item {
   padding: 8px 0;
   border-bottom: 1px solid #f0f0f0;
+  color: #333;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.detail-item strong {
+  color: #333;
+  font-weight: 600;
 }
 
 .detail-item:last-child {
@@ -724,6 +740,7 @@ export default {
   gap: 10px;
   padding: 20px;
   border-top: 1px solid #ddd;
+  background-color: #f8f9fa;
 }
 
 /* États vides et chargement */
@@ -732,6 +749,25 @@ export default {
   text-align: center;
   padding: 60px 20px;
   color: #333;
+}
+
+.loading-container p {
+  color: #666;
+  margin-top: 15px;
+  font-size: 0.95rem;
+}
+
+.empty-state h3 {
+  color: #333;
+  margin: 15px 0 10px 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.empty-state p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .loading-spinner {

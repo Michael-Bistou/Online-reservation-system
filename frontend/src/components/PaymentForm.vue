@@ -110,8 +110,8 @@
               :class="{ 'error': errors.expiryYear }"
             >
               <option value="">Année</option>
-              <option v-for="year in 10" :key="year" :value="(new Date().getFullYear() + 1 + year).toString()">
-                {{ new Date().getFullYear() + 1 + year }}
+              <option v-for="year in 15" :key="year" :value="(2020 + year - 1).toString()">
+                {{ 2020 + year - 1 }}
               </option>
             </select>
             <span v-if="errors.expiryYear" class="error-message">{{ errors.expiryYear }}</span>
@@ -144,8 +144,7 @@
               required
             />
             <span class="checkmark"></span>
-            J'accepte les <a href="#" @click.prevent="showTerms">conditions générales</a> et la 
-            <a href="#" @click.prevent="showPrivacy">politique de confidentialité</a>
+                         J'accepte les conditions générales et la politique de confidentialité
           </label>
         </div>
       </div>
@@ -343,15 +342,7 @@ export default {
       return new Date(dateString).toLocaleDateString('fr-FR')
     }
 
-    // Afficher les conditions
-    const showTerms = () => {
-      alert('Conditions générales - À implémenter')
-    }
-
-    // Afficher la politique de confidentialité
-    const showPrivacy = () => {
-      alert('Politique de confidentialité - À implémenter')
-    }
+    
 
     return {
       processing,
@@ -362,10 +353,8 @@ export default {
       formatCardNumber,
       formatCVC,
       handlePayment,
-      formatAmount,
-      formatDate,
-      showTerms,
-      showPrivacy
+             formatAmount,
+       formatDate
     }
   }
 }
@@ -391,12 +380,17 @@ export default {
 .payment-header h3 {
   margin: 0 0 10px 0;
   font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .payment-subtitle {
   margin: 0;
-  opacity: 0.9;
+  color: #ffffff;
   font-size: 0.9rem;
+  font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .payment-summary {
@@ -411,6 +405,7 @@ export default {
   align-items: center;
   margin-bottom: 10px;
   font-size: 0.9rem;
+  color: #333;
 }
 
 .summary-item:last-child {
@@ -521,7 +516,9 @@ export default {
   align-items: flex-start;
   cursor: pointer;
   font-size: 0.9rem;
-  line-height: 1.4;
+  line-height: 1.5;
+  color: #333;
+  text-align: left;
 }
 
 .checkbox-label input[type="checkbox"] {
@@ -529,14 +526,7 @@ export default {
   margin-top: 2px;
 }
 
-.checkbox-label a {
-  color: #667eea;
-  text-decoration: none;
-}
 
-.checkbox-label a:hover {
-  text-decoration: underline;
-}
 
 .payment-actions {
   display: flex;
