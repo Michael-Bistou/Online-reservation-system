@@ -414,6 +414,61 @@
       "reason": "Raison"
     }
   },
+  "restaurant_dashboard": {
+    "nav": {
+      "dashboard": "🏪 Dashboard Restaurant",
+      "reservations": "📅 Réservations",
+      "statistics": "📈 Statistiques",
+      "menu": "📝 Menu",
+      "profile": "⚙️ Profil",
+      "main_site": "🏠 Site Principal",
+      "logout": "🚪 Déconnexion"
+    },
+    "header": {
+      "title": "Dashboard Restaurant",
+      "welcome": "Bienvenue, {name}"
+    },
+    "restaurant_info": {
+      "title": "Informations du restaurant",
+      "name": "Nom",
+      "cuisine_type": "Type de cuisine",
+      "price_range": "Gamme de prix",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email"
+    },
+    "statistics": {
+      "title": "Statistiques",
+      "today_reservations": "Réservations aujourd'hui",
+      "pending_reservations": "Réservations en attente",
+      "total_capacity": "Capacité totale",
+      "confirmed_reservations": "Réservations confirmées"
+    },
+    "quick_actions": {
+      "title": "Actions rapides",
+      "manage_reservations": "Gérer les réservations",
+      "edit_profile": "Modifier le profil",
+      "view_statistics": "Voir les statistiques",
+      "manage_menu": "Gérer le menu"
+    },
+    "hours_amenities": {
+      "title": "Horaires et équipements",
+      "opening_hours": "Horaires d'ouverture",
+      "not_specified": "Non renseigné",
+      "available_amenities": "Équipements disponibles",
+      "parking": "🚗 Parking",
+      "wifi": "📶 Wi-Fi",
+      "outdoor_seating": "🌳 Terrasse",
+      "wheelchair_accessible": "♿ Accessible PMR",
+      "no_amenities": "Aucun équipement renseigné"
+    },
+    "emails": {
+      "title": "📧 Emails reçus",
+      "no_emails": "Aucun email reçu",
+      "no_emails_text": "Les emails de nouvelles réservations apparaîtront ici.",
+      "view_all_emails": "Voir tous les emails ({count})"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",

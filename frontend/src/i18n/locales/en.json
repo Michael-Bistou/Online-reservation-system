@@ -411,6 +411,61 @@
       "reason": "Reason"
     }
   },
+  "restaurant_dashboard": {
+    "nav": {
+      "dashboard": "🏪 Restaurant Dashboard",
+      "reservations": "📅 Reservations",
+      "statistics": "📈 Statistics",
+      "menu": "📝 Menu",
+      "profile": "⚙️ Profile",
+      "main_site": "🏠 Main Site",
+      "logout": "🚪 Logout"
+    },
+    "header": {
+      "title": "Restaurant Dashboard",
+      "welcome": "Welcome, {name}"
+    },
+    "restaurant_info": {
+      "title": "Restaurant Information",
+      "name": "Name",
+      "cuisine_type": "Cuisine Type",
+      "price_range": "Price Range",
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "statistics": {
+      "title": "Statistics",
+      "today_reservations": "Today's Reservations",
+      "pending_reservations": "Pending Reservations",
+      "total_capacity": "Total Capacity",
+      "confirmed_reservations": "Confirmed Reservations"
+    },
+    "quick_actions": {
+      "title": "Quick Actions",
+      "manage_reservations": "Manage Reservations",
+      "edit_profile": "Edit Profile",
+      "view_statistics": "View Statistics",
+      "manage_menu": "Manage Menu"
+    },
+    "hours_amenities": {
+      "title": "Hours & Amenities",
+      "opening_hours": "Opening Hours",
+      "not_specified": "Not specified",
+      "available_amenities": "Available Amenities",
+      "parking": "🚗 Parking",
+      "wifi": "📶 Wi-Fi",
+      "outdoor_seating": "🌳 Outdoor Seating",
+      "wheelchair_accessible": "♿ Wheelchair Accessible",
+      "no_amenities": "No amenities specified"
+    },
+    "emails": {
+      "title": "📧 Received Emails",
+      "no_emails": "No emails received",
+      "no_emails_text": "New reservation emails will appear here.",
+      "view_all_emails": "View all emails ({count})"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",

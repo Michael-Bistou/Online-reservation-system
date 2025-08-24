@@ -6,32 +6,39 @@
         <div class="nav-content">
           <div class="nav-brand">
             <router-link to="/restaurant-dashboard" class="nav-logo">
-              🏪 Dashboard Restaurant
+              {{ $t('restaurant_dashboard.nav.dashboard') }}
             </router-link>
           </div>
           <div class="nav-links">
             <router-link to="/restaurant-dashboard" class="nav-link active">
-              📊 Dashboard
+              📊 {{ $t('restaurant_dashboard.nav.dashboard').replace('🏪 ', '') }}
             </router-link>
             <router-link to="/restaurant-reservations" class="nav-link">
-              📅 Réservations
+              {{ $t('restaurant_dashboard.nav.reservations') }}
             </router-link>
             <router-link to="/restaurant-stats" class="nav-link">
-              📈 Statistiques
+              {{ $t('restaurant_dashboard.nav.statistics') }}
             </router-link>
             <router-link to="/restaurant-menu" class="nav-link">
-              📝 Menu
+              {{ $t('restaurant_dashboard.nav.menu') }}
             </router-link>
             <router-link to="/restaurant-profile" class="nav-link">
-              ⚙️ Profil
+              {{ $t('restaurant_dashboard.nav.profile') }}
             </router-link>
           </div>
           <div class="nav-actions">
+            <!-- Language Selector -->
+            <div class="language-selector">
+              <select v-model="currentLanguage" @change="changeLanguage" class="language-select">
+                <option value="fr">🇫🇷 Français</option>
+                <option value="en">🇬🇧 English</option>
+              </select>
+            </div>
             <router-link to="/" class="btn btn-outline btn-sm">
-              🏠 Site Principal
+              {{ $t('restaurant_dashboard.nav.main_site') }}
             </router-link>
             <button @click="logout" class="btn btn-outline btn-sm">
-              🚪 Déconnexion
+              {{ $t('restaurant_dashboard.nav.logout') }}
             </button>
           </div>
         </div>
@@ -40,8 +47,8 @@
 
     <div class="dashboard-header">
       <div class="container">
-        <h1 class="dashboard-title">Dashboard Restaurant</h1>
-        <p class="dashboard-subtitle">Bienvenue, {{ restaurant?.restaurant_name || 'Restaurant' }}</p>
+        <h1 class="dashboard-title">{{ $t('restaurant_dashboard.header.title') }}</h1>
+        <p class="dashboard-subtitle">{{ $t('restaurant_dashboard.header.welcome', { name: restaurant?.restaurant_name || 'Restaurant' }) }}</p>
       </div>
     </div>
 
@@ -50,30 +57,30 @@
         <div class="dashboard-grid">
           <!-- Informations du restaurant -->
           <div class="dashboard-card">
-            <h3 class="card-title">Informations du restaurant</h3>
+            <h3 class="card-title">{{ $t('restaurant_dashboard.restaurant_info.title') }}</h3>
             <div class="info-list">
               <div class="info-item">
-                <span class="info-label">Nom :</span>
+                <span class="info-label">{{ $t('restaurant_dashboard.restaurant_info.name') }} :</span>
                 <span class="info-value">{{ restaurant?.restaurant_name }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Type de cuisine :</span>
+                <span class="info-label">{{ $t('restaurant_dashboard.restaurant_info.cuisine_type') }} :</span>
                 <span class="info-value">{{ restaurant?.cuisine_type }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Gamme de prix :</span>
+                <span class="info-label">{{ $t('restaurant_dashboard.restaurant_info.price_range') }} :</span>
                 <span class="info-value">{{ restaurant?.price_range }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Adresse :</span>
+                <span class="info-label">{{ $t('restaurant_dashboard.restaurant_info.address') }} :</span>
                 <span class="info-value">{{ restaurant?.address }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Téléphone :</span>
+                <span class="info-label">{{ $t('restaurant_dashboard.restaurant_info.phone') }} :</span>
                 <span class="info-value">{{ restaurant?.phone }}</span>
               </div>
               <div class="info-item">
-                <span class="info-label">Email :</span>
+                <span class="info-label">{{ $t('restaurant_dashboard.restaurant_info.email') }} :</span>
                 <span class="info-value">{{ restaurant?.email }}</span>
               </div>
             </div>
@@ -81,66 +88,66 @@
 
           <!-- Statistiques -->
           <div class="dashboard-card">
-            <h3 class="card-title">Statistiques</h3>
+            <h3 class="card-title">{{ $t('restaurant_dashboard.statistics.title') }}</h3>
             <div class="stats-grid">
               <div class="stat-item">
                 <div class="stat-number">{{ todayReservations }}</div>
-                <div class="stat-label">Réservations aujourd'hui</div>
+                <div class="stat-label">{{ $t('restaurant_dashboard.statistics.today_reservations') }}</div>
               </div>
               <div class="stat-item">
                 <div class="stat-number">{{ pendingReservations }}</div>
-                <div class="stat-label">Réservations en attente</div>
+                <div class="stat-label">{{ $t('restaurant_dashboard.statistics.pending_reservations') }}</div>
               </div>
               <div class="stat-item">
                 <div class="stat-number">{{ restaurant?.capacity || 0 }}</div>
-                <div class="stat-label">Capacité totale</div>
+                <div class="stat-label">{{ $t('restaurant_dashboard.statistics.total_capacity') }}</div>
               </div>
               <div class="stat-item">
                 <div class="stat-number">{{ confirmedReservations }}</div>
-                <div class="stat-label">Réservations confirmées</div>
+                <div class="stat-label">{{ $t('restaurant_dashboard.statistics.confirmed_reservations') }}</div>
               </div>
             </div>
           </div>
 
           <!-- Actions rapides -->
           <div class="dashboard-card">
-            <h3 class="card-title">Actions rapides</h3>
+            <h3 class="card-title">{{ $t('restaurant_dashboard.quick_actions.title') }}</h3>
             <div class="actions-grid">
               <router-link to="/restaurant-reservations" class="action-btn">
                 <span class="action-icon">📅</span>
-                <span class="action-text">Gérer les réservations</span>
+                <span class="action-text">{{ $t('restaurant_dashboard.quick_actions.manage_reservations') }}</span>
               </router-link>
               <router-link to="/restaurant-profile" class="action-btn">
                 <span class="action-icon">⚙️</span>
-                <span class="action-text">Modifier le profil</span>
+                <span class="action-text">{{ $t('restaurant_dashboard.quick_actions.edit_profile') }}</span>
               </router-link>
                         <router-link to="/restaurant-stats" class="action-btn">
             <span class="action-icon">📊</span>
-            <span class="action-text">Voir les statistiques</span>
+            <span class="action-text">{{ $t('restaurant_dashboard.quick_actions.view_statistics') }}</span>
           </router-link>
           <router-link to="/restaurant-menu" class="action-btn">
             <span class="action-icon">📝</span>
-            <span class="action-text">Gérer le menu</span>
+            <span class="action-text">{{ $t('restaurant_dashboard.quick_actions.manage_menu') }}</span>
           </router-link>
             </div>
           </div>
 
           <!-- Horaires et équipements -->
           <div class="dashboard-card">
-            <h3 class="card-title">Horaires et équipements</h3>
+            <h3 class="card-title">{{ $t('restaurant_dashboard.hours_amenities.title') }}</h3>
             <div class="info-section">
-              <h4>Horaires d'ouverture</h4>
-              <p class="opening-hours">{{ restaurant?.opening_hours || 'Non renseigné' }}</p>
+              <h4>{{ $t('restaurant_dashboard.hours_amenities.opening_hours') }}</h4>
+              <p class="opening-hours">{{ restaurant?.opening_hours || $t('restaurant_dashboard.hours_amenities.not_specified') }}</p>
             </div>
             <div class="info-section">
-              <h4>Équipements disponibles</h4>
+              <h4>{{ $t('restaurant_dashboard.hours_amenities.available_amenities') }}</h4>
               <div class="amenities-list">
-                <span v-if="restaurant?.has_parking" class="amenity-tag">🚗 Parking</span>
-                <span v-if="restaurant?.has_wifi" class="amenity-tag">📶 Wi-Fi</span>
-                <span v-if="restaurant?.has_outdoor_seating" class="amenity-tag">🌳 Terrasse</span>
-                <span v-if="restaurant?.is_wheelchair_accessible" class="amenity-tag">♿ Accessible PMR</span>
+                <span v-if="restaurant?.has_parking" class="amenity-tag">{{ $t('restaurant_dashboard.hours_amenities.parking') }}</span>
+                <span v-if="restaurant?.has_wifi" class="amenity-tag">{{ $t('restaurant_dashboard.hours_amenities.wifi') }}</span>
+                <span v-if="restaurant?.has_outdoor_seating" class="amenity-tag">{{ $t('restaurant_dashboard.hours_amenities.outdoor_seating') }}</span>
+                <span v-if="restaurant?.is_wheelchair_accessible" class="amenity-tag">{{ $t('restaurant_dashboard.hours_amenities.wheelchair_accessible') }}</span>
                 <span v-if="!restaurant?.has_parking && !restaurant?.has_wifi && !restaurant?.has_outdoor_seating && !restaurant?.is_wheelchair_accessible" class="no-amenities">
-                  Aucun équipement renseigné
+                  {{ $t('restaurant_dashboard.hours_amenities.no_amenities') }}
                 </span>
               </div>
             </div>
@@ -148,11 +155,11 @@
 
           <!-- Emails reçus -->
           <div class="dashboard-card">
-            <h3 class="card-title">📧 Emails reçus</h3>
+            <h3 class="card-title">{{ $t('restaurant_dashboard.emails.title') }}</h3>
             <div v-if="restaurantEmails.length === 0" class="empty-state">
               <div class="empty-icon">📧</div>
-              <p>Aucun email reçu</p>
-              <small>Les emails de nouvelles réservations apparaîtront ici.</small>
+              <p>{{ $t('restaurant_dashboard.emails.no_emails') }}</p>
+              <small>{{ $t('restaurant_dashboard.emails.no_emails_text') }}</small>
             </div>
             
             <div v-else class="emails-list">
@@ -182,7 +189,7 @@
               
               <div v-if="restaurantEmails.length > 3" class="view-more">
                 <router-link to="/email-history" class="btn btn-outline btn-sm">
-                  Voir tous les emails ({{ restaurantEmails.length }})
+                  {{ $t('restaurant_dashboard.emails.view_all_emails', { count: restaurantEmails.length }) }}
                 </router-link>
               </div>
             </div>
@@ -194,18 +201,31 @@
 </template>
 
 <script>
-import { ref, onMounted, onActivated, onUnmounted } from 'vue'
+import { ref, onMounted, onActivated, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'RestaurantDashboard',
   setup() {
     const router = useRouter()
+    const { t } = useI18n()
+    
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      // Force re-render when language changes
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+    
+    // Reactive data
     const restaurant = ref(null)
     const todayReservations = ref(0)
     const pendingReservations = ref(0)
     const confirmedReservations = ref(0)
     const restaurantEmails = ref([])
+    const currentLanguage = ref(localStorage.getItem('i18nextLng') || 'fr')
 
     const calculateStats = () => {
       try {
@@ -312,6 +332,18 @@ export default {
       return content.length > 100 ? content.substring(0, 100) + '...' : content
     }
 
+    // Language change function
+    const changeLanguage = (event) => {
+      const newLang = event.target.value
+      localStorage.setItem('i18nextLng', newLang)
+      
+      // Dispatch custom event to notify other components
+      window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: newLang } }))
+      
+      // Force page reload to apply language change
+      window.location.reload()
+    }
+
     onMounted(() => {
       // Vérifier si le restaurant est connecté
       const isLoggedIn = localStorage.getItem('restaurantLoggedIn')
@@ -328,6 +360,9 @@ export default {
 
       // Calculer les statistiques
       calculateStats()
+      
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
     })
 
     // Recalculer les statistiques quand on revient sur la page
@@ -350,6 +385,8 @@ export default {
     // Nettoyer l'écouteur lors de la destruction du composant
     onUnmounted(() => {
       window.removeEventListener('storage', handleStorageChange)
+      // Clean up language change event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     const logout = () => {
@@ -364,10 +401,12 @@ export default {
       pendingReservations,
       confirmedReservations,
       restaurantEmails,
+      currentLanguage,
       getEmailTypeLabel,
       formatEmailDate,
       truncateEmailContent,
       calculateStats,
+      changeLanguage,
       logout
     }
   }
@@ -701,6 +740,106 @@ export default {
   
   .dashboard-card {
     padding: 20px;
+  }
+}
+
+/* Navigation Styles */
+.restaurant-nav {
+  background: #2c3e50;
+  padding: 15px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand .nav-logo {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: white;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.language-selector {
+  position: relative;
+}
+
+.language-select {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-select:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.language-select:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.language-select option {
+  background: #333;
+  color: white;
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+  .nav-content {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-links {
+    gap: 15px;
+  }
+  
+  .nav-actions {
+    gap: 10px;
+  }
+  
+  .language-select {
+    font-size: 12px;
+    padding: 6px 8px;
   }
 }
 </style>
