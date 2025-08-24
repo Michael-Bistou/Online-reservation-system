@@ -138,7 +138,7 @@
                         🕐 {{ reservation.time }}
                       </span>
                       <span class="party-size">
-                        👥 {{ reservation.party_size }} {{ reservation.party_size === 1 ? 'personne' : 'personnes' }}
+                        👥 {{ reservation.party_size }} {{ reservation.party_size === 1 ? $t('common.person') : $t('common.people') }}
                       </span>
                     </div>
                   </div>
@@ -155,7 +155,7 @@
                   </div>
                   <div class="detail-row">
                     <span class="detail-label">{{ $t('reservations.table_number') }}:</span>
-                    <span class="detail-value">{{ reservation.table_number || 'À confirmer' }}</span>
+                    <span class="detail-value">{{ reservation.table_number || $t('reservations.to_confirm') }}</span>
                   </div>
                   <div v-if="reservation.special_requests" class="detail-row">
                     <span class="detail-label">{{ $t('reservations.special_requests') }}:</span>
@@ -238,7 +238,7 @@
               <label class="form-label">{{ $t('reservations.party_size') }}</label>
               <select v-model="newReservation.party_size" class="form-input" required>
                 <option value="">{{ $t('common.select') }}</option>
-                <option v-for="i in 10" :key="i" :value="i">{{ i }} {{ i === 1 ? 'personne' : 'personnes' }}</option>
+                                      <option v-for="i in 10" :key="i" :value="i">{{ i }} {{ i === 1 ? $t('common.person') : $t('common.people') }}</option>
               </select>
             </div>
 
@@ -313,7 +313,7 @@
                   <strong>Heure :</strong> {{ reservationToCancel.time }}
                 </div>
                 <div class="summary-item">
-                  <strong>Personnes :</strong> {{ reservationToCancel.party_size }}
+                  <strong>{{ $t('reservations.party_size') }} :</strong> {{ reservationToCancel.party_size }}
                 </div>
               </div>
             </div>
@@ -325,7 +325,7 @@
                 <option value="change_of_plans">Changement de plans</option>
                 <option value="unavailable">Indisponibilité</option>
                 <option value="found_alternative">Autre restaurant trouvé</option>
-                <option value="emergency">Urgence personnelle</option>
+                                  <option value="emergency">{{ $t('reservations.emergency') }}</option>
                 <option value="weather">Conditions météo</option>
                 <option value="other">Autre raison</option>
               </select>
@@ -381,7 +381,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
@@ -393,6 +393,14 @@ export default {
   setup() {
     const router = useRouter()
     const { t } = useI18n()
+    
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      // Force re-render when language changes
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
     
     // Reactive data
     const reservations = ref([])
@@ -816,6 +824,13 @@ export default {
     // Lifecycle
     onMounted(() => {
       loadReservations()
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {

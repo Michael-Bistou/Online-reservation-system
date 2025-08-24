@@ -353,7 +353,9 @@
     "special_requests_placeholder": "Allergies, préférences alimentaires, demandes spéciales...",
     "reservation_error": "Erreur lors de la création de la réservation",
     "reservation_created": "Votre réservation a été créée avec succès !",
-    "reservation_cancelled": "Votre réservation a été annulée avec succès !"
+    "reservation_cancelled": "Votre réservation a été annulée avec succès !",
+    "to_confirm": "À confirmer",
+    "emergency": "Urgence personnelle"
   },
   "profile": {
     "title": "Mon Profil",
