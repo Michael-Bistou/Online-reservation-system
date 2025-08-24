@@ -552,6 +552,66 @@
       "most_popular_hour": "{hour} with {count} reservations"
     }
   },
+  "restaurant_menu": {
+    "title": "Menu Management",
+    "subtitle": "Manage your dishes and menu",
+    "actions": {
+      "add_dish": "Add dish",
+      "export_menu": "Export menu",
+      "import_menu": "Import menu"
+    },
+    "filters": {
+      "search_placeholder": "Search for a dish...",
+      "all_categories": "All categories",
+      "sort_by_name": "Sort by name",
+      "sort_by_price": "Sort by price",
+      "sort_by_category": "Sort by category"
+    },
+    "categories": {
+      "entrees": "Starters",
+      "plats": "Main courses",
+      "desserts": "Desserts",
+      "boissons": "Beverages"
+    },
+    "stats": {
+      "total_dishes": "Total dishes",
+      "average_price": "Average price",
+      "popular_dishes": "Popular dishes",
+      "new_dishes": "New dishes"
+    },
+    "dish": {
+      "available": "Available",
+      "unavailable": "Unavailable",
+      "vegetarian": "Vegetarian",
+      "gluten_free": "Gluten-free",
+      "spicy": "Spicy"
+    },
+    "empty_state": {
+      "no_dishes": "No dishes found",
+      "no_search_results": "No dishes match your search.",
+      "start_adding": "Start by adding your first dish!"
+    },
+    "modal": {
+      "edit_dish": "Edit dish",
+      "add_dish": "Add dish",
+      "dish_name": "Dish name",
+      "description": "Description",
+      "price": "Price",
+      "category": "Category",
+      "available": "Available",
+      "vegetarian": "Vegetarian",
+      "gluten_free": "Gluten-free",
+      "spicy": "Spicy",
+      "save": "Save",
+      "cancel": "Cancel"
+    },
+    "delete_modal": {
+      "title": "Confirm deletion",
+      "message": "Are you sure you want to delete this dish? This action is irreversible.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",

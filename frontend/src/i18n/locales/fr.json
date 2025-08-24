@@ -555,6 +555,66 @@
       "most_popular_hour": "{hour} avec {count} réservations"
     }
   },
+  "restaurant_menu": {
+    "title": "Gestion du Menu",
+    "subtitle": "Gérez vos plats et votre carte",
+    "actions": {
+      "add_dish": "Ajouter un plat",
+      "export_menu": "Exporter le menu",
+      "import_menu": "Importer un menu"
+    },
+    "filters": {
+      "search_placeholder": "Rechercher un plat...",
+      "all_categories": "Toutes les catégories",
+      "sort_by_name": "Trier par nom",
+      "sort_by_price": "Trier par prix",
+      "sort_by_category": "Trier par catégorie"
+    },
+    "categories": {
+      "entrees": "Entrées",
+      "plats": "Plats principaux",
+      "desserts": "Desserts",
+      "boissons": "Boissons"
+    },
+    "stats": {
+      "total_dishes": "Total des plats",
+      "average_price": "Prix moyen",
+      "popular_dishes": "Plats populaires",
+      "new_dishes": "Nouveaux plats"
+    },
+    "dish": {
+      "available": "Disponible",
+      "unavailable": "Indisponible",
+      "vegetarian": "Végétarien",
+      "gluten_free": "Sans gluten",
+      "spicy": "Épicé"
+    },
+    "empty_state": {
+      "no_dishes": "Aucun plat trouvé",
+      "no_search_results": "Aucun plat ne correspond à votre recherche.",
+      "start_adding": "Commencez par ajouter votre premier plat !"
+    },
+    "modal": {
+      "edit_dish": "Modifier le plat",
+      "add_dish": "Ajouter un plat",
+      "dish_name": "Nom du plat",
+      "description": "Description",
+      "price": "Prix",
+      "category": "Catégorie",
+      "available": "Disponible",
+      "vegetarian": "Végétarien",
+      "gluten_free": "Sans gluten",
+      "spicy": "Épicé",
+      "save": "Enregistrer",
+      "cancel": "Annuler"
+    },
+    "delete_modal": {
+      "title": "Confirmer la suppression",
+      "message": "Êtes-vous sûr de vouloir supprimer ce plat ? Cette action est irréversible.",
+      "cancel": "Annuler",
+      "delete": "Supprimer"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",

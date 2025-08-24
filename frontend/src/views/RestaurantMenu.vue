@@ -6,32 +6,32 @@
         <div class="nav-content">
           <div class="nav-brand">
             <router-link to="/restaurant-dashboard" class="nav-logo">
-              🏪 Dashboard Restaurant
+              {{ $t('restaurant_dashboard.nav.dashboard') }}
             </router-link>
           </div>
           <div class="nav-links">
             <router-link to="/restaurant-dashboard" class="nav-link">
-              📊 Dashboard
+              📊 {{ $t('restaurant_dashboard.nav.dashboard').replace('🏪 ', '') }}
             </router-link>
             <router-link to="/restaurant-reservations" class="nav-link">
-              📅 Réservations
+              {{ $t('restaurant_dashboard.nav.reservations') }}
             </router-link>
             <router-link to="/restaurant-stats" class="nav-link">
-              📈 Statistiques
+              {{ $t('restaurant_dashboard.nav.statistics') }}
             </router-link>
             <router-link to="/restaurant-menu" class="nav-link active">
-              📝 Menu
+              {{ $t('restaurant_dashboard.nav.menu') }}
             </router-link>
             <router-link to="/restaurant-profile" class="nav-link">
-              ⚙️ Profil
+              {{ $t('restaurant_dashboard.nav.profile') }}
             </router-link>
           </div>
           <div class="nav-actions">
             <router-link to="/" class="btn btn-outline btn-sm">
-              🏠 Site Principal
+              {{ $t('restaurant_dashboard.nav.main_site') }}
             </router-link>
             <button @click="logout" class="btn btn-outline btn-sm">
-              🚪 Déconnexion
+              {{ $t('restaurant_dashboard.nav.logout') }}
             </button>
           </div>
         </div>
@@ -40,8 +40,8 @@
 
     <div class="page-header">
       <div class="container">
-        <h1 class="page-title">Gestion du Menu</h1>
-        <p class="page-subtitle">Gérez vos plats et votre carte</p>
+        <h1 class="page-title">{{ $t('restaurant_menu.title') }}</h1>
+        <p class="page-subtitle">{{ $t('restaurant_menu.subtitle') }}</p>
       </div>
     </div>
 
@@ -52,15 +52,15 @@
           <div class="actions-row">
             <button @click="showAddModal = true" class="btn btn-primary">
               <span class="btn-icon">➕</span>
-              Ajouter un plat
+              {{ $t('restaurant_menu.actions.add_dish') }}
             </button>
             <button @click="exportMenu" class="btn btn-outline">
               <span class="btn-icon">📄</span>
-              Exporter le menu
+              {{ $t('restaurant_menu.actions.export_menu') }}
             </button>
             <button @click="importMenu" class="btn btn-outline">
               <span class="btn-icon">📥</span>
-              Importer un menu
+              {{ $t('restaurant_menu.actions.import_menu') }}
             </button>
           </div>
         </div>
@@ -72,24 +72,24 @@
               <input 
                 v-model="searchQuery" 
                 type="text" 
-                placeholder="Rechercher un plat..." 
+                :placeholder="$t('restaurant_menu.filters.search_placeholder')" 
                 class="search-input"
               />
             </div>
             <div class="filter-group">
               <select v-model="selectedCategory" class="filter-select">
-                <option value="">Toutes les catégories</option>
-                <option value="entrees">Entrées</option>
-                <option value="plats">Plats principaux</option>
-                <option value="desserts">Desserts</option>
-                <option value="boissons">Boissons</option>
+                <option value="">{{ $t('restaurant_menu.filters.all_categories') }}</option>
+                <option value="entrees">{{ $t('restaurant_menu.categories.entrees') }}</option>
+                <option value="plats">{{ $t('restaurant_menu.categories.plats') }}</option>
+                <option value="desserts">{{ $t('restaurant_menu.categories.desserts') }}</option>
+                <option value="boissons">{{ $t('restaurant_menu.categories.boissons') }}</option>
               </select>
             </div>
             <div class="filter-group">
               <select v-model="sortBy" class="filter-select">
-                <option value="name">Trier par nom</option>
-                <option value="price">Trier par prix</option>
-                <option value="category">Trier par catégorie</option>
+                <option value="name">{{ $t('restaurant_menu.filters.sort_by_name') }}</option>
+                <option value="price">{{ $t('restaurant_menu.filters.sort_by_price') }}</option>
+                <option value="category">{{ $t('restaurant_menu.filters.sort_by_category') }}</option>
               </select>
             </div>
           </div>
@@ -102,28 +102,28 @@
               <div class="stat-icon">🍽️</div>
               <div class="stat-content">
                 <div class="stat-number">{{ totalDishes }}</div>
-                <div class="stat-label">Total des plats</div>
+                <div class="stat-label">{{ $t('restaurant_menu.stats.total_dishes') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">💰</div>
               <div class="stat-content">
                 <div class="stat-number">{{ averagePrice }}€</div>
-                <div class="stat-label">Prix moyen</div>
+                <div class="stat-label">{{ $t('restaurant_menu.stats.average_price') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">⭐</div>
               <div class="stat-content">
                 <div class="stat-number">{{ popularDishes.length }}</div>
-                <div class="stat-label">Plats populaires</div>
+                <div class="stat-label">{{ $t('restaurant_menu.stats.popular_dishes') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">🆕</div>
               <div class="stat-content">
                 <div class="stat-number">{{ newDishes.length }}</div>
-                <div class="stat-label">Nouveaux plats</div>
+                <div class="stat-label">{{ $t('restaurant_menu.stats.new_dishes') }}</div>
               </div>
             </div>
           </div>
@@ -153,13 +153,13 @@
                 <div class="dish-meta">
                   <span class="dish-category">{{ getCategoryLabel(dish.category) }}</span>
                   <span class="dish-status" :class="dish.available ? 'available' : 'unavailable'">
-                    {{ dish.available ? 'Disponible' : 'Indisponible' }}
+                    {{ dish.available ? $t('restaurant_menu.dish.available') : $t('restaurant_menu.dish.unavailable') }}
                   </span>
                 </div>
                 <div class="dish-tags">
-                  <span v-if="dish.vegetarian" class="tag vegetarian">Végétarien</span>
-                  <span v-if="dish.glutenFree" class="tag gluten-free">Sans gluten</span>
-                  <span v-if="dish.spicy" class="tag spicy">Épicé</span>
+                  <span v-if="dish.vegetarian" class="tag vegetarian">{{ $t('restaurant_menu.dish.vegetarian') }}</span>
+                  <span v-if="dish.glutenFree" class="tag gluten-free">{{ $t('restaurant_menu.dish.gluten_free') }}</span>
+                  <span v-if="dish.spicy" class="tag spicy">{{ $t('restaurant_menu.dish.spicy') }}</span>
                 </div>
               </div>
             </div>
@@ -168,9 +168,9 @@
           <!-- État vide -->
           <div v-if="filteredDishes.length === 0" class="empty-state">
             <div class="empty-icon">🍽️</div>
-            <h3>Aucun plat trouvé</h3>
-            <p>{{ searchQuery ? 'Aucun plat ne correspond à votre recherche.' : 'Commencez par ajouter votre premier plat !' }}</p>
-            <button @click="showAddModal = true" class="btn btn-primary">Ajouter un plat</button>
+            <h3>{{ $t('restaurant_menu.empty_state.no_dishes') }}</h3>
+            <p>{{ searchQuery ? $t('restaurant_menu.empty_state.no_search_results') : $t('restaurant_menu.empty_state.start_adding') }}</p>
+            <button @click="showAddModal = true" class="btn btn-primary">{{ $t('restaurant_menu.actions.add_dish') }}</button>
           </div>
         </div>
       </div>
@@ -180,14 +180,14 @@
     <div v-if="showAddModal || showEditModal" class="modal-overlay" @click="closeModal">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
-          <h2>{{ showEditModal ? 'Modifier le plat' : 'Ajouter un plat' }}</h2>
+          <h2>{{ showEditModal ? $t('restaurant_menu.modal.edit_dish') : $t('restaurant_menu.modal.add_dish') }}</h2>
           <button @click="closeModal" class="close-btn">✕</button>
         </div>
         
         <form @submit.prevent="saveDish" class="dish-form">
           <div class="form-grid">
             <div class="form-group">
-              <label class="form-label">Nom du plat *</label>
+              <label class="form-label">{{ $t('restaurant_menu.modal.dish_name') }} *</label>
               <input 
                 v-model="dishForm.name" 
                 type="text" 
@@ -198,7 +198,7 @@
             </div>
             
             <div class="form-group">
-              <label class="form-label">Prix (€) *</label>
+              <label class="form-label">{{ $t('restaurant_menu.modal.price') }} (€) *</label>
               <input 
                 v-model="dishForm.price" 
                 type="number" 
@@ -211,13 +211,13 @@
             </div>
             
             <div class="form-group">
-              <label class="form-label">Catégorie *</label>
+              <label class="form-label">{{ $t('restaurant_menu.modal.category') }} *</label>
               <select v-model="dishForm.category" class="form-select" required>
                 <option value="">Sélectionner une catégorie</option>
-                <option value="entrees">Entrées</option>
-                <option value="plats">Plats principaux</option>
-                <option value="desserts">Desserts</option>
-                <option value="boissons">Boissons</option>
+                <option value="entrees">{{ $t('restaurant_menu.categories.entrees') }}</option>
+                <option value="plats">{{ $t('restaurant_menu.categories.plats') }}</option>
+                <option value="desserts">{{ $t('restaurant_menu.categories.desserts') }}</option>
+                <option value="boissons">{{ $t('restaurant_menu.categories.boissons') }}</option>
               </select>
             </div>
             
@@ -232,7 +232,7 @@
             </div>
             
             <div class="form-group full-width">
-              <label class="form-label">Description *</label>
+              <label class="form-label">{{ $t('restaurant_menu.modal.description') }} *</label>
               <textarea 
                 v-model="dishForm.description" 
                 class="form-textarea" 
@@ -269,33 +269,33 @@
               <label class="checkbox-label">
                 <input v-model="dishForm.available" type="checkbox" />
                 <span class="checkmark"></span>
-                Disponible
+                {{ $t('restaurant_menu.modal.available') }}
               </label>
               
               <label class="checkbox-label">
                 <input v-model="dishForm.vegetarian" type="checkbox" />
                 <span class="checkmark"></span>
-                Végétarien
+                {{ $t('restaurant_menu.modal.vegetarian') }}
               </label>
               
               <label class="checkbox-label">
                 <input v-model="dishForm.glutenFree" type="checkbox" />
                 <span class="checkmark"></span>
-                Sans gluten
+                {{ $t('restaurant_menu.modal.gluten_free') }}
               </label>
               
               <label class="checkbox-label">
                 <input v-model="dishForm.spicy" type="checkbox" />
                 <span class="checkmark"></span>
-                Épicé
+                {{ $t('restaurant_menu.modal.spicy') }}
               </label>
             </div>
           </div>
           
           <div class="form-actions">
-            <button type="button" @click="closeModal" class="btn btn-outline">Annuler</button>
+            <button type="button" @click="closeModal" class="btn btn-outline">{{ $t('restaurant_menu.modal.cancel') }}</button>
             <button type="submit" class="btn btn-primary">
-              {{ showEditModal ? 'Modifier' : 'Ajouter' }}
+              {{ showEditModal ? $t('restaurant_menu.modal.save') : $t('restaurant_menu.actions.add_dish') }}
             </button>
           </div>
         </form>
@@ -306,15 +306,15 @@
     <div v-if="showDeleteModal" class="modal-overlay" @click="showDeleteModal = false">
       <div class="modal-content delete-modal" @click.stop>
         <div class="modal-header">
-          <h2>Confirmer la suppression</h2>
+          <h2>{{ $t('restaurant_menu.delete_modal.title') }}</h2>
           <button @click="showDeleteModal = false" class="close-btn">✕</button>
         </div>
         <div class="modal-body">
-          <p>Êtes-vous sûr de vouloir supprimer ce plat ? Cette action est irréversible.</p>
+          <p>{{ $t('restaurant_menu.delete_modal.message') }}</p>
         </div>
         <div class="modal-actions">
-          <button @click="showDeleteModal = false" class="btn btn-outline">Annuler</button>
-          <button @click="confirmDelete" class="btn btn-danger">Supprimer</button>
+          <button @click="showDeleteModal = false" class="btn btn-outline">{{ $t('restaurant_menu.delete_modal.cancel') }}</button>
+          <button @click="confirmDelete" class="btn btn-danger">{{ $t('restaurant_menu.delete_modal.delete') }}</button>
         </div>
       </div>
     </div>
@@ -322,11 +322,14 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'RestaurantMenu',
   setup() {
+    const { t } = useI18n()
+    
     const dishes = ref([])
     const loading = ref(false)
     const searchQuery = ref('')
@@ -570,12 +573,19 @@ export default {
 
     const getCategoryLabel = (category) => {
       const labels = {
-        entrees: 'Entrées',
-        plats: 'Plats principaux',
-        desserts: 'Desserts',
-        boissons: 'Boissons'
+        entrees: t('restaurant_menu.categories.entrees'),
+        plats: t('restaurant_menu.categories.plats'),
+        desserts: t('restaurant_menu.categories.desserts'),
+        boissons: t('restaurant_menu.categories.boissons')
       }
       return labels[category] || category
+    }
+
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
     }
 
     const logout = () => {
@@ -586,6 +596,13 @@ export default {
 
     onMounted(() => {
       loadMenu()
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {
