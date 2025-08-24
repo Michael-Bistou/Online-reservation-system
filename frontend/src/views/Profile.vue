@@ -5,8 +5,8 @@
       <div class="container">
         <div class="header-content">
           <div class="header-info">
-            <h1 class="page-title">{{ $t('profile.title') }}</h1>
-            <p class="page-subtitle">{{ $t('profile.subtitle') }}</p>
+            <h1 class="page-title">Mon Profil</h1>
+            <p class="page-subtitle">Gérez vos informations personnelles et consultez vos statistiques</p>
           </div>
           <div class="user-avatar">
             <div class="avatar-circle">
@@ -23,7 +23,7 @@
         <!-- Loading State -->
         <div v-if="loading" class="loading-container">
           <div class="loading-spinner"></div>
-          <p>{{ $t('profile.loading') }}</p>
+          <p>Chargement de votre profil...</p>
         </div>
 
         <!-- Error State -->
@@ -40,48 +40,48 @@
         <div v-else class="profile-content">
           <!-- Mon Activité Section -->
           <div class="activity-section light-bg">
-            <h2 class="section-title">{{ $t('profile.stats.title') }}</h2>
+            <h2 class="section-title">Mes Statistiques</h2>
             <div class="activity-grid">
               <div class="activity-card light-bg">
                 <div class="activity-icon">📅</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.totalReservations }}</div>
-                  <div class="activity-label">{{ $t('profile.activity.total_reservations') }}</div>
+                  <div class="activity-label">Réservations totales</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">✅</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.confirmedReservations }}</div>
-                  <div class="activity-label">{{ $t('profile.activity.confirmed_reservations') }}</div>
+                  <div class="activity-label">Réservations confirmées</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">❌</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.cancelledReservations }}</div>
-                  <div class="activity-label">{{ $t('profile.activity.cancelled_reservations') }}</div>
+                  <div class="activity-label">Réservations annulées</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">🏪</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.uniqueRestaurants }}</div>
-                  <div class="activity-label">{{ $t('profile.activity.unique_restaurants') }}</div>
+                  <div class="activity-label">Restaurants visités</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">💰</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.totalSpent }}</div>
-                  <div class="activity-label">{{ $t('profile.activity.total_spent') }}</div>
+                  <div class="activity-label">Montant total dépensé</div>
                 </div>
               </div>
               <div class="activity-card light-bg">
                 <div class="activity-icon">📧</div>
                 <div class="activity-content">
                   <div class="activity-number">{{ userActivity.totalEmails }}</div>
-                  <div class="activity-label">{{ $t('profile.activity.total_emails') }}</div>
+                  <div class="activity-label">Emails reçus</div>
                 </div>
               </div>
             </div>
@@ -90,35 +90,35 @@
           <!-- Personal Info Section -->
           <div class="info-section light-bg">
             <div class="section-header">
-              <h2 class="section-title">{{ $t('profile.personalInfo.title') }}</h2>
+              <h2 class="section-title">Informations personnelles</h2>
               <button 
                 v-if="!editingPersonalInfo" 
                 @click="startEditPersonalInfo" 
                 class="btn-outline btn-sm"
               >
-                {{ $t('profile.personalInfo.edit') }}
+                Modifier
               </button>
             </div>
 
             <div class="info-card light-bg">
               <div v-if="!editingPersonalInfo" class="info-display">
                 <div class="info-row">
-                  <span class="info-label">{{ $t('profile.personalInfo.fullName') }}</span>
+                  <span class="info-label">Nom complet</span>
                   <span class="info-value">{{ userProfile.full_name }}</span>
                 </div>
                 <div class="info-row">
-                  <span class="info-label">{{ $t('profile.personalInfo.email') }}</span>
+                  <span class="info-label">Adresse email</span>
                   <span class="info-value">{{ userProfile.email }}</span>
                 </div>
                 <div class="info-row">
-                  <span class="info-label">{{ $t('profile.personalInfo.phone') }}</span>
-                  <span class="info-value">{{ userProfile.phone || $t('profile.personalInfo.notProvided') }}</span>
+                  <span class="info-label">Téléphone</span>
+                  <span class="info-value">{{ userProfile.phone || 'Non renseigné' }}</span>
                 </div>
               </div>
 
               <form v-else @submit.prevent="savePersonalInfo" class="info-form">
                 <div class="form-group">
-                  <label class="form-label">{{ $t('profile.personalInfo.fullName') }}</label>
+                  <label class="form-label">Nom complet</label>
                   <input
                     v-model="editForm.full_name"
                     type="text"
@@ -129,7 +129,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label">{{ $t('profile.personalInfo.email') }}</label>
+                  <label class="form-label">Adresse email</label>
                   <input
                     v-model="editForm.email"
                     type="email"
@@ -140,7 +140,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label">{{ $t('profile.personalInfo.phone') }}</label>
+                  <label class="form-label">Téléphone</label>
                   <input
                     v-model="editForm.phone"
                     type="tel"
@@ -152,11 +152,11 @@
 
                 <div class="form-actions">
                   <button type="button" @click="cancelEditPersonalInfo" class="btn-outline">
-                    {{ $t('profile.personalInfo.cancel') }}
+                    Annuler
                   </button>
                   <button type="submit" class="btn-primary" :disabled="saving">
                     <span v-if="saving" class="loading-spinner-small"></span>
-                    {{ saving ? $t('profile.personalInfo.saving') : $t('profile.personalInfo.save') }}
+                    {{ saving ? 'Enregistrement...' : 'Enregistrer' }}
                   </button>
                 </div>
               </form>
@@ -166,28 +166,28 @@
           <!-- Password Section -->
           <div class="info-section light-bg">
             <div class="section-header">
-              <h2 class="section-title">{{ $t('profile.password.title') }}</h2>
+              <h2 class="section-title">Sécurité du compte</h2>
               <button 
                 v-if="!editingPassword" 
                 @click="startEditPassword" 
                 class="btn-outline btn-sm"
               >
-                {{ $t('profile.password.edit') }}
+                Modifier le mot de passe
               </button>
             </div>
 
             <div class="info-card light-bg">
               <div v-if="!editingPassword" class="info-display">
                 <div class="info-row">
-                  <span class="info-label">{{ $t('profile.password.title') }}</span>
+                  <span class="info-label">Sécurité du compte</span>
                   <span class="info-value">••••••••</span>
                 </div>
-                <p class="info-note">{{ $t('profile.password.note') }}</p>
+                <p class="info-note">Pour des raisons de sécurité, vous devez entrer votre mot de passe actuel</p>
               </div>
 
               <form v-else @submit.prevent="changePassword" class="info-form">
                 <div class="form-group">
-                  <label class="form-label">{{ $t('profile.password.currentPassword') }}</label>
+                  <label class="form-label">Mot de passe actuel</label>
                   <input
                     v-model="passwordForm.currentPassword"
                     type="password"
@@ -198,7 +198,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label">{{ $t('profile.password.newPassword') }}</label>
+                  <label class="form-label">Nouveau mot de passe</label>
                   <input
                     v-model="passwordForm.newPassword"
                     type="password"
@@ -209,7 +209,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label">{{ $t('profile.password.confirmPassword') }}</label>
+                  <label class="form-label">Confirmer le nouveau mot de passe</label>
                   <input
                     v-model="passwordForm.confirmPassword"
                     type="password"
@@ -221,11 +221,11 @@
 
                 <div class="form-actions">
                   <button type="button" @click="cancelEditPassword" class="btn-outline">
-                    {{ $t('profile.password.cancel') }}
+                    Annuler
                   </button>
                   <button type="submit" class="btn-primary" :disabled="changingPassword">
                     <span v-if="changingPassword" class="loading-spinner-small"></span>
-                    {{ changingPassword ? $t('profile.password.changing') : $t('profile.password.change') }}
+                    {{ changingPassword ? 'Modification...' : 'Changer le mot de passe' }}
                   </button>
                 </div>
               </form>
@@ -234,21 +234,21 @@
 
           <!-- Account Actions Section -->
           <div class="actions-section light-bg">
-            <h2 class="section-title">{{ $t('common.actions') }}</h2>
+            <h2 class="section-title">Actions</h2>
             <div class="actions-grid">
               <button @click="exportData" class="action-card light-bg">
                 <div class="action-icon">📊</div>
                 <div class="action-content">
-                  <h3>{{ $t('profile.account_actions.export_data.title') }}</h3>
-                  <p>{{ $t('profile.account_actions.export_data.description') }}</p>
+                  <h3>Exporter mes données</h3>
+                  <p>Téléchargez toutes vos données personnelles au format JSON</p>
                 </div>
               </button>
               
               <button @click="showDeleteAccountModal = true" class="action-card danger light-bg">
                 <div class="action-icon">🗑️</div>
                 <div class="action-content">
-                  <h3>{{ $t('profile.account_actions.delete_account.title') }}</h3>
-                  <p>{{ $t('profile.account_actions.delete_account.description') }}</p>
+                  <h3>Supprimer mon compte</h3>
+                  <p>Supprimez définitivement votre compte et toutes vos données</p>
                 </div>
               </button>
 
@@ -263,30 +263,30 @@
     <div v-if="showDeleteAccountModal" class="modal-overlay" @click="showDeleteAccountModal = false">
       <div class="modal-content light-bg" @click.stop>
         <div class="modal-header">
-          <h3>{{ $t('profile.account_actions.delete_account.modal_title') }}</h3>
+          <h3>Confirmer la suppression du compte</h3>
           <button @click="showDeleteAccountModal = false" class="modal-close">×</button>
         </div>
         
         <div class="modal-body">
           <div class="warning-message">
             <div class="warning-icon">⚠️</div>
-            <h4>{{ $t('profile.account_actions.delete_account.warning_title') }}</h4>
-            <p>{{ $t('profile.account_actions.delete_account.warning_message') }}</p>
+            <h4>Attention : Cette action est irréversible</h4>
+            <p>En supprimant votre compte, vous perdrez définitivement :</p>
             <ul>
-              <li>{{ $t('profile.account_actions.delete_account.data_list.reservations') }}</li>
-              <li>{{ $t('profile.account_actions.delete_account.data_list.personal_info') }}</li>
-              <li>{{ $t('profile.account_actions.delete_account.data_list.history') }}</li>
+              <li>Toutes vos réservations</li>
+              <li>Vos informations personnelles</li>
+              <li>Votre historique d'activité</li>
             </ul>
-            <p><strong>{{ $t('profile.account_actions.delete_account.irreversible') }}</strong></p>
+            <p><strong>Cette action ne peut pas être annulée</strong></p>
           </div>
           
           <div class="modal-actions">
             <button @click="showDeleteAccountModal = false" class="btn-outline">
-              {{ $t('common.cancel') }}
+              Annuler
             </button>
             <button @click="deleteAccount" class="btn-danger" :disabled="deletingAccount">
               <span v-if="deletingAccount" class="loading-spinner-small"></span>
-              {{ deletingAccount ? $t('profile.account_actions.delete_account.deleting') : $t('profile.account_actions.delete_account.confirm_button') }}
+              {{ deletingAccount ? 'Suppression...' : 'Supprimer définitivement' }}
             </button>
           </div>
         </div>

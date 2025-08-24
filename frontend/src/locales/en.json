@@ -124,17 +124,95 @@
   },
   "profile": {
     "title": "My Profile",
+    "subtitle": "Manage your personal information and view your statistics",
     "personal_info": "Personal information",
     "activity": "My activity",
     "stats": {
+      "title": "My Statistics",
+      "subtitle": "Overview of your activity on the platform",
       "total_reservations": "Total reservations",
       "total_spent": "Total spent",
       "favorite_cuisine": "Favorite cuisine",
       "member_since": "Member since"
     },
+    "personalInfo": {
+      "title": "Personal Information",
+      "subtitle": "Your contact details and information",
+      "fullName": "Full name",
+      "email": "Email address",
+      "phone": "Phone number",
+      "notProvided": "Not provided",
+      "edit": "Edit",
+      "save": "Save",
+      "cancel": "Cancel",
+      "saving": "Saving...",
+      "errors": {
+        "nameRequired": "Full name is required",
+        "nameMin": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email format",
+        "phoneInvalid": "Invalid phone format",
+        "profile_update_error": "Error updating profile"
+      },
+      "success": "Profile updated successfully"
+    },
+    "password": {
+      "title": "Account Security",
+      "subtitle": "Change your password to secure your account",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm new password",
+      "changePassword": "Change password",
+      "passwordChanged": "Password changed successfully",
+      "edit": "Change password",
+      "note": "For security reasons, you must enter your current password",
+      "changing": "Changing...",
+      "change": "Change password",
+      "success": "Password changed successfully",
+      "errors": {
+        "currentRequired": "Current password is required",
+        "newRequired": "New password is required",
+        "newMin": "New password must be at least 6 characters",
+        "confirmMatch": "Passwords do not match",
+        "currentIncorrect": "Current password is incorrect"
+      }
+    },
+    "activity": {
+      "title": "My Activity",
+      "subtitle": "History of your reservations and interactions",
+      "total_reservations": "Total reservations",
+      "confirmed_reservations": "Confirmed reservations",
+      "cancelled_reservations": "Cancelled reservations",
+      "unique_restaurants": "Restaurants visited",
+      "total_spent": "Total amount spent",
+      "total_emails": "Emails received"
+    },
     "actions": {
       "export_data": "Export my data",
       "delete_account": "Delete my account"
+    },
+    "loading": "Loading your profile...",
+    "error": "Error loading profile",
+    "account_actions": {
+      "export_data": {
+        "title": "Export my data",
+        "description": "Download all your personal data in JSON format"
+      },
+      "delete_account": {
+        "title": "Delete my account",
+        "description": "Permanently delete your account and all your data",
+        "modal_title": "Confirm account deletion",
+        "warning_title": "Warning: This action is irreversible",
+        "warning_message": "By deleting your account, you will permanently lose:",
+        "data_list": {
+          "reservations": "All your reservations",
+          "personal_info": "Your personal information",
+          "history": "Your activity history"
+        },
+        "irreversible": "This action cannot be undone",
+        "deleting": "Deleting...",
+        "confirm_button": "Delete permanently"
+      }
     }
   },
   "admin": {

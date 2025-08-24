@@ -124,17 +124,95 @@
   },
   "profile": {
     "title": "Mon Profil",
+    "subtitle": "Gérez vos informations personnelles et consultez vos statistiques",
     "personal_info": "Informations personnelles",
     "activity": "Mon activité",
     "stats": {
+      "title": "Mes Statistiques",
+      "subtitle": "Vue d'ensemble de votre activité sur la plateforme",
       "total_reservations": "Total des réservations",
       "total_spent": "Total dépensé",
       "favorite_cuisine": "Cuisine préférée",
       "member_since": "Membre depuis"
     },
+    "personalInfo": {
+      "title": "Informations personnelles",
+      "subtitle": "Vos coordonnées et informations de contact",
+      "fullName": "Nom complet",
+      "email": "Adresse email",
+      "phone": "Téléphone",
+      "notProvided": "Non renseigné",
+      "edit": "Modifier",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "saving": "Enregistrement...",
+      "errors": {
+        "nameRequired": "Le nom complet est requis",
+        "nameMin": "Le nom doit contenir au moins 2 caractères",
+        "emailRequired": "L'email est requis",
+        "emailInvalid": "Format d'email invalide",
+        "phoneInvalid": "Format de téléphone invalide",
+        "profile_update_error": "Erreur lors de la mise à jour du profil"
+      },
+      "success": "Profil mis à jour avec succès"
+    },
+    "password": {
+      "title": "Sécurité du compte",
+      "subtitle": "Modifiez votre mot de passe pour sécuriser votre compte",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le nouveau mot de passe",
+      "changePassword": "Changer le mot de passe",
+      "passwordChanged": "Mot de passe modifié avec succès",
+      "edit": "Modifier le mot de passe",
+      "note": "Pour des raisons de sécurité, vous devez entrer votre mot de passe actuel",
+      "changing": "Modification...",
+      "change": "Changer le mot de passe",
+      "success": "Mot de passe modifié avec succès",
+      "errors": {
+        "currentRequired": "Le mot de passe actuel est requis",
+        "newRequired": "Le nouveau mot de passe est requis",
+        "newMin": "Le nouveau mot de passe doit contenir au moins 6 caractères",
+        "confirmMatch": "Les mots de passe ne correspondent pas",
+        "currentIncorrect": "Le mot de passe actuel est incorrect"
+      }
+    },
+    "activity": {
+      "title": "Mon activité",
+      "subtitle": "Historique de vos réservations et interactions",
+      "total_reservations": "Réservations totales",
+      "confirmed_reservations": "Réservations confirmées",
+      "cancelled_reservations": "Réservations annulées",
+      "unique_restaurants": "Restaurants visités",
+      "total_spent": "Montant total dépensé",
+      "total_emails": "Emails reçus"
+    },
     "actions": {
       "export_data": "Exporter mes données",
       "delete_account": "Supprimer mon compte"
+    },
+    "loading": "Chargement de votre profil...",
+    "error": "Erreur lors du chargement du profil",
+    "account_actions": {
+      "export_data": {
+        "title": "Exporter mes données",
+        "description": "Téléchargez toutes vos données personnelles au format JSON"
+      },
+      "delete_account": {
+        "title": "Supprimer mon compte",
+        "description": "Supprimez définitivement votre compte et toutes vos données",
+        "modal_title": "Confirmer la suppression du compte",
+        "warning_title": "Attention : Cette action est irréversible",
+        "warning_message": "En supprimant votre compte, vous perdrez définitivement :",
+        "data_list": {
+          "reservations": "Toutes vos réservations",
+          "personal_info": "Vos informations personnelles",
+          "history": "Votre historique d'activité"
+        },
+        "irreversible": "Cette action ne peut pas être annulée",
+        "deleting": "Suppression...",
+        "confirm_button": "Supprimer définitivement"
+      }
     }
   },
   "admin": {
