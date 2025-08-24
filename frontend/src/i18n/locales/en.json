@@ -466,6 +466,55 @@
       "view_all_emails": "View all emails ({count})"
     }
   },
+  "restaurant_reservations": {
+    "title": "Reservation Management",
+    "subtitle": "Manage your restaurant reservations",
+    "stats": {
+      "total_reservations": "Total reservations",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "today": "Today"
+    },
+    "filters": {
+      "status": "Status",
+      "all_statuses": "All statuses",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled",
+      "completed": "Completed",
+      "date": "Date",
+      "all_dates": "All dates",
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "this_week": "This week",
+      "this_month": "This month",
+      "search": "Search",
+      "search_placeholder": "Client name, email...",
+      "clear_filters": "Clear filters"
+    },
+    "reservations": {
+      "title": "Reservations",
+      "refresh": "Refresh",
+      "loading": "Loading reservations...",
+      "no_reservations": "No reservations found",
+      "no_reservations_text": "You haven't received any reservations yet.",
+      "people": "people",
+      "email": "Email",
+      "phone": "Phone",
+      "special_requests": "Special requests",
+      "reservation_number": "Reservation number"
+    },
+    "actions": {
+      "confirm": "Confirm",
+      "reject": "Reject",
+      "mark_completed": "Mark as completed",
+      "cancel": "Cancel"
+    },
+    "modal": {
+      "confirm_action": "Confirm action",
+      "cancel": "Cancel"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",

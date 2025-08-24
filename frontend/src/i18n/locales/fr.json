@@ -469,6 +469,55 @@
       "view_all_emails": "Voir tous les emails ({count})"
     }
   },
+  "restaurant_reservations": {
+    "title": "Gestion des Réservations",
+    "subtitle": "Gérez les réservations de votre restaurant",
+    "stats": {
+      "total_reservations": "Total des réservations",
+      "pending": "En attente",
+      "confirmed": "Confirmées",
+      "today": "Aujourd'hui"
+    },
+    "filters": {
+      "status": "Statut",
+      "all_statuses": "Tous les statuts",
+      "pending": "En attente",
+      "confirmed": "Confirmées",
+      "cancelled": "Annulées",
+      "completed": "Terminées",
+      "date": "Date",
+      "all_dates": "Toutes les dates",
+      "today": "Aujourd'hui",
+      "tomorrow": "Demain",
+      "this_week": "Cette semaine",
+      "this_month": "Ce mois",
+      "search": "Rechercher",
+      "search_placeholder": "Nom du client, email...",
+      "clear_filters": "Effacer les filtres"
+    },
+    "reservations": {
+      "title": "Réservations",
+      "refresh": "Actualiser",
+      "loading": "Chargement des réservations...",
+      "no_reservations": "Aucune réservation trouvée",
+      "no_reservations_text": "Vous n'avez pas encore reçu de réservations.",
+      "people": "personnes",
+      "email": "Email",
+      "phone": "Téléphone",
+      "special_requests": "Demandes spéciales",
+      "reservation_number": "Numéro de réservation"
+    },
+    "actions": {
+      "confirm": "Confirmer",
+      "reject": "Refuser",
+      "mark_completed": "Marquer comme terminée",
+      "cancel": "Annuler"
+    },
+    "modal": {
+      "confirm_action": "Confirmer l'action",
+      "cancel": "Annuler"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",

@@ -6,32 +6,32 @@
         <div class="nav-content">
           <div class="nav-brand">
             <router-link to="/restaurant-dashboard" class="nav-logo">
-              🏪 Dashboard Restaurant
+              {{ $t('restaurant_dashboard.nav.dashboard') }}
             </router-link>
           </div>
           <div class="nav-links">
             <router-link to="/restaurant-dashboard" class="nav-link">
-              📊 Dashboard
+              📊 {{ $t('restaurant_dashboard.nav.dashboard').replace('🏪 ', '') }}
             </router-link>
             <router-link to="/restaurant-reservations" class="nav-link active">
-              📅 Réservations
+              {{ $t('restaurant_dashboard.nav.reservations') }}
             </router-link>
             <router-link to="/restaurant-stats" class="nav-link">
-              📈 Statistiques
+              {{ $t('restaurant_dashboard.nav.statistics') }}
             </router-link>
             <router-link to="/restaurant-menu" class="nav-link">
-              📝 Menu
+              {{ $t('restaurant_dashboard.nav.menu') }}
             </router-link>
             <router-link to="/restaurant-profile" class="nav-link">
-              ⚙️ Profil
+              {{ $t('restaurant_dashboard.nav.profile') }}
             </router-link>
           </div>
           <div class="nav-actions">
             <router-link to="/" class="btn btn-outline btn-sm">
-              🏠 Site Principal
+              {{ $t('restaurant_dashboard.nav.main_site') }}
             </router-link>
             <button @click="logout" class="btn btn-outline btn-sm">
-              🚪 Déconnexion
+              {{ $t('restaurant_dashboard.nav.logout') }}
             </button>
           </div>
         </div>
@@ -40,8 +40,8 @@
 
     <div class="page-header">
       <div class="container">
-        <h1 class="page-title">Gestion des Réservations</h1>
-        <p class="page-subtitle">Gérez les réservations de votre restaurant</p>
+        <h1 class="page-title">{{ $t('restaurant_reservations.title') }}</h1>
+        <p class="page-subtitle">{{ $t('restaurant_reservations.subtitle') }}</p>
       </div>
     </div>
 
@@ -52,57 +52,57 @@
           <div class="stats-grid">
             <div class="stat-card">
               <div class="stat-number">{{ totalReservations }}</div>
-              <div class="stat-label">Total des réservations</div>
+              <div class="stat-label">{{ $t('restaurant_reservations.stats.total_reservations') }}</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">{{ pendingReservations }}</div>
-              <div class="stat-label">En attente</div>
+              <div class="stat-label">{{ $t('restaurant_reservations.stats.pending') }}</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">{{ confirmedReservations }}</div>
-              <div class="stat-label">Confirmées</div>
+              <div class="stat-label">{{ $t('restaurant_reservations.stats.confirmed') }}</div>
             </div>
             <div class="stat-card">
               <div class="stat-number">{{ todayReservations }}</div>
-              <div class="stat-label">Aujourd'hui</div>
+              <div class="stat-label">{{ $t('restaurant_reservations.stats.today') }}</div>
             </div>
           </div>
 
           <div class="filters-row">
             <div class="filter-group">
-              <label class="filter-label">Statut</label>
+              <label class="filter-label">{{ $t('restaurant_reservations.filters.status') }}</label>
               <select v-model="selectedStatus" class="filter-select">
-                <option value="">Tous les statuts</option>
-                <option value="pending">En attente</option>
-                <option value="confirmed">Confirmées</option>
-                <option value="cancelled">Annulées</option>
-                <option value="completed">Terminées</option>
+                <option value="">{{ $t('restaurant_reservations.filters.all_statuses') }}</option>
+                <option value="pending">{{ $t('restaurant_reservations.filters.pending') }}</option>
+                <option value="confirmed">{{ $t('restaurant_reservations.filters.confirmed') }}</option>
+                <option value="cancelled">{{ $t('restaurant_reservations.filters.cancelled') }}</option>
+                <option value="completed">{{ $t('restaurant_reservations.filters.completed') }}</option>
               </select>
             </div>
 
             <div class="filter-group">
-              <label class="filter-label">Date</label>
+              <label class="filter-label">{{ $t('restaurant_reservations.filters.date') }}</label>
               <select v-model="selectedDate" class="filter-select">
-                <option value="">Toutes les dates</option>
-                <option value="today">Aujourd'hui</option>
-                <option value="tomorrow">Demain</option>
-                <option value="week">Cette semaine</option>
-                <option value="month">Ce mois</option>
+                <option value="">{{ $t('restaurant_reservations.filters.all_dates') }}</option>
+                <option value="today">{{ $t('restaurant_reservations.filters.today') }}</option>
+                <option value="tomorrow">{{ $t('restaurant_reservations.filters.tomorrow') }}</option>
+                <option value="week">{{ $t('restaurant_reservations.filters.this_week') }}</option>
+                <option value="month">{{ $t('restaurant_reservations.filters.this_month') }}</option>
               </select>
             </div>
 
             <div class="filter-group">
-              <label class="filter-label">Rechercher</label>
+              <label class="filter-label">{{ $t('restaurant_reservations.filters.search') }}</label>
               <input
                 v-model="searchQuery"
                 type="text"
                 class="filter-input"
-                placeholder="Nom du client, email..."
+                :placeholder="$t('restaurant_reservations.filters.search_placeholder')"
               />
             </div>
 
             <button @click="clearFilters" class="btn btn-outline">
-              Effacer les filtres
+              {{ $t('restaurant_reservations.filters.clear_filters') }}
             </button>
           </div>
         </div>
@@ -110,23 +110,23 @@
         <!-- Liste des réservations -->
         <div class="reservations-section">
           <div class="section-header">
-            <h2 class="section-title">Réservations</h2>
+            <h2 class="section-title">{{ $t('restaurant_reservations.reservations.title') }}</h2>
             <div class="section-actions">
               <button @click="refreshReservations" class="btn btn-outline">
                 <span class="btn-icon">🔄</span>
-                Actualiser
+                {{ $t('restaurant_reservations.reservations.refresh') }}
               </button>
             </div>
           </div>
 
           <div v-if="loading" class="loading-state">
             <div class="loading-spinner"></div>
-            <p>Chargement des réservations...</p>
+            <p>{{ $t('restaurant_reservations.reservations.loading') }}</p>
           </div>
 
           <div v-else-if="filteredReservations.length === 0" class="empty-state">
             <div class="empty-icon">📅</div>
-            <h3>Aucune réservation trouvée</h3>
+            <h3>{{ $t('restaurant_reservations.reservations.no_reservations') }}</h3>
             <p>{{ getEmptyStateMessage() }}</p>
           </div>
 
@@ -143,7 +143,7 @@
                   <p class="reservation-date">
                     {{ formatDate(reservation.date) }} à {{ reservation.time }}
                   </p>
-                  <p class="party-size">{{ reservation.partySize }} personnes</p>
+                  <p class="party-size">{{ reservation.partySize }} {{ $t('restaurant_reservations.reservations.people') }}</p>
                 </div>
                 <div class="status-badge" :class="`status-${reservation.status}`">
                   {{ getStatusLabel(reservation.status) }}
@@ -152,19 +152,19 @@
 
               <div class="reservation-details">
                 <div class="detail-row">
-                  <span class="detail-label">Email :</span>
+                  <span class="detail-label">{{ $t('restaurant_reservations.reservations.email') }} :</span>
                   <span class="detail-value">{{ reservation.clientEmail }}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Téléphone :</span>
+                  <span class="detail-label">{{ $t('restaurant_reservations.reservations.phone') }} :</span>
                   <span class="detail-value">{{ reservation.clientPhone }}</span>
                 </div>
                 <div v-if="reservation.specialRequests" class="detail-row">
-                  <span class="detail-label">Demandes spéciales :</span>
+                  <span class="detail-label">{{ $t('restaurant_reservations.reservations.special_requests') }} :</span>
                   <span class="detail-value">{{ reservation.specialRequests }}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Numéro de réservation :</span>
+                  <span class="detail-label">{{ $t('restaurant_reservations.reservations.reservation_number') }} :</span>
                   <span class="detail-value">#{{ reservation.id }}</span>
                 </div>
               </div>
@@ -175,28 +175,28 @@
                   @click="confirmReservation(reservation.id)"
                   class="btn btn-success"
                 >
-                  Confirmer
+                  {{ $t('restaurant_reservations.actions.confirm') }}
                 </button>
                 <button
                   v-if="reservation.status === 'pending'"
                   @click="rejectReservation(reservation.id)"
                   class="btn btn-danger"
                 >
-                  Refuser
+                  {{ $t('restaurant_reservations.actions.reject') }}
                 </button>
                 <button
                   v-if="reservation.status === 'confirmed'"
                   @click="completeReservation(reservation.id)"
                   class="btn btn-primary"
                 >
-                  Marquer comme terminée
+                  {{ $t('restaurant_reservations.actions.mark_completed') }}
                 </button>
                 <button
                   v-if="['pending', 'confirmed'].includes(reservation.status)"
                   @click="cancelReservation(reservation.id)"
                   class="btn btn-outline"
                 >
-                  Annuler
+                  {{ $t('restaurant_reservations.actions.cancel') }}
                 </button>
               </div>
             </div>
@@ -208,10 +208,10 @@
     <!-- Modal de confirmation -->
     <div v-if="showConfirmModal" class="modal-overlay" @click="closeModal">
       <div class="modal-content" @click.stop>
-        <h3>Confirmer l'action</h3>
+        <h3>{{ $t('restaurant_reservations.modal.confirm_action') }}</h3>
         <p>{{ confirmModalMessage }}</p>
         <div class="modal-actions">
-          <button @click="closeModal" class="btn btn-outline">Annuler</button>
+          <button @click="closeModal" class="btn btn-outline">{{ $t('restaurant_reservations.modal.cancel') }}</button>
           <button @click="executeAction" class="btn" :class="confirmModalButtonClass">
             {{ confirmModalButtonText }}
           </button>
@@ -222,12 +222,24 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import notificationService from '../services/notificationService.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'RestaurantReservations',
   setup() {
+    const { t } = useI18n()
+    
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      // Force re-render when language changes
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+    
+    // Reactive data
     const loading = ref(false)
     const reservations = ref([])
     const selectedStatus = ref('')
@@ -388,9 +400,9 @@ export default {
 
     const getEmptyStateMessage = () => {
       if (selectedStatus.value || selectedDate.value || searchQuery.value) {
-        return 'Aucune réservation ne correspond à vos critères de recherche.'
+        return t('restaurant_reservations.reservations.no_reservations_text')
       }
-      return 'Vous n\'avez pas encore reçu de réservations.'
+      return t('restaurant_reservations.reservations.no_reservations_text')
     }
 
     const formatDate = (dateString) => {
@@ -405,10 +417,10 @@ export default {
 
     const getStatusLabel = (status) => {
       const labels = {
-        pending: 'En attente',
-        confirmed: 'Confirmée',
-        cancelled: 'Annulée',
-        completed: 'Terminée'
+        pending: t('restaurant_reservations.filters.pending'),
+        confirmed: t('restaurant_reservations.filters.confirmed'),
+        cancelled: t('restaurant_reservations.filters.cancelled'),
+        completed: t('restaurant_reservations.filters.completed')
       }
       return labels[status] || status
     }
@@ -565,6 +577,13 @@ export default {
 
     onMounted(() => {
       loadReservations()
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {
