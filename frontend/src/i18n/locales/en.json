@@ -25,7 +25,9 @@
     "close": "Close",
     "open": "Open",
     "refresh": "Refresh",
-    "retry": "Retry"
+    "retry": "Retry",
+    "or": "or",
+    "app_name": "GastroReserve"
   },
   "navigation": {
     "home": "Home",
@@ -168,12 +170,14 @@
         "invalidCredentials": "Invalid credentials",
         "emailRequired": "Email is required",
         "passwordRequired": "Password is required",
-        "invalidEmail": "Invalid email format"
+        "invalidEmail": "Invalid email format",
+        "invalidCredentials": "Invalid credentials",
+        "unexpectedError": "An unexpected error occurred"
       }
     },
     "register": {
       "title": "Register",
-      "subtitle": "Create your account",
+      "subtitle": "Create your account to start booking",
       "firstName": "First name",
       "lastName": "Last name",
       "email": "Email address",
@@ -196,8 +200,10 @@
         "phoneInvalid": "Invalid phone format (10 digits)",
         "passwordRequired": "Password is required",
         "passwordMin": "Password must contain at least 6 characters",
+        "confirmPasswordRequired": "Password confirmation is required",
         "passwordMatch": "Passwords do not match",
-        "emailExists": "This email address is already in use"
+        "emailExists": "This email address is already in use",
+        "unexpectedError": "An unexpected error occurred"
       }
     }
   },

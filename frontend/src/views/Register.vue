@@ -9,10 +9,10 @@
         <div class="register-header">
           <div class="logo-section">
             <div class="logo-icon">G</div>
-            <h1 class="logo-text">GastroReserve</h1>
+            <h1 class="logo-text">{{ $t('common.app_name') }}</h1>
           </div>
           <h2 class="register-title">{{ $t('auth.register.title') }}</h2>
-          <p class="register-subtitle">Créez votre compte pour commencer à réserver</p>
+          <p class="register-subtitle">{{ $t('auth.register.subtitle') }}</p>
         </div>
         
         <form @submit.prevent="handleRegister" class="register-form">
@@ -141,7 +141,7 @@
 
         <div class="register-footer">
           <div class="divider">
-            <span class="divider-text">ou</span>
+            <span class="divider-text">{{ $t('common.or') }}</span>
           </div>
           <p class="footer-text">{{ $t('auth.register.hasAccount') }}</p>
           <router-link to="/login" class="btn btn-outline btn-full">
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import authService from '../services/auth.js'
@@ -196,57 +196,57 @@ export default {
 
       // Validation prénom
       if (!form.first_name.trim()) {
-        errors.first_name = 'Le prénom est requis'
+        errors.first_name = $t('auth.register.errors.firstNameRequired')
         isValid = false
       } else if (form.first_name.length < 2) {
-        errors.first_name = 'Le prénom doit contenir au moins 2 caractères'
+        errors.first_name = $t('auth.register.errors.firstNameMin')
         isValid = false
       }
 
       // Validation nom
       if (!form.last_name.trim()) {
-        errors.last_name = 'Le nom est requis'
+        errors.last_name = $t('auth.register.errors.lastNameRequired')
         isValid = false
       } else if (form.last_name.length < 2) {
-        errors.last_name = 'Le nom doit contenir au moins 2 caractères'
+        errors.last_name = $t('auth.register.errors.lastNameMin')
         isValid = false
       }
 
       // Validation email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!form.email) {
-        errors.email = 'L\'email est requis'
+        errors.email = $t('auth.register.errors.emailRequired')
         isValid = false
       } else if (!emailRegex.test(form.email)) {
-        errors.email = 'Format d\'email invalide'
+        errors.email = $t('auth.register.errors.emailInvalid')
         isValid = false
       }
 
       // Validation téléphone
       const phoneRegex = /^[0-9]{10}$/
       if (!form.phone) {
-        errors.phone = 'Le téléphone est requis'
+        errors.phone = $t('auth.register.errors.phoneRequired')
         isValid = false
       } else if (!phoneRegex.test(form.phone.replace(/\s/g, ''))) {
-        errors.phone = 'Format de téléphone invalide (10 chiffres)'
+        errors.phone = $t('auth.register.errors.phoneInvalid')
         isValid = false
       }
 
       // Validation mot de passe
       if (!form.password) {
-        errors.password = 'Le mot de passe est requis'
+        errors.password = $t('auth.register.errors.passwordRequired')
         isValid = false
       } else if (form.password.length < 6) {
-        errors.password = 'Le mot de passe doit contenir au moins 6 caractères'
+        errors.password = $t('auth.register.errors.passwordMin')
         isValid = false
       }
 
       // Validation confirmation mot de passe
       if (!form.confirm_password) {
-        errors.confirm_password = 'La confirmation du mot de passe est requise'
+        errors.confirm_password = $t('auth.register.errors.confirmPasswordRequired')
         isValid = false
       } else if (form.password !== form.confirm_password) {
-        errors.confirm_password = 'Les mots de passe ne correspondent pas'
+        errors.confirm_password = $t('auth.register.errors.passwordMatch')
         isValid = false
       }
 
@@ -272,7 +272,7 @@ export default {
         const result = await authService.register(userData)
         
         if (result.success) {
-          successMessage.value = 'Compte créé avec succès ! Redirection...'
+          successMessage.value = $t('auth.register.success')
           
           // Rediriger vers les restaurants après 2 secondes
           setTimeout(() => {
@@ -294,11 +294,25 @@ export default {
         }
       } catch (err) {
         console.error('Erreur d\'inscription:', err)
-        errorMessage.value = 'Une erreur inattendue s\'est produite'
+        errorMessage.value = $t('auth.register.errors.unexpectedError')
       } finally {
         loading.value = false
       }
     }
+
+    // Écouter les changements de langue
+    const handleLanguageChange = () => {
+      console.log('🌍 Langue changée, mise à jour de la page d\'inscription...')
+      // Le composant se mettra à jour automatiquement grâce aux $t()
+    }
+
+    onMounted(() => {
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('languageChanged', handleLanguageChange)
+    })
 
     return {
       form,

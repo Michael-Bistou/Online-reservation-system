@@ -33,7 +33,9 @@
                     "all": "Toutes",
     "today": "Aujourd'hui",
     "select": "Choisir",
-    "date": "Date"
+    "date": "Date",
+    "or": "ou",
+    "app_name": "GastroReserve"
   },
   "navigation": {
     "home": "Accueil",
@@ -176,12 +178,13 @@
         "invalidCredentials": "Identifiants invalides",
         "emailRequired": "L'email est requis",
         "passwordRequired": "Le mot de passe est requis",
-        "invalidEmail": "Format d'email invalide"
+        "invalidEmail": "Format d'email invalide",
+        "unexpectedError": "Une erreur inattendue s'est produite"
       }
     },
     "register": {
       "title": "Inscription",
-      "subtitle": "Créez votre compte",
+      "subtitle": "Créez votre compte pour commencer à réserver",
       "firstName": "Prénom",
       "lastName": "Nom",
       "email": "Adresse email",
@@ -204,8 +207,10 @@
         "phoneInvalid": "Format de téléphone invalide (10 chiffres)",
         "passwordRequired": "Le mot de passe est requis",
         "passwordMin": "Le mot de passe doit contenir au moins 6 caractères",
+        "confirmPasswordRequired": "La confirmation du mot de passe est requise",
         "passwordMatch": "Les mots de passe ne correspondent pas",
-        "emailExists": "Cette adresse email est déjà utilisée"
+        "emailExists": "Cette adresse email est déjà utilisée",
+        "unexpectedError": "Une erreur inattendue s'est produite"
       }
     }
   },

@@ -9,10 +9,10 @@
         <div class="login-header">
           <div class="logo-section">
             <div class="logo-icon">G</div>
-            <h1 class="logo-text">GastroReserve</h1>
+            <h1 class="logo-text">{{ $t('common.app_name') }}</h1>
           </div>
           <h2 class="login-title">{{ $t('auth.login.title') }}</h2>
-          <p class="login-subtitle">Connectez-vous à votre compte pour continuer</p>
+          <p class="login-subtitle">{{ $t('auth.login.subtitle') }}</p>
         </div>
         
         <form @submit.prevent="handleLogin" class="login-form">
@@ -66,7 +66,7 @@
 
         <div class="login-footer">
           <div class="divider">
-            <span class="divider-text">ou</span>
+            <span class="divider-text">{{ $t('common.or') }}</span>
           </div>
           <p class="footer-text">{{ $t('auth.login.noAccount') }}</p>
           <router-link to="/register" class="btn btn-outline btn-full">
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import authService from '../services/auth.js'
@@ -138,11 +138,25 @@ export default {
         }
       } catch (err) {
         console.error('Erreur de connexion:', err)
-        errorMessage.value = 'Une erreur inattendue s\'est produite'
+        errorMessage.value = $t('auth.login.errors.unexpectedError')
       } finally {
         loading.value = false
       }
     }
+
+    // Écouter les changements de langue
+    const handleLanguageChange = () => {
+      console.log('🌍 Langue changée, mise à jour de la page de connexion...')
+      // Le composant se mettra à jour automatiquement grâce aux $t()
+    }
+
+    onMounted(() => {
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('languageChanged', handleLanguageChange)
+    })
 
     return {
       form,
