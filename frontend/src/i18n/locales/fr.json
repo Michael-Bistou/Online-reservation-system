@@ -345,6 +345,7 @@
       "fullName": "Nom complet",
       "email": "Adresse email",
       "phone": "Numéro de téléphone",
+      "notProvided": "Non renseigné",
       "edit": "Modifier",
       "cancel": "Annuler",
       "save": "Sauvegarder",
@@ -363,6 +364,7 @@
       "currentPassword": "Mot de passe actuel",
       "newPassword": "Nouveau mot de passe",
       "confirmPassword": "Confirmer le nouveau mot de passe",
+      "note": "Votre mot de passe a été défini lors de l'inscription",
       "edit": "Modifier",
       "cancel": "Annuler",
       "change": "Changer le mot de passe",
@@ -377,7 +379,28 @@
       }
     },
     "loading": "Chargement de votre profil...",
-    "error": "Erreur lors du chargement du profil"
+    "error": "Erreur lors du chargement du profil",
+    "account_actions": {
+      "export_data": {
+        "title": "Exporter mes données",
+        "description": "Télécharger l'historique de vos réservations"
+      },
+      "delete_account": {
+        "title": "Supprimer mon compte",
+        "description": "Cette action est irréversible",
+        "modal_title": "Supprimer mon compte",
+        "warning_title": "Attention !",
+        "warning_message": "Cette action supprimera définitivement votre compte et toutes vos données :",
+        "data_list": {
+          "reservations": "Toutes vos réservations",
+          "personal_info": "Vos informations personnelles",
+          "history": "Votre historique"
+        },
+        "irreversible": "Cette action ne peut pas être annulée.",
+        "deleting": "Suppression...",
+        "confirm_button": "Supprimer définitivement"
+      }
+    }
   },
   "language": {
     "title": "Langue",

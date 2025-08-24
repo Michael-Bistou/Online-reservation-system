@@ -296,6 +296,7 @@
       "fullName": "Full name",
       "email": "Email address",
       "phone": "Phone number",
+      "notProvided": "Not provided",
       "edit": "Edit",
       "cancel": "Cancel",
       "save": "Save",
@@ -314,6 +315,7 @@
       "currentPassword": "Current password",
       "newPassword": "New password",
       "confirmPassword": "Confirm new password",
+      "note": "Your password was set during registration",
       "edit": "Edit",
       "cancel": "Cancel",
       "change": "Change password",
@@ -328,7 +330,28 @@
       }
     },
     "loading": "Loading your profile...",
-    "error": "Error loading profile"
+    "error": "Error loading profile",
+    "account_actions": {
+      "export_data": {
+        "title": "Export my data",
+        "description": "Download your reservation history"
+      },
+      "delete_account": {
+        "title": "Delete my account",
+        "description": "This action is irreversible",
+        "modal_title": "Delete my account",
+        "warning_title": "Warning!",
+        "warning_message": "This action will permanently delete your account and all your data:",
+        "data_list": {
+          "reservations": "All your reservations",
+          "personal_info": "Your personal information",
+          "history": "Your history"
+        },
+        "irreversible": "This action cannot be undone.",
+        "deleting": "Deleting...",
+        "confirm_button": "Delete permanently"
+      }
+    }
   },
   "language": {
     "title": "Language",

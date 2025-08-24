@@ -112,7 +112,7 @@
                 </div>
                 <div class="info-row">
                   <span class="info-label">{{ $t('profile.personalInfo.phone') }}</span>
-                  <span class="info-value">{{ userProfile.phone || 'Non renseigné' }}</span>
+                  <span class="info-value">{{ userProfile.phone || $t('profile.personalInfo.notProvided') }}</span>
                 </div>
               </div>
 
@@ -182,7 +182,7 @@
                   <span class="info-label">{{ $t('profile.password.title') }}</span>
                   <span class="info-value">••••••••</span>
                 </div>
-                <p class="info-note">Votre mot de passe a été défini lors de l'inscription</p>
+                <p class="info-note">{{ $t('profile.password.note') }}</p>
               </div>
 
               <form v-else @submit.prevent="changePassword" class="info-form">
@@ -239,16 +239,16 @@
               <button @click="exportData" class="action-card light-bg">
                 <div class="action-icon">📊</div>
                 <div class="action-content">
-                  <h3>Exporter mes données</h3>
-                  <p>Télécharger l'historique de vos réservations</p>
+                  <h3>{{ $t('profile.account_actions.export_data.title') }}</h3>
+                  <p>{{ $t('profile.account_actions.export_data.description') }}</p>
                 </div>
               </button>
               
               <button @click="showDeleteAccountModal = true" class="action-card danger light-bg">
                 <div class="action-icon">🗑️</div>
                 <div class="action-content">
-                  <h3>Supprimer mon compte</h3>
-                  <p>Cette action est irréversible</p>
+                  <h3>{{ $t('profile.account_actions.delete_account.title') }}</h3>
+                  <p>{{ $t('profile.account_actions.delete_account.description') }}</p>
                 </div>
               </button>
             </div>
@@ -261,21 +261,21 @@
     <div v-if="showDeleteAccountModal" class="modal-overlay" @click="showDeleteAccountModal = false">
       <div class="modal-content light-bg" @click.stop>
         <div class="modal-header">
-          <h3>Supprimer mon compte</h3>
+          <h3>{{ $t('profile.account_actions.delete_account.modal_title') }}</h3>
           <button @click="showDeleteAccountModal = false" class="modal-close">×</button>
         </div>
         
         <div class="modal-body">
           <div class="warning-message">
             <div class="warning-icon">⚠️</div>
-            <h4>Attention !</h4>
-            <p>Cette action supprimera définitivement votre compte et toutes vos données :</p>
+            <h4>{{ $t('profile.account_actions.delete_account.warning_title') }}</h4>
+            <p>{{ $t('profile.account_actions.delete_account.warning_message') }}</p>
             <ul>
-              <li>Toutes vos réservations</li>
-              <li>Vos informations personnelles</li>
-              <li>Votre historique</li>
+              <li>{{ $t('profile.account_actions.delete_account.data_list.reservations') }}</li>
+              <li>{{ $t('profile.account_actions.delete_account.data_list.personal_info') }}</li>
+              <li>{{ $t('profile.account_actions.delete_account.data_list.history') }}</li>
             </ul>
-            <p><strong>Cette action ne peut pas être annulée.</strong></p>
+            <p><strong>{{ $t('profile.account_actions.delete_account.irreversible') }}</strong></p>
           </div>
           
           <div class="modal-actions">
@@ -284,7 +284,7 @@
             </button>
             <button @click="deleteAccount" class="btn-danger" :disabled="deletingAccount">
               <span v-if="deletingAccount" class="loading-spinner-small"></span>
-              {{ deletingAccount ? 'Suppression...' : 'Supprimer définitivement' }}
+              {{ deletingAccount ? $t('profile.account_actions.delete_account.deleting') : $t('profile.account_actions.delete_account.confirm_button') }}
             </button>
           </div>
         </div>
