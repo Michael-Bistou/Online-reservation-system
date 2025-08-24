@@ -612,6 +612,87 @@
       "delete": "Delete"
     }
   },
+  "restaurant_profile": {
+    "title": "Edit Profile",
+    "subtitle": "Update your restaurant information",
+    "sections": {
+      "restaurant_info": "Restaurant Information",
+      "address_contact": "Address and Contact",
+      "hours_capacity": "Hours and Capacity",
+      "amenities": "Available Amenities"
+    },
+    "fields": {
+      "restaurant_name": "Restaurant name",
+      "cuisine_type": "Cuisine type",
+      "price_range": "Price range",
+      "description": "Description",
+      "address": "Complete address",
+      "phone": "Phone",
+      "email": "Email",
+      "website": "Website",
+      "opening_hours": "Opening hours",
+      "capacity": "Capacity"
+    },
+    "placeholders": {
+      "restaurant_name": "Ex: The Little Bistro",
+      "select_cuisine": "Select a cuisine type",
+      "select_price_range": "Select a price range",
+      "description": "Describe your restaurant, cuisine, atmosphere...",
+      "address": "123 Peace Street, 75001 Paris",
+      "phone": "01 23 45 67 89",
+      "email": "contact@restaurant.com",
+      "website": "https://www.restaurant.com",
+      "opening_hours": "Ex: Mon-Sat: 12h-14h30, 19h-22h30",
+      "capacity": "50"
+    },
+    "cuisine_types": {
+      "french": "French",
+      "italian": "Italian",
+      "japanese": "Japanese",
+      "chinese": "Chinese",
+      "mexican": "Mexican",
+      "indian": "Indian",
+      "thai": "Thai",
+      "greek": "Greek",
+      "spanish": "Spanish",
+      "other": "Other"
+    },
+    "price_ranges": {
+      "budget": "€ (Budget)",
+      "moderate": "€€ (Moderate)",
+      "expensive": "€€€ (Expensive)",
+      "luxury": "€€€€ (Luxury)"
+    },
+    "amenities": {
+      "parking": "🚗 Parking",
+      "wifi": "📶 Wi-Fi",
+      "outdoor_seating": "🌳 Outdoor Seating",
+      "wheelchair_accessible": "♿ Wheelchair Accessible"
+    },
+    "actions": {
+      "save": "Save Changes",
+      "saving": "Saving...",
+      "cancel": "Cancel"
+    },
+    "messages": {
+      "success": "Profile updated successfully!",
+      "error": "Error updating profile"
+    },
+    "validation": {
+      "restaurant_name_required": "Restaurant name is required",
+      "restaurant_name_min_length": "Name must contain at least 2 characters",
+      "cuisine_type_required": "Cuisine type is required",
+      "price_range_required": "Price range is required",
+      "address_required": "Address is required",
+      "phone_required": "Phone is required",
+      "phone_invalid": "Invalid phone format (10 digits)",
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email format",
+      "opening_hours_required": "Opening hours are required",
+      "capacity_required": "Capacity is required",
+      "capacity_min": "Capacity must be greater than 0"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",

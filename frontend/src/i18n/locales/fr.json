@@ -615,6 +615,87 @@
       "delete": "Supprimer"
     }
   },
+  "restaurant_profile": {
+    "title": "Modifier le Profil",
+    "subtitle": "Mettez à jour les informations de votre restaurant",
+    "sections": {
+      "restaurant_info": "Informations du restaurant",
+      "address_contact": "Adresse et contact",
+      "hours_capacity": "Horaires et capacité",
+      "amenities": "Équipements disponibles"
+    },
+    "fields": {
+      "restaurant_name": "Nom du restaurant",
+      "cuisine_type": "Type de cuisine",
+      "price_range": "Gamme de prix",
+      "description": "Description",
+      "address": "Adresse complète",
+      "phone": "Téléphone",
+      "email": "Email",
+      "website": "Site web",
+      "opening_hours": "Horaires d'ouverture",
+      "capacity": "Capacité d'accueil"
+    },
+    "placeholders": {
+      "restaurant_name": "Ex: Le Petit Bistrot",
+      "select_cuisine": "Sélectionnez un type de cuisine",
+      "select_price_range": "Sélectionnez une gamme de prix",
+      "description": "Décrivez votre restaurant, votre cuisine, votre ambiance...",
+      "address": "123 Rue de la Paix, 75001 Paris",
+      "phone": "01 23 45 67 89",
+      "email": "contact@restaurant.fr",
+      "website": "https://www.restaurant.fr",
+      "opening_hours": "Ex: Lun-Sam: 12h-14h30, 19h-22h30",
+      "capacity": "50"
+    },
+    "cuisine_types": {
+      "french": "Française",
+      "italian": "Italienne",
+      "japanese": "Japonaise",
+      "chinese": "Chinoise",
+      "mexican": "Mexicaine",
+      "indian": "Indienne",
+      "thai": "Thaï",
+      "greek": "Grecque",
+      "spanish": "Espagnole",
+      "other": "Autre"
+    },
+    "price_ranges": {
+      "budget": "€ (Économique)",
+      "moderate": "€€ (Modéré)",
+      "expensive": "€€€ (Élevé)",
+      "luxury": "€€€€ (Luxe)"
+    },
+    "amenities": {
+      "parking": "🚗 Parking",
+      "wifi": "📶 Wi-Fi",
+      "outdoor_seating": "🌳 Terrasse",
+      "wheelchair_accessible": "♿ Accessible PMR"
+    },
+    "actions": {
+      "save": "Sauvegarder les modifications",
+      "saving": "Sauvegarde...",
+      "cancel": "Annuler"
+    },
+    "messages": {
+      "success": "Profil mis à jour avec succès !",
+      "error": "Erreur de mise à jour du profil"
+    },
+    "validation": {
+      "restaurant_name_required": "Le nom du restaurant est requis",
+      "restaurant_name_min_length": "Le nom doit contenir au moins 2 caractères",
+      "cuisine_type_required": "Le type de cuisine est requis",
+      "price_range_required": "La gamme de prix est requise",
+      "address_required": "L'adresse est requise",
+      "phone_required": "Le téléphone est requis",
+      "phone_invalid": "Format de téléphone invalide (10 chiffres)",
+      "email_required": "L'email est requis",
+      "email_invalid": "Format d'email invalide",
+      "opening_hours_required": "Les horaires d'ouverture sont requis",
+      "capacity_required": "La capacité est requise",
+      "capacity_min": "La capacité doit être supérieure à 0"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",
