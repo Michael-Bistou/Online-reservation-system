@@ -366,9 +366,7 @@ export default {
         const currentLang = localStorage.getItem('i18nextLng') || 'fr'
         const descriptions = restaurant.descriptions || {}
         
-        console.log('🔍 Langue actuelle:', currentLang)
-        console.log('🔍 Descriptions disponibles:', Object.keys(descriptions))
-        console.log('🔍 Description pour cette langue:', descriptions[currentLang])
+
         
         // Si on a une description traduite pour la langue actuelle, l'utiliser
         if (descriptions[currentLang]) {
@@ -784,12 +782,9 @@ export default {
         }
 
         // Stocker la réservation temporairement et passer au paiement
-        console.log('🔍 Réservation créée:', reservation)
         currentReservation.value = reservation
-        console.log('🔍 currentReservation défini:', currentReservation.value)
         showReservationModal.value = false
         showPaymentModal.value = true
-        console.log('🔍 Modal de paiement ouvert:', showPaymentModal.value)
         
       } catch (err) {
         console.error('Erreur lors de la création de la réservation:', err)
@@ -863,8 +858,8 @@ export default {
         const restaurantId = restaurant.value.id || restaurant.value.restaurant_name
         notificationService.createReservationNotification(reservation, restaurantName, restaurantId)
         
-        console.log('Réservation sauvegardée:', reservation)
-        console.log('Nom du restaurant:', restaurantName)
+
+
       } catch (err) {
         console.error('Erreur lors de la sauvegarde de la réservation:', err)
       }

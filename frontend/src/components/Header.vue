@@ -125,7 +125,7 @@ import NotificationCenter from './NotificationCenter.vue'
                 try {
                   const permission = await Notification.requestPermission()
                   notificationPermission.value = permission
-                  console.log('📋 Permission notifications accordée:', permission)
+          
                 } catch (error) {
                   console.error('❌ Erreur lors de la demande de permission:', error)
                 }

@@ -666,11 +666,7 @@ export default {
       window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
-    // Fonction de debug pour forcer le rechargement
-    const debugReload = () => {
-      console.log('=== FORCE RELOAD ===')
-      loadReservations()
-    }
+
 
     const logout = () => {
       localStorage.removeItem('restaurantLoggedIn')
@@ -703,7 +699,7 @@ export default {
       getChangeClass,
       formatDayLabel,
       getPeakClass,
-      debugReload,
+      
       logout
     }
   }

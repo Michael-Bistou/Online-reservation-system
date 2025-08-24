@@ -367,10 +367,7 @@ export default {
                reservation.user_id === userData?.id
       })
       
-      console.log('📊 Calcul des statistiques utilisateur:')
-      console.log('   - Email utilisateur:', userEmail)
-      console.log('   - Réservations totales dans localStorage:', restaurantReservations.length)
-      console.log('   - Réservations filtrées pour cet utilisateur:', userReservations.length)
+
       
       // Calculer les statistiques
       const totalReservations = userReservations.length
@@ -401,12 +398,7 @@ export default {
       
       const totalSpent = totalAmount - totalRefunded
       
-      console.log('   - Calcul du total dépensé (cohérent avec PaymentHistory):')
-      console.log('     * Transactions réussies:', totalTransactions.length)
-      console.log('     * Remboursements:', totalRefunds.length)
-      console.log('     * Montant total:', totalAmount)
-      console.log('     * Montant remboursé:', totalRefunded)
-      console.log('     * Total final (net):', totalSpent)
+      
       
       // Emails reçus
       const emailHistory = JSON.parse(localStorage.getItem('emailHistory') || '[]')
@@ -415,15 +407,7 @@ export default {
       )
       const totalEmails = userEmails.length
       
-      console.log('   - Statistiques calculées:')
-      console.log('     * Total:', totalReservations)
-      console.log('     * Confirmées:', confirmedReservations)
-      console.log('     * Annulées:', cancelledReservations)
-      console.log('     * En attente:', pendingReservations)
-      console.log('     * Terminées:', completedReservations)
-      console.log('     * Restaurants uniques:', uniqueRestaurants)
-      console.log('     * Total dépensé:', totalSpent)
-      console.log('     * Emails reçus:', totalEmails)
+      
       
       return {
         totalReservations,
@@ -641,17 +625,16 @@ export default {
       // Écouter les changements dans localStorage pour mettre à jour les stats
       const handleStorageChange = (event) => {
         if (event.key === 'restaurantReservations' || event.key === 'emailHistory') {
-          console.log('📊 Données mises à jour, recalcul des statistiques...')
+    
           // Forcer la recalcul en touchant une propriété réactive
           userProfile.value = { ...userProfile.value }
         }
       }
       
-      // Écouter les changements de langue
-      const handleLanguageChange = () => {
-        console.log('🌍 Langue changée, mise à jour du profil...')
-        // Le composant se mettra à jour automatiquement grâce aux $t()
-      }
+          // Écouter les changements de langue
+    const handleLanguageChange = () => {
+      // Le composant se mettra à jour automatiquement grâce aux $t()
+    }
       
       window.addEventListener('storage', handleStorageChange)
       window.addEventListener('languageChanged', handleLanguageChange)

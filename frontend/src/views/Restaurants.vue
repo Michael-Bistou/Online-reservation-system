@@ -532,13 +532,11 @@ export default {
 
     const viewRestaurant = (restaurant) => {
       // Navigate to restaurant details page
-      console.log('Navigating to restaurant:', restaurant.id, restaurant.name)
       router.push(`/restaurants/${restaurant.id}`)
     }
 
     // Écouter les changements de langue
     const handleLanguageChange = () => {
-      console.log('🌍 Langue changée, mise à jour de la page restaurants...')
       // Le composant se mettra à jour automatiquement grâce aux $t()
     }
 
