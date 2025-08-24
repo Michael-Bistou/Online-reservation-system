@@ -13,3 +13,10 @@ app.mount('#app')
 
 // Initialiser les rappels automatiques au démarrage
 notificationService.scheduleAllReminders()
+
+// Import tests for development
+if (process.env.NODE_ENV === 'development') {
+  import('./tests/cancellationSystem.test.js').then(() => {
+    console.log('🧪 Tests d\'annulation chargés pour le développement')
+  })
+}

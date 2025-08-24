@@ -289,6 +289,94 @@
         </div>
       </div>
     </div>
+
+    <!-- Cancel Reservation Modal -->
+    <div v-if="showCancelModal" class="modal-overlay" @click="closeCancelModal">
+      <div class="modal-content light-bg" @click.stop>
+        <div class="modal-header">
+          <h3>Annuler la réservation</h3>
+          <button @click="closeCancelModal" class="modal-close">×</button>
+        </div>
+        
+        <div class="modal-body">
+          <div v-if="reservationToCancel" class="cancel-reservation-content">
+            <div class="reservation-summary">
+              <h4>Détails de la réservation</h4>
+              <div class="summary-details">
+                <div class="summary-item">
+                  <strong>Restaurant :</strong> {{ reservationToCancel.restaurant_name }}
+                </div>
+                <div class="summary-item">
+                  <strong>Date :</strong> {{ formatDate(reservationToCancel.date) }}
+                </div>
+                <div class="summary-item">
+                  <strong>Heure :</strong> {{ reservationToCancel.time }}
+                </div>
+                <div class="summary-item">
+                  <strong>Personnes :</strong> {{ reservationToCancel.party_size }}
+                </div>
+              </div>
+            </div>
+
+            <div class="cancellation-reason">
+              <h4>Raison de l'annulation</h4>
+              <select v-model="cancellationReason" class="form-input" required>
+                <option value="">Choisissez une raison</option>
+                <option value="change_of_plans">Changement de plans</option>
+                <option value="unavailable">Indisponibilité</option>
+                <option value="found_alternative">Autre restaurant trouvé</option>
+                <option value="emergency">Urgence personnelle</option>
+                <option value="weather">Conditions météo</option>
+                <option value="other">Autre raison</option>
+              </select>
+              
+              <div v-if="cancellationReason === 'other'" class="form-group">
+                <label class="form-label">Précisez la raison :</label>
+                <textarea 
+                  v-model="customReason" 
+                  class="form-input" 
+                  rows="3"
+                  placeholder="Décrivez votre raison d'annulation..."
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="refund-info">
+              <h4>Informations de remboursement</h4>
+              <div class="refund-details">
+                <div class="refund-item">
+                  <span>Montant de l'acompte :</span>
+                  <span class="refund-amount">{{ formatAmount(reservationToCancel.deposit_amount || getDefaultDepositAmount(reservationToCancel)) }}</span>
+                </div>
+                <div class="refund-item">
+                  <span>Remboursement :</span>
+                  <span class="refund-amount">{{ formatAmount(cancellationService.calculateRefundAmount(reservationToCancel)) }}</span>
+                </div>
+                <div class="refund-note">
+                  <p>⚠️ Le remboursement sera traité automatiquement sur votre carte de paiement originale dans les 3-5 jours ouvrables.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button @click="closeCancelModal" class="btn-cancel">
+            <span class="btn-icon">✕</span>
+            Annuler
+          </button>
+          <button 
+            @click="confirmCancellation" 
+            class="btn-confirm-cancellation"
+            :disabled="!cancellationReason || submitting"
+          >
+            <span v-if="submitting" class="loading-spinner-small"></span>
+            <span v-else class="btn-icon">⚠️</span>
+            {{ submitting ? 'Annulation en cours...' : 'Confirmer l\'annulation' }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -298,6 +386,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 import { validateReservation } from '../utils/validation.js'
+import cancellationService from '../services/cancellationService.js'
 
 export default {
   name: 'Reservations',
@@ -321,6 +410,8 @@ export default {
     const showNewReservationModal = ref(false)
     const showCancelModal = ref(false)
     const reservationToCancel = ref(null)
+    const cancellationReason = ref('')
+    const customReason = ref('')
     
     // New reservation form
     const newReservation = ref({
@@ -516,6 +607,13 @@ export default {
       })
     }
 
+    const formatAmount = (amount) => {
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: 'EUR'
+      }).format(amount / 100) // Montant en centimes
+    }
+
     const getStatusText = (status) => {
       const statusMap = {
         'pending': t('reservations.pending'),
@@ -533,9 +631,7 @@ export default {
     }
 
     const canCancel = (reservation) => {
-      const reservationDate = new Date(reservation.date)
-      const today = new Date()
-      return reservation.status === 'pending' || reservation.status === 'confirmed' && reservationDate > today
+      return cancellationService.canCancelReservation(reservation)
     }
 
     const handleFilter = () => {
@@ -557,44 +653,75 @@ export default {
 
     const cancelReservation = (reservation) => {
       reservationToCancel.value = reservation
+      cancellationReason.value = ''
+      customReason.value = ''
       showCancelModal.value = true
     }
 
-    const confirmCancel = async () => {
+    const closeCancelModal = () => {
+      showCancelModal.value = false
+      reservationToCancel.value = null
+      cancellationReason.value = ''
+      customReason.value = ''
+    }
+
+    const confirmCancellation = async () => {
       try {
+        if (!cancellationReason.value) {
+          alert('Veuillez sélectionner une raison d\'annulation')
+          return
+        }
+
         submitting.value = true
         
-        // Update the status locally
-        const reservation = reservations.value.find(r => r.id === reservationToCancel.value.id)
-        if (reservation) {
-          reservation.status = 'cancelled'
+        // Get the final reason
+        const finalReason = cancellationReason.value === 'other' 
+          ? customReason.value 
+          : cancellationReason.value
+
+        // Use the cancellation service
+        const result = await cancellationService.processCancellation(reservationToCancel.value, finalReason)
+        
+        if (result.success) {
+          // Update the reservation in the local list
+          const reservation = reservations.value.find(r => r.id === reservationToCancel.value.id)
+          if (reservation) {
+            Object.assign(reservation, result.reservation)
+          }
           
           // Update in localStorage
           try {
             const storedReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
-            const storedReservation = storedReservations.find(r => r.id === reservation.id)
+            const storedReservation = storedReservations.find(r => r.id === reservationToCancel.value.id)
             if (storedReservation) {
-              storedReservation.status = 'cancelled'
+              Object.assign(storedReservation, result.reservation)
               localStorage.setItem('restaurantReservations', JSON.stringify(storedReservations))
             }
           } catch (error) {
             console.error('Erreur lors de la mise à jour dans localStorage:', error)
           }
+          
+          closeCancelModal()
+          
+          // Show success message with refund info
+          const refundMessage = result.refundAmount > 0 
+            ? `Réservation annulée avec succès ! Un remboursement de ${formatAmount(result.refundAmount)} sera traité automatiquement.`
+            : 'Réservation annulée avec succès !'
+          
+          alert(refundMessage)
+        } else {
+          alert(`Erreur lors de l'annulation : ${result.error}`)
         }
-        
-        showCancelModal.value = false
-        reservationToCancel.value = null
-        
-        // Show success message
-        alert(t('reservations.reservation_cancelled'))
         
       } catch (err) {
         console.error('Erreur lors de l\'annulation:', err)
-        alert(t('reservations.cancel_error'))
+        alert('Erreur lors de l\'annulation de la réservation')
       } finally {
         submitting.value = false
       }
     }
+
+
 
     const createNewReservation = async () => {
       try {
@@ -625,6 +752,7 @@ export default {
           id: Date.now(), // Generate unique ID
           restaurant_id: parseInt(newReservation.value.restaurant_id),
           restaurant_name: restaurant.name,
+          price_range: restaurant.price_range || '€€', // Ajouter le price_range
           date: newReservation.value.date,
           time: newReservation.value.time,
           party_size: parseInt(newReservation.value.party_size),
@@ -702,8 +830,14 @@ export default {
       viewRestaurant,
       editReservation,
       cancelReservation,
-      confirmCancel,
-      createNewReservation
+      closeCancelModal,
+      confirmCancellation,
+      cancellationReason,
+      customReason,
+      createNewReservation,
+      formatAmount,
+      cancellationService,
+      getDefaultDepositAmount: cancellationService.getDefaultDepositAmount.bind(cancellationService)
     }
   }
 }
@@ -1195,6 +1329,175 @@ export default {
   height: 16px;
   border: 2px solid transparent;
   border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Cancel Modal Styles */
+.cancel-reservation-content {
+  max-width: 500px;
+}
+
+.reservation-summary,
+.cancellation-reason,
+.refund-info {
+  margin-bottom: 25px;
+}
+
+.reservation-summary h4,
+.cancellation-reason h4,
+.refund-info h4 {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.summary-details {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.summary-item:last-child {
+  margin-bottom: 0;
+}
+
+.summary-item strong {
+  font-weight: 600;
+}
+
+.cancellation-reason select {
+  margin-bottom: 15px;
+}
+
+.refund-details {
+  background: #e8f5e8;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #c3e6c3;
+}
+
+.refund-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  color: #155724;
+}
+
+.refund-item:last-child {
+  margin-bottom: 0;
+}
+
+.refund-amount {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.refund-note {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #c3e6c3;
+}
+
+.refund-note p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #155724;
+  line-height: 1.4;
+}
+
+/* Styles des boutons du modal d'annulation */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 20px;
+  border-top: 1px solid #e9ecef;
+  background-color: #f8f9fa;
+}
+
+.btn-cancel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 2px solid #6c757d;
+  background-color: #ffffff;
+  color: #6c757d;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.btn-cancel:hover {
+  background-color: #6c757d;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-confirm-cancellation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 2px solid #dc3545;
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: #ffffff;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-confirm-cancellation:hover:not(:disabled) {
+  background: linear-gradient(135deg, #c82333, #bd2130);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+.btn-confirm-cancellation:disabled {
+  background: linear-gradient(135deg, #6c757d, #5a6268);
+  border-color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-confirm-cancellation:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.loading-spinner-small {
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid #ffffff;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

@@ -674,6 +674,7 @@ export default {
           id: Date.now(), // ID unique
           restaurant_id: restaurant.value.id,
           restaurant_name: restaurant.value.name || restaurant.value.restaurant_name,
+          price_range: restaurant.value.price_range || '€€', // Ajouter le price_range
           user_id: user.id || 'guest_user',
           user_name: user.first_name && user.last_name ? `${user.first_name} ${user.last_name}` : user.username || 'Invité',
           user_email: user.email || 'invite@example.com',

@@ -150,10 +150,16 @@
                <div class="chart-container">
                  <div class="pie-chart-container">
                    <div class="pie-chart">
-                     <div class="pie-segment pending" :style="{ transform: `rotate(${pendingAngle}deg)` }"></div>
-                     <div class="pie-segment confirmed" :style="{ transform: `rotate(${confirmedAngle}deg)` }"></div>
-                     <div class="pie-segment completed" :style="{ transform: `rotate(${completedAngle}deg)` }"></div>
-                     <div class="pie-segment cancelled" :style="{ transform: `rotate(${cancelledAngle}deg)` }"></div>
+                     <div 
+                       v-for="(segment, index) in pieSegments" 
+                       :key="index"
+                       class="pie-segment"
+                       :class="segment.status"
+                       :style="{ 
+                         transform: `rotate(${segment.startAngle}deg)`,
+                         '--segment-angle': `${segment.angle}deg`
+                       }"
+                     ></div>
                    </div>
                    <div class="pie-legend">
                      <div class="legend-item">
@@ -264,11 +270,73 @@ export default {
     const mostPopularHour = ref('')
     const mostPopularHourCount = ref(0)
 
-    // Angles pour le graphique circulaire
-    const pendingAngle = computed(() => 0)
-    const confirmedAngle = computed(() => (statusStats.value.pending / totalReservations.value) * 360)
-    const completedAngle = computed(() => ((statusStats.value.pending + statusStats.value.confirmed) / totalReservations.value) * 360)
-    const cancelledAngle = computed(() => ((statusStats.value.pending + statusStats.value.confirmed + statusStats.value.completed) / totalReservations.value) * 360)
+    // Segments pour le graphique circulaire
+    const pieSegments = computed(() => {
+      if (totalReservations.value === 0) {
+        return [
+          { status: 'pending', startAngle: 0, angle: 90 },
+          { status: 'confirmed', startAngle: 90, angle: 90 },
+          { status: 'completed', startAngle: 180, angle: 90 },
+          { status: 'cancelled', startAngle: 270, angle: 90 }
+        ]
+      }
+
+      const pending = statusStats.value.pending
+      const confirmed = statusStats.value.confirmed
+      const completed = statusStats.value.completed
+      const cancelled = statusStats.value.cancelled
+
+      const pendingAngle = (pending / totalReservations.value) * 360
+      const confirmedAngle = (confirmed / totalReservations.value) * 360
+      const completedAngle = (completed / totalReservations.value) * 360
+      const cancelledAngle = (cancelled / totalReservations.value) * 360
+
+      console.log('📊 Calcul des segments du graphique:')
+      console.log(`   - En attente: ${pending} (${pendingAngle.toFixed(1)}°)`)
+      console.log(`   - Confirmées: ${confirmed} (${confirmedAngle.toFixed(1)}°)`)
+      console.log(`   - Terminées: ${completed} (${completedAngle.toFixed(1)}°)`)
+      console.log(`   - Annulées: ${cancelled} (${cancelledAngle.toFixed(1)}°)`)
+
+      let currentAngle = 0
+      const segments = []
+
+      if (pending > 0) {
+        segments.push({
+          status: 'pending',
+          startAngle: currentAngle,
+          angle: pendingAngle
+        })
+        currentAngle += pendingAngle
+      }
+
+      if (confirmed > 0) {
+        segments.push({
+          status: 'confirmed',
+          startAngle: currentAngle,
+          angle: confirmedAngle
+        })
+        currentAngle += confirmedAngle
+      }
+
+      if (completed > 0) {
+        segments.push({
+          status: 'completed',
+          startAngle: currentAngle,
+          angle: completedAngle
+        })
+        currentAngle += completedAngle
+      }
+
+      if (cancelled > 0) {
+        segments.push({
+          status: 'cancelled',
+          startAngle: currentAngle,
+          angle: cancelledAngle
+        })
+      }
+
+      return segments
+    })
 
     const loadReservations = () => {
       loading.value = true
@@ -481,12 +549,25 @@ export default {
     }
 
     const calculateStatusStats = (filteredReservations) => {
+      const pending = filteredReservations.filter(r => r.status === 'pending').length
+      const confirmed = filteredReservations.filter(r => r.status === 'confirmed').length
+      const completed = filteredReservations.filter(r => r.status === 'completed').length
+      const cancelled = filteredReservations.filter(r => r.status === 'cancelled').length
+      
       statusStats.value = {
-        pending: filteredReservations.filter(r => r.status === 'pending').length,
-        confirmed: filteredReservations.filter(r => r.status === 'confirmed').length,
-        completed: filteredReservations.filter(r => r.status === 'completed').length,
-        cancelled: filteredReservations.filter(r => r.status === 'cancelled').length
+        pending,
+        confirmed,
+        completed,
+        cancelled
       }
+      
+      console.log('📊 Calcul des statistiques par statut:')
+      console.log('   - Réservations filtrées:', filteredReservations.length)
+      console.log('   - En attente:', pending)
+      console.log('   - Confirmées:', confirmed)
+      console.log('   - Terminées:', completed)
+      console.log('   - Annulées:', cancelled)
+      console.log('   - Total:', pending + confirmed + completed + cancelled)
     }
 
     const calculatePeakHours = (filteredReservations) => {
@@ -590,10 +671,7 @@ export default {
       maxPeakReservations,
       mostPopularHour,
       mostPopularHourCount,
-      pendingAngle,
-      confirmedAngle,
-      completedAngle,
-      cancelledAngle,
+      pieSegments,
       updateStats,
       getChangeClass,
       formatDayLabel,
@@ -869,6 +947,24 @@ export default {
    width: 100%;
    height: 100%;
    border-radius: 50%;
+   transform-origin: 50% 50%;
+   clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+ }
+
+ .pie-segment.pending {
+   background: conic-gradient(from 0deg, #ffc107 0deg, #ffc107 var(--segment-angle), transparent var(--segment-angle));
+ }
+
+ .pie-segment.confirmed {
+   background: conic-gradient(from 0deg, #28a745 0deg, #28a745 var(--segment-angle), transparent var(--segment-angle));
+ }
+
+ .pie-segment.completed {
+   background: conic-gradient(from 0deg, #6c757d 0deg, #6c757d var(--segment-angle), transparent var(--segment-angle));
+ }
+
+ .pie-segment.cancelled {
+   background: conic-gradient(from 0deg, #dc3545 0deg, #dc3545 var(--segment-angle), transparent var(--segment-angle));
  }
 
  .pie-legend {

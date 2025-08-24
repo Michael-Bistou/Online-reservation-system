@@ -194,7 +194,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onActivated } from 'vue'
+import { ref, onMounted, onActivated, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default {
@@ -227,11 +227,27 @@ export default {
         })
 
         // Calculer les statistiques
-        const today = new Date().toISOString().split('T')[0]
+        const today = new Date()
+        const todayString = today.toISOString().split('T')[0]
         
-        todayReservations.value = restaurantReservations.filter(reservation => 
-          reservation.date === today
-        ).length
+        console.log('🔍 Calcul des statistiques:')
+        console.log('   - Date aujourd\'hui:', todayString)
+        console.log('   - Nombre total de réservations:', restaurantReservations.length)
+        console.log('   - Réservations pour ce restaurant:', restaurantReservations)
+        
+        todayReservations.value = restaurantReservations.filter(reservation => {
+          // Normaliser la date de réservation pour la comparaison
+          const reservationDate = new Date(reservation.date)
+          const reservationDateString = reservationDate.toISOString().split('T')[0]
+          
+          const isToday = reservationDateString === todayString
+          console.log(`   - Réservation ${reservation.id}: ${reservation.date} (${reservationDateString}) = ${isToday ? 'AUJOURD\'HUI' : 'pas aujourd\'hui'}`)
+          
+          // Comparer les dates normalisées
+          return isToday
+        }).length
+        
+        console.log('   - Réservations aujourd\'hui:', todayReservations.value)
 
         pendingReservations.value = restaurantReservations.filter(reservation => 
           reservation.status === 'pending'
@@ -320,6 +336,22 @@ export default {
       loadRestaurantEmails()
     })
 
+    // Surveiller les changements dans localStorage pour recalculer les stats
+    const handleStorageChange = (e) => {
+      if (e.key === 'restaurantReservations') {
+        console.log('🔄 Changement détecté dans les réservations, recalcul des stats...')
+        calculateStats()
+      }
+    }
+
+    // Ajouter l'écouteur d'événements
+    window.addEventListener('storage', handleStorageChange)
+    
+    // Nettoyer l'écouteur lors de la destruction du composant
+    onUnmounted(() => {
+      window.removeEventListener('storage', handleStorageChange)
+    })
+
     const logout = () => {
       localStorage.removeItem('restaurantLoggedIn')
       localStorage.removeItem('currentRestaurant')
@@ -335,6 +367,7 @@ export default {
       getEmailTypeLabel,
       formatEmailDate,
       truncateEmailContent,
+      calculateStats,
       logout
     }
   }
@@ -395,6 +428,13 @@ export default {
   border: 1px solid #e9ecef;
 }
 
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .card-title {
   font-size: 1.3rem;
   font-weight: 600;
@@ -402,6 +442,8 @@ export default {
   margin-bottom: 20px;
   font-family: 'Playfair Display', serif;
 }
+
+
 
 .info-list {
   display: flex;
