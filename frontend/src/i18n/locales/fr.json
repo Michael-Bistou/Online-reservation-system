@@ -727,6 +727,106 @@
       "login_error": "Erreur de connexion restaurant"
     }
   },
+  "restaurant_register": {
+    "title": "Inscription Restaurant",
+    "subtitle": "Rejoignez notre plateforme et gérez vos réservations en ligne",
+    "sections": {
+      "restaurant_info": "Informations du restaurant",
+      "address_contact": "Adresse et contact",
+      "hours_capacity": "Horaires et capacité",
+      "amenities": "Équipements disponibles",
+      "owner_info": "Informations du propriétaire"
+    },
+    "fields": {
+      "restaurant_name": "Nom du restaurant",
+      "cuisine_type": "Type de cuisine",
+      "price_range": "Gamme de prix",
+      "description": "Description",
+      "address": "Adresse complète",
+      "phone": "Téléphone",
+      "email": "Email",
+      "website": "Site web",
+      "opening_hours": "Horaires d'ouverture",
+      "capacity": "Capacité d'accueil",
+      "owner_first_name": "Prénom",
+      "owner_last_name": "Nom",
+      "password": "Mot de passe",
+      "confirm_password": "Confirmer le mot de passe"
+    },
+    "placeholders": {
+      "restaurant_name": "Ex: Le Petit Bistrot",
+      "select_cuisine": "Sélectionnez un type de cuisine",
+      "select_price_range": "Sélectionnez une gamme de prix",
+      "description": "Décrivez votre restaurant, votre cuisine, votre ambiance...",
+      "address": "123 Rue de la Paix, 75001 Paris",
+      "phone": "01 23 45 67 89",
+      "email": "contact@restaurant.fr",
+      "website": "https://www.restaurant.fr",
+      "opening_hours": "Ex: Lun-Sam: 12h-14h30, 19h-22h30",
+      "capacity": "50",
+      "owner_first_name": "Jean",
+      "owner_last_name": "Dupont",
+      "password": "Minimum 6 caractères",
+      "confirm_password": "Confirmez votre mot de passe"
+    },
+    "cuisine_types": {
+      "french": "Française",
+      "italian": "Italienne",
+      "japanese": "Japonaise",
+      "chinese": "Chinoise",
+      "mexican": "Mexicaine",
+      "indian": "Indienne",
+      "thai": "Thaï",
+      "greek": "Grecque",
+      "spanish": "Espagnole",
+      "other": "Autre"
+    },
+    "price_ranges": {
+      "budget": "€ (Économique)",
+      "moderate": "€€ (Modéré)",
+      "expensive": "€€€ (Élevé)",
+      "luxury": "€€€€ (Luxe)"
+    },
+    "amenities": {
+      "parking": "🚗 Parking",
+      "wifi": "📶 Wi-Fi",
+      "outdoor_seating": "🌳 Terrasse",
+      "wheelchair_accessible": "♿ Accessible PMR"
+    },
+    "actions": {
+      "register": "Inscrire mon restaurant",
+      "registering": "Inscription en cours...",
+      "login": "Se connecter"
+    },
+    "footer": {
+      "or": "ou",
+      "has_account": "Vous avez déjà un compte restaurant ?"
+    },
+    "validation": {
+      "restaurant_name_required": "Le nom du restaurant est requis",
+      "cuisine_type_required": "Le type de cuisine est requis",
+      "price_range_required": "La gamme de prix est requise",
+      "phone_required": "Le téléphone est requis",
+      "phone_invalid": "Format de téléphone invalide (10 chiffres)",
+      "email_required": "L'email est requis",
+      "email_invalid": "Format d'email invalide",
+      "opening_hours_required": "Les horaires d'ouverture sont requis",
+      "capacity_required": "La capacité est requise",
+      "capacity_min": "La capacité doit être supérieure à 0",
+      "owner_first_name_required": "Le prénom est requis",
+      "owner_first_name_min_length": "Le prénom doit contenir au moins 2 caractères",
+      "owner_last_name_required": "Le nom est requis",
+      "owner_last_name_min_length": "Le nom doit contenir au moins 2 caractères",
+      "password_required": "Le mot de passe est requis",
+      "password_min_length": "Le mot de passe doit contenir au moins 6 caractères",
+      "confirm_password_required": "La confirmation du mot de passe est requise",
+      "passwords_not_match": "Les mots de passe ne correspondent pas"
+    },
+    "messages": {
+      "success": "Inscription réussie ! Redirection vers la connexion...",
+      "register_error": "Erreur d'inscription restaurant"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",

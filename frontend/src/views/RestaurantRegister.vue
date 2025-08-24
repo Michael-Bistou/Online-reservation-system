@@ -3,158 +3,158 @@
     <div class="register-container">
       <div class="register-card">
         <div class="register-header">
-          <h1 class="register-title">Inscription Restaurant</h1>
-          <p class="register-subtitle">Rejoignez notre plateforme et gérez vos réservations en ligne</p>
+          <h1 class="register-title">{{ $t('restaurant_register.title') }}</h1>
+          <p class="register-subtitle">{{ $t('restaurant_register.subtitle') }}</p>
         </div>
 
         <form @submit.prevent="handleRegister" class="register-form">
           <!-- Informations du restaurant -->
           <div class="form-section">
-            <h3 class="section-title">Informations du restaurant</h3>
+            <h3 class="section-title">{{ $t('restaurant_register.sections.restaurant_info') }}</h3>
             
             <div class="form-group">
-              <label class="form-label">Nom du restaurant *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.restaurant_name') }} *</label>
               <input
                 v-model="form.restaurant_name"
                 type="text"
                 class="form-input"
                 :class="{ 'error': errors.restaurant_name }"
-                placeholder="Ex: Le Petit Bistrot"
+                :placeholder="$t('restaurant_register.placeholders.restaurant_name')"
                 required
               />
               <span v-if="errors.restaurant_name" class="form-error">{{ errors.restaurant_name }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Type de cuisine *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.cuisine_type') }} *</label>
               <select
                 v-model="form.cuisine_type"
                 class="form-input"
                 :class="{ 'error': errors.cuisine_type }"
                 required
               >
-                <option value="">Sélectionnez un type de cuisine</option>
-                <option value="Française">Française</option>
-                <option value="Italienne">Italienne</option>
-                <option value="Japonaise">Japonaise</option>
-                <option value="Chinoise">Chinoise</option>
-                <option value="Mexicaine">Mexicaine</option>
-                <option value="Indienne">Indienne</option>
-                <option value="Thaï">Thaï</option>
-                <option value="Grecque">Grecque</option>
-                <option value="Espagnole">Espagnole</option>
-                <option value="Autre">Autre</option>
+                <option value="">{{ $t('restaurant_register.placeholders.select_cuisine') }}</option>
+                <option value="Française">{{ $t('restaurant_register.cuisine_types.french') }}</option>
+                <option value="Italienne">{{ $t('restaurant_register.cuisine_types.italian') }}</option>
+                <option value="Japonaise">{{ $t('restaurant_register.cuisine_types.japanese') }}</option>
+                <option value="Chinoise">{{ $t('restaurant_register.cuisine_types.chinese') }}</option>
+                <option value="Mexicaine">{{ $t('restaurant_register.cuisine_types.mexican') }}</option>
+                <option value="Indienne">{{ $t('restaurant_register.cuisine_types.indian') }}</option>
+                <option value="Thaï">{{ $t('restaurant_register.cuisine_types.thai') }}</option>
+                <option value="Grecque">{{ $t('restaurant_register.cuisine_types.greek') }}</option>
+                <option value="Espagnole">{{ $t('restaurant_register.cuisine_types.spanish') }}</option>
+                <option value="Autre">{{ $t('restaurant_register.cuisine_types.other') }}</option>
               </select>
               <span v-if="errors.cuisine_type" class="form-error">{{ errors.cuisine_type }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Gamme de prix *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.price_range') }} *</label>
               <select
                 v-model="form.price_range"
                 class="form-input"
                 :class="{ 'error': errors.price_range }"
                 required
               >
-                <option value="">Sélectionnez une gamme de prix</option>
-                <option value="€">€ (Économique)</option>
-                <option value="€€">€€ (Modéré)</option>
-                <option value="€€€">€€€ (Élevé)</option>
-                <option value="€€€€">€€€€ (Luxe)</option>
+                <option value="">{{ $t('restaurant_register.placeholders.select_price_range') }}</option>
+                <option value="€">{{ $t('restaurant_register.price_ranges.budget') }}</option>
+                <option value="€€">{{ $t('restaurant_register.price_ranges.moderate') }}</option>
+                <option value="€€€">{{ $t('restaurant_register.price_ranges.expensive') }}</option>
+                <option value="€€€€">{{ $t('restaurant_register.price_ranges.luxury') }}</option>
               </select>
               <span v-if="errors.price_range" class="form-error">{{ errors.price_range }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Description</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.description') }}</label>
               <textarea
                 v-model="form.description"
                 class="form-input"
                 rows="4"
-                placeholder="Décrivez votre restaurant, votre cuisine, votre ambiance..."
+                :placeholder="$t('restaurant_register.placeholders.description')"
               ></textarea>
             </div>
           </div>
 
           <!-- Adresse et contact -->
           <div class="form-section">
-            <h3 class="section-title">Adresse et contact</h3>
+            <h3 class="section-title">{{ $t('restaurant_register.sections.address_contact') }}</h3>
             
             <div class="form-group">
-              <label class="form-label">Adresse complète *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.address') }} *</label>
               <input
                 v-model="form.address"
                 type="text"
                 class="form-input"
                 :class="{ 'error': errors.address }"
-                placeholder="123 Rue de la Paix, 75001 Paris"
+                :placeholder="$t('restaurant_register.placeholders.address')"
                 required
               />
               <span v-if="errors.address" class="form-error">{{ errors.address }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Téléphone *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.phone') }} *</label>
               <input
                 v-model="form.phone"
                 type="tel"
                 class="form-input"
                 :class="{ 'error': errors.phone }"
-                placeholder="01 23 45 67 89"
+                :placeholder="$t('restaurant_register.placeholders.phone')"
                 required
               />
               <span v-if="errors.phone" class="form-error">{{ errors.phone }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Email *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.email') }} *</label>
               <input
                 v-model="form.email"
                 type="email"
                 class="form-input"
                 :class="{ 'error': errors.email }"
-                placeholder="contact@restaurant.fr"
+                :placeholder="$t('restaurant_register.placeholders.email')"
                 required
               />
               <span v-if="errors.email" class="form-error">{{ errors.email }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Site web</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.website') }}</label>
               <input
                 v-model="form.website"
                 type="url"
                 class="form-input"
-                placeholder="https://www.restaurant.fr"
+                :placeholder="$t('restaurant_register.placeholders.website')"
               />
             </div>
           </div>
 
           <!-- Horaires et capacité -->
           <div class="form-section">
-            <h3 class="section-title">Horaires et capacité</h3>
+            <h3 class="section-title">{{ $t('restaurant_register.sections.hours_capacity') }}</h3>
             
             <div class="form-group">
-              <label class="form-label">Horaires d'ouverture *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.opening_hours') }} *</label>
               <textarea
                 v-model="form.opening_hours"
                 class="form-input"
                 :class="{ 'error': errors.opening_hours }"
                 rows="3"
-                placeholder="Ex: Lun-Sam: 12h-14h30, 19h-22h30"
+                :placeholder="$t('restaurant_register.placeholders.opening_hours')"
                 required
               ></textarea>
               <span v-if="errors.opening_hours" class="form-error">{{ errors.opening_hours }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Capacité d'accueil *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.capacity') }} *</label>
               <input
                 v-model="form.capacity"
                 type="number"
                 class="form-input"
                 :class="{ 'error': errors.capacity }"
-                placeholder="50"
+                :placeholder="$t('restaurant_register.placeholders.capacity')"
                 min="1"
                 required
               />
@@ -164,7 +164,7 @@
 
           <!-- Équipements -->
           <div class="form-section">
-            <h3 class="section-title">Équipements disponibles</h3>
+            <h3 class="section-title">{{ $t('restaurant_register.sections.amenities') }}</h3>
             
             <div class="amenities-grid">
               <label class="amenity-checkbox">
@@ -173,7 +173,7 @@
                   type="checkbox"
                   class="checkbox-input"
                 />
-                <span class="checkbox-label">🚗 Parking</span>
+                <span class="checkbox-label">{{ $t('restaurant_register.amenities.parking') }}</span>
               </label>
 
               <label class="amenity-checkbox">
@@ -182,7 +182,7 @@
                   type="checkbox"
                   class="checkbox-input"
                 />
-                <span class="checkbox-label">📶 Wi-Fi</span>
+                <span class="checkbox-label">{{ $t('restaurant_register.amenities.wifi') }}</span>
               </label>
 
               <label class="amenity-checkbox">
@@ -191,7 +191,7 @@
                   type="checkbox"
                   class="checkbox-input"
                 />
-                <span class="checkbox-label">🌳 Terrasse</span>
+                <span class="checkbox-label">{{ $t('restaurant_register.amenities.outdoor_seating') }}</span>
               </label>
 
               <label class="amenity-checkbox">
@@ -200,37 +200,37 @@
                   type="checkbox"
                   class="checkbox-input"
                 />
-                <span class="checkbox-label">♿ Accessible PMR</span>
+                <span class="checkbox-label">{{ $t('restaurant_register.amenities.wheelchair_accessible') }}</span>
               </label>
             </div>
           </div>
 
           <!-- Informations du propriétaire -->
           <div class="form-section">
-            <h3 class="section-title">Informations du propriétaire</h3>
+            <h3 class="section-title">{{ $t('restaurant_register.sections.owner_info') }}</h3>
             
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label">Prénom *</label>
+                <label class="form-label">{{ $t('restaurant_register.fields.owner_first_name') }} *</label>
                 <input
                   v-model="form.owner_first_name"
                   type="text"
                   class="form-input"
                   :class="{ 'error': errors.owner_first_name }"
-                  placeholder="Jean"
+                  :placeholder="$t('restaurant_register.placeholders.owner_first_name')"
                   required
                 />
                 <span v-if="errors.owner_first_name" class="form-error">{{ errors.owner_first_name }}</span>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Nom *</label>
+                <label class="form-label">{{ $t('restaurant_register.fields.owner_last_name') }} *</label>
                 <input
                   v-model="form.owner_last_name"
                   type="text"
                   class="form-input"
                   :class="{ 'error': errors.owner_last_name }"
-                  placeholder="Dupont"
+                  :placeholder="$t('restaurant_register.placeholders.owner_last_name')"
                   required
                 />
                 <span v-if="errors.owner_last_name" class="form-error">{{ errors.owner_last_name }}</span>
@@ -238,26 +238,26 @@
             </div>
 
             <div class="form-group">
-              <label class="form-label">Mot de passe *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.password') }} *</label>
               <input
                 v-model="form.password"
                 type="password"
                 class="form-input"
                 :class="{ 'error': errors.password }"
-                placeholder="Minimum 6 caractères"
+                :placeholder="$t('restaurant_register.placeholders.password')"
                 required
               />
               <span v-if="errors.password" class="form-error">{{ errors.password }}</span>
             </div>
 
             <div class="form-group">
-              <label class="form-label">Confirmer le mot de passe *</label>
+              <label class="form-label">{{ $t('restaurant_register.fields.confirm_password') }} *</label>
               <input
                 v-model="form.confirm_password"
                 type="password"
                 class="form-input"
                 :class="{ 'error': errors.confirm_password }"
-                placeholder="Confirmez votre mot de passe"
+                :placeholder="$t('restaurant_register.placeholders.confirm_password')"
                 required
               />
               <span v-if="errors.confirm_password" class="form-error">{{ errors.confirm_password }}</span>
@@ -279,19 +279,19 @@
           <button type="submit" class="btn btn-primary btn-full" :disabled="loading">
             <div class="btn-content">
               <span v-if="loading" class="loading-spinner"></span>
-              <span v-if="loading">Inscription en cours...</span>
-              <span v-else>Inscrire mon restaurant</span>
+              <span v-if="loading">{{ $t('restaurant_register.actions.registering') }}</span>
+              <span v-else>{{ $t('restaurant_register.actions.register') }}</span>
             </div>
           </button>
         </form>
 
         <div class="register-footer">
           <div class="divider">
-            <span class="divider-text">ou</span>
+            <span class="divider-text">{{ $t('restaurant_register.footer.or') }}</span>
           </div>
-          <p class="footer-text">Vous avez déjà un compte restaurant ?</p>
+          <p class="footer-text">{{ $t('restaurant_register.footer.has_account') }}</p>
           <router-link to="/restaurant-login" class="btn btn-outline btn-full">
-            Se connecter
+            {{ $t('restaurant_register.actions.login') }}
           </router-link>
         </div>
       </div>
@@ -300,7 +300,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -308,7 +308,7 @@ export default {
   name: 'RestaurantRegister',
   setup() {
     const router = useRouter()
-    const { t: $t } = useI18n()
+    const { t } = useI18n()
     const loading = ref(false)
     const errorMessage = ref('')
     const successMessage = ref('')
@@ -368,98 +368,98 @@ export default {
 
       // Validation nom du restaurant
       if (!form.restaurant_name.trim()) {
-        errors.restaurant_name = 'Le nom du restaurant est requis'
+        errors.restaurant_name = t('restaurant_register.validation.restaurant_name_required')
         isValid = false
       } else if (form.restaurant_name.length < 2) {
-        errors.restaurant_name = 'Le nom doit contenir au moins 2 caractères'
+        errors.restaurant_name = t('restaurant_register.validation.restaurant_name_min_length')
         isValid = false
       }
 
       // Validation type de cuisine
       if (!form.cuisine_type) {
-        errors.cuisine_type = 'Le type de cuisine est requis'
+        errors.cuisine_type = t('restaurant_register.validation.cuisine_type_required')
         isValid = false
       }
 
       // Validation gamme de prix
       if (!form.price_range) {
-        errors.price_range = 'La gamme de prix est requise'
+        errors.price_range = t('restaurant_register.validation.price_range_required')
         isValid = false
       }
 
       // Validation adresse
       if (!form.address.trim()) {
-        errors.address = 'L\'adresse est requise'
+        errors.address = t('restaurant_register.validation.address_required')
         isValid = false
       }
 
       // Validation téléphone
       const phoneRegex = /^[0-9]{10}$/
       if (!form.phone) {
-        errors.phone = 'Le téléphone est requis'
+        errors.phone = t('restaurant_register.validation.phone_required')
         isValid = false
       } else if (!phoneRegex.test(form.phone.replace(/\s/g, ''))) {
-        errors.phone = 'Format de téléphone invalide (10 chiffres)'
+        errors.phone = t('restaurant_register.validation.phone_invalid')
         isValid = false
       }
 
       // Validation email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
       if (!form.email) {
-        errors.email = 'L\'email est requis'
+        errors.email = t('restaurant_register.validation.email_required')
         isValid = false
       } else if (!emailRegex.test(form.email)) {
-        errors.email = 'Format d\'email invalide'
+        errors.email = t('restaurant_register.validation.email_invalid')
         isValid = false
       }
 
       // Validation horaires
       if (!form.opening_hours.trim()) {
-        errors.opening_hours = 'Les horaires d\'ouverture sont requis'
+        errors.opening_hours = t('restaurant_register.validation.opening_hours_required')
         isValid = false
       }
 
       // Validation capacité
       if (!form.capacity) {
-        errors.capacity = 'La capacité est requise'
+        errors.capacity = t('restaurant_register.validation.capacity_required')
         isValid = false
       } else if (parseInt(form.capacity) < 1) {
-        errors.capacity = 'La capacité doit être supérieure à 0'
+        errors.capacity = t('restaurant_register.validation.capacity_min')
         isValid = false
       }
 
       // Validation propriétaire
       if (!form.owner_first_name.trim()) {
-        errors.owner_first_name = 'Le prénom du propriétaire est requis'
+        errors.owner_first_name = t('restaurant_register.validation.owner_first_name_required')
         isValid = false
       } else if (form.owner_first_name.length < 2) {
-        errors.owner_first_name = 'Le prénom doit contenir au moins 2 caractères'
+        errors.owner_first_name = t('restaurant_register.validation.owner_first_name_min_length')
         isValid = false
       }
 
       if (!form.owner_last_name.trim()) {
-        errors.owner_last_name = 'Le nom du propriétaire est requis'
+        errors.owner_last_name = t('restaurant_register.validation.owner_last_name_required')
         isValid = false
       } else if (form.owner_last_name.length < 2) {
-        errors.owner_last_name = 'Le nom doit contenir au moins 2 caractères'
+        errors.owner_last_name = t('restaurant_register.validation.owner_last_name_min_length')
         isValid = false
       }
 
       // Validation mot de passe
       if (!form.password) {
-        errors.password = 'Le mot de passe est requis'
+        errors.password = t('restaurant_register.validation.password_required')
         isValid = false
       } else if (form.password.length < 6) {
-        errors.password = 'Le mot de passe doit contenir au moins 6 caractères'
+        errors.password = t('restaurant_register.validation.password_min_length')
         isValid = false
       }
 
       // Validation confirmation mot de passe
       if (!form.confirm_password) {
-        errors.confirm_password = 'La confirmation du mot de passe est requise'
+        errors.confirm_password = t('restaurant_register.validation.confirm_password_required')
         isValid = false
       } else if (form.password !== form.confirm_password) {
-        errors.confirm_password = 'Les mots de passe ne correspondent pas'
+        errors.confirm_password = t('restaurant_register.validation.passwords_not_match')
         isValid = false
       }
 
@@ -498,7 +498,7 @@ export default {
         // Pour l'instant, simuler une inscription réussie
         console.log('Données du restaurant:', restaurantData)
         
-        successMessage.value = 'Restaurant inscrit avec succès ! Redirection...'
+        successMessage.value = t('restaurant_register.messages.success')
         
         // Stocker les données du restaurant
         localStorage.setItem('restaurantData', JSON.stringify(restaurantData))
@@ -509,12 +509,29 @@ export default {
         }, 2000)
         
       } catch (err) {
-        console.error('Erreur d\'inscription restaurant:', err)
+        console.error(t('restaurant_register.messages.register_error'), err)
         errorMessage.value = 'Une erreur inattendue s\'est produite'
       } finally {
         loading.value = false
       }
     }
+
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+
+    onMounted(() => {
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
+    })
 
     return {
       form,
