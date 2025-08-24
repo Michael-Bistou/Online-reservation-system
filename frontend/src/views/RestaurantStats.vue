@@ -6,32 +6,32 @@
         <div class="nav-content">
           <div class="nav-brand">
             <router-link to="/restaurant-dashboard" class="nav-logo">
-              🏪 Dashboard Restaurant
+              {{ $t('restaurant_dashboard.nav.dashboard') }}
             </router-link>
           </div>
           <div class="nav-links">
             <router-link to="/restaurant-dashboard" class="nav-link">
-              📊 Dashboard
+              📊 {{ $t('restaurant_dashboard.nav.dashboard').replace('🏪 ', '') }}
             </router-link>
             <router-link to="/restaurant-reservations" class="nav-link">
-              📅 Réservations
+              {{ $t('restaurant_dashboard.nav.reservations') }}
             </router-link>
             <router-link to="/restaurant-stats" class="nav-link active">
-              📈 Statistiques
+              {{ $t('restaurant_dashboard.nav.statistics') }}
             </router-link>
             <router-link to="/restaurant-menu" class="nav-link">
-              📝 Menu
+              {{ $t('restaurant_dashboard.nav.menu') }}
             </router-link>
             <router-link to="/restaurant-profile" class="nav-link">
-              ⚙️ Profil
+              {{ $t('restaurant_dashboard.nav.profile') }}
             </router-link>
           </div>
           <div class="nav-actions">
             <router-link to="/" class="btn btn-outline btn-sm">
-              🏠 Site Principal
+              {{ $t('restaurant_dashboard.nav.main_site') }}
             </router-link>
             <button @click="logout" class="btn btn-outline btn-sm">
-              🚪 Déconnexion
+              {{ $t('restaurant_dashboard.nav.logout') }}
             </button>
           </div>
         </div>
@@ -40,8 +40,8 @@
 
     <div class="page-header">
       <div class="container">
-        <h1 class="page-title">Statistiques Détaillées</h1>
-        <p class="page-subtitle">Analysez les performances de votre restaurant</p>
+        <h1 class="page-title">{{ $t('restaurant_stats.title') }}</h1>
+        <p class="page-subtitle">{{ $t('restaurant_stats.subtitle') }}</p>
       </div>
     </div>
 
@@ -51,20 +51,20 @@
         <div class="filters-section">
           <div class="filter-row">
             <div class="filter-group">
-              <label class="filter-label">Période</label>
+              <label class="filter-label">{{ $t('restaurant_stats.filters.period') }}</label>
               <select v-model="selectedPeriod" class="filter-select" @change="updateStats">
-                <option value="7">7 derniers jours</option>
-                <option value="30">30 derniers jours</option>
-                <option value="90">3 derniers mois</option>
-                <option value="365">1 an</option>
+                <option value="7">{{ $t('restaurant_stats.filters.last_7_days') }}</option>
+                <option value="30">{{ $t('restaurant_stats.filters.last_30_days') }}</option>
+                <option value="90">{{ $t('restaurant_stats.filters.last_3_months') }}</option>
+                <option value="365">{{ $t('restaurant_stats.filters.last_year') }}</option>
               </select>
             </div>
             <div class="filter-group">
-              <label class="filter-label">Date de début</label>
+              <label class="filter-label">{{ $t('restaurant_stats.filters.start_date') }}</label>
               <input v-model="startDate" type="date" class="filter-input" @change="updateStats" />
             </div>
             <div class="filter-group">
-              <label class="filter-label">Date de fin</label>
+              <label class="filter-label">{{ $t('restaurant_stats.filters.end_date') }}</label>
               <input v-model="endDate" type="date" class="filter-input" @change="updateStats" />
             </div>
           </div>
@@ -76,9 +76,9 @@
             <div class="metric-icon">📊</div>
             <div class="metric-content">
               <div class="metric-number">{{ totalReservations }}</div>
-              <div class="metric-label">Total Réservations</div>
+              <div class="metric-label">{{ $t('restaurant_stats.metrics.total_reservations') }}</div>
               <div class="metric-change" :class="getChangeClass(reservationChange)">
-                {{ reservationChange > 0 ? '+' : '' }}{{ reservationChange }}% vs période précédente
+                {{ reservationChange > 0 ? '+' : '' }}{{ reservationChange }}% {{ $t('restaurant_stats.metrics.vs_previous_period') }}
               </div>
             </div>
           </div>
@@ -87,9 +87,9 @@
             <div class="metric-icon">💰</div>
             <div class="metric-content">
               <div class="metric-number">{{ averagePartySize }}</div>
-              <div class="metric-label">Taille moyenne groupe</div>
+              <div class="metric-label">{{ $t('restaurant_stats.metrics.average_party_size') }}</div>
               <div class="metric-change" :class="getChangeClass(partySizeChange)">
-                {{ partySizeChange > 0 ? '+' : '' }}{{ partySizeChange }}% vs période précédente
+                {{ partySizeChange > 0 ? '+' : '' }}{{ partySizeChange }}% {{ $t('restaurant_stats.metrics.vs_previous_period') }}
               </div>
             </div>
           </div>
@@ -98,9 +98,9 @@
             <div class="metric-icon">✅</div>
             <div class="metric-content">
               <div class="metric-number">{{ confirmationRate }}%</div>
-              <div class="metric-label">Taux de confirmation</div>
+              <div class="metric-label">{{ $t('restaurant_stats.metrics.confirmation_rate') }}</div>
               <div class="metric-change" :class="getChangeClass(confirmationChange)">
-                {{ confirmationChange > 0 ? '+' : '' }}{{ confirmationChange }}% vs période précédente
+                {{ confirmationChange > 0 ? '+' : '' }}{{ confirmationChange }}% {{ $t('restaurant_stats.metrics.vs_previous_period') }}
               </div>
             </div>
           </div>
@@ -109,9 +109,9 @@
             <div class="metric-icon">📅</div>
             <div class="metric-content">
               <div class="metric-number">{{ averageReservationsPerDay }}</div>
-              <div class="metric-label">Réservations/jour</div>
+              <div class="metric-label">{{ $t('restaurant_stats.metrics.reservations_per_day') }}</div>
               <div class="metric-change" :class="getChangeClass(dailyChange)">
-                {{ dailyChange > 0 ? '+' : '' }}{{ dailyChange }}% vs période précédente
+                {{ dailyChange > 0 ? '+' : '' }}{{ dailyChange }}% {{ $t('restaurant_stats.metrics.vs_previous_period') }}
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@
           <div class="chart-grid">
             <!-- Réservations par jour -->
             <div class="chart-card">
-              <h3 class="chart-title">Réservations par jour</h3>
+              <h3 class="chart-title">{{ $t('restaurant_stats.charts.daily_reservations') }}</h3>
               <div class="chart-container">
                 <div class="chart-placeholder">
                   <div class="chart-bars">
@@ -132,7 +132,7 @@
                       class="chart-bar"
                       :style="{ height: `${(day.count / maxDailyReservations) * 100}%` }"
                     >
-                      <div class="bar-tooltip">{{ day.count }} réservations</div>
+                      <div class="bar-tooltip">{{ day.count }} {{ $t('restaurant_stats.charts.reservations') }}</div>
                     </div>
                   </div>
                   <div class="chart-labels">
@@ -146,12 +146,12 @@
 
                          <!-- Répartition par statut -->
              <div class="chart-card">
-               <h3 class="chart-title">Répartition par statut</h3>
+               <h3 class="chart-title">{{ $t('restaurant_stats.charts.status_distribution') }}</h3>
                <div class="chart-container">
                  <div class="pie-chart-container">
                    <div class="pie-chart">
                      <div v-if="pieSegments.length === 0" class="pie-empty">
-                       <div class="empty-text">Aucune réservation</div>
+                       <div class="empty-text">{{ $t('restaurant_stats.charts.no_reservations') }}</div>
                      </div>
                      <div 
                        v-for="(segment, index) in pieSegments" 
@@ -167,19 +167,19 @@
                    <div class="pie-legend">
                      <div class="legend-item">
                        <span class="legend-color pending"></span>
-                       <span class="legend-text">En attente: {{ statusStats.pending }}</span>
+                       <span class="legend-text">{{ $t('restaurant_stats.charts.pending') }}: {{ statusStats.pending }}</span>
                      </div>
                      <div class="legend-item">
                        <span class="legend-color confirmed"></span>
-                       <span class="legend-text">Confirmées: {{ statusStats.confirmed }}</span>
+                       <span class="legend-text">{{ $t('restaurant_stats.charts.confirmed') }}: {{ statusStats.confirmed }}</span>
                      </div>
                      <div class="legend-item">
                        <span class="legend-color completed"></span>
-                       <span class="legend-text">Terminées: {{ statusStats.completed }}</span>
+                       <span class="legend-text">{{ $t('restaurant_stats.charts.completed') }}: {{ statusStats.completed }}</span>
                      </div>
                      <div class="legend-item">
                        <span class="legend-color cancelled"></span>
-                       <span class="legend-text">Annulées: {{ statusStats.cancelled }}</span>
+                       <span class="legend-text">{{ $t('restaurant_stats.charts.cancelled') }}: {{ statusStats.cancelled }}</span>
                      </div>
                    </div>
                  </div>
@@ -190,7 +190,7 @@
 
         <!-- Tableau des heures de pointe -->
         <div class="peak-hours-section">
-          <h3 class="section-title">Heures de pointe</h3>
+          <h3 class="section-title">{{ $t('restaurant_stats.peak_hours.title') }}</h3>
           <div class="peak-hours-grid">
             <div 
               v-for="(hour, index) in peakHours" 
@@ -199,7 +199,7 @@
               :class="getPeakClass(hour.count)"
             >
               <div class="hour-time">{{ hour.time }}</div>
-              <div class="hour-count">{{ hour.count }} réservations</div>
+              <div class="hour-count">{{ hour.count }} {{ $t('restaurant_stats.peak_hours.reservations') }}</div>
               <div class="hour-bar" :style="{ width: `${(hour.count / maxPeakReservations) * 100}%` }"></div>
             </div>
           </div>
@@ -212,22 +212,22 @@
             <div class="trend-card">
               <div class="trend-icon">📈</div>
               <div class="trend-content">
-                <h4>Réservations en hausse</h4>
-                <p>Vos réservations ont augmenté de {{ reservationChange }}% cette période</p>
+                <h4>{{ $t('restaurant_stats.peak_hours.increasing_reservations') }}</h4>
+                <p>{{ $t('restaurant_stats.peak_hours.increasing_text', { percent: reservationChange }) }}</p>
               </div>
             </div>
             <div class="trend-card">
               <div class="trend-icon">⏰</div>
               <div class="trend-content">
-                <h4>Heure la plus populaire</h4>
-                <p>{{ mostPopularHour }} avec {{ mostPopularHourCount }} réservations</p>
+                <h4>{{ $t('restaurant_stats.peak_hours.most_popular_hour', { hour: mostPopularHour, count: mostPopularHourCount }) }}</h4>
+                <p>{{ mostPopularHour }} avec {{ mostPopularHourCount }} {{ $t('restaurant_stats.peak_hours.reservations') }}</p>
               </div>
             </div>
             <div class="trend-card">
               <div class="trend-icon">👥</div>
               <div class="trend-content">
-                <h4>Groupe moyen</h4>
-                <p>{{ averagePartySize }} personnes par réservation</p>
+                <h4>{{ $t('restaurant_stats.metrics.average_party_size') }}</h4>
+                <p>{{ averagePartySize }} {{ $t('restaurant_stats.charts.reservations') }} par réservation</p>
               </div>
             </div>
           </div>
@@ -238,11 +238,23 @@
 </template>
 
 <script>
-import { ref, computed, onMounted, onActivated } from 'vue'
+import { ref, computed, onMounted, onActivated, onUnmounted, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'RestaurantStats',
   setup() {
+    const { t } = useI18n()
+    
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      // Force re-render when language changes
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+    
+    // Reactive data
     const selectedPeriod = ref('30')
     const startDate = ref('')
     const endDate = ref('')
@@ -639,11 +651,19 @@ export default {
       endDate.value = end.toISOString().split('T')[0]
       
       loadReservations()
+      
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
     })
 
     // Recharger les données quand on revient sur la page
     onActivated(() => {
       loadReservations()
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     // Fonction de debug pour forcer le rechargement

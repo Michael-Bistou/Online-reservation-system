@@ -518,6 +518,43 @@
       "cancel": "Annuler"
     }
   },
+  "restaurant_stats": {
+    "title": "Statistiques Détaillées",
+    "subtitle": "Analysez les performances de votre restaurant",
+    "filters": {
+      "period": "Période",
+      "last_7_days": "7 derniers jours",
+      "last_30_days": "30 derniers jours",
+      "last_3_months": "3 derniers mois",
+      "last_year": "1 an",
+      "start_date": "Date de début",
+      "end_date": "Date de fin"
+    },
+    "metrics": {
+      "total_reservations": "Total Réservations",
+      "average_party_size": "Taille moyenne groupe",
+      "confirmation_rate": "Taux de confirmation",
+      "reservations_per_day": "Réservations/jour",
+      "vs_previous_period": "vs période précédente"
+    },
+    "charts": {
+      "daily_reservations": "Réservations par jour",
+      "status_distribution": "Répartition par statut",
+      "reservations": "réservations",
+      "no_reservations": "Aucune réservation",
+      "pending": "En attente",
+      "confirmed": "Confirmées",
+      "completed": "Terminées",
+      "cancelled": "Annulées"
+    },
+    "peak_hours": {
+      "title": "Heures de pointe",
+      "reservations": "réservations",
+      "increasing_reservations": "Réservations en hausse",
+      "increasing_text": "Vos réservations ont augmenté de {percent}% cette période",
+      "most_popular_hour": "{hour} avec {count} réservations"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",

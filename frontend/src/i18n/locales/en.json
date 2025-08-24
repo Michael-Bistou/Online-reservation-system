@@ -515,6 +515,43 @@
       "cancel": "Cancel"
     }
   },
+  "restaurant_stats": {
+    "title": "Detailed Statistics",
+    "subtitle": "Analyze your restaurant performance",
+    "filters": {
+      "period": "Period",
+      "last_7_days": "Last 7 days",
+      "last_30_days": "Last 30 days",
+      "last_3_months": "Last 3 months",
+      "last_year": "Last year",
+      "start_date": "Start date",
+      "end_date": "End date"
+    },
+    "metrics": {
+      "total_reservations": "Total Reservations",
+      "average_party_size": "Average party size",
+      "confirmation_rate": "Confirmation rate",
+      "reservations_per_day": "Reservations/day",
+      "vs_previous_period": "vs previous period"
+    },
+    "charts": {
+      "daily_reservations": "Daily Reservations",
+      "status_distribution": "Status Distribution",
+      "reservations": "reservations",
+      "no_reservations": "No reservations",
+      "pending": "Pending",
+      "confirmed": "Confirmed",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "peak_hours": {
+      "title": "Peak Hours",
+      "reservations": "reservations",
+      "increasing_reservations": "Increasing Reservations",
+      "increasing_text": "Your reservations have increased by {percent}% this period",
+      "most_popular_hour": "{hour} with {count} reservations"
+    }
+  },
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your personal information",
