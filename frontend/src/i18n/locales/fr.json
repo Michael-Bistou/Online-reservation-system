@@ -225,8 +225,31 @@
     "make_reservation": "Réserver une table",
     "load_error": "Erreur lors du chargement des restaurants",
     "cuisine_types": "Type de cuisine",
+    "cuisine_options": {
+      "french": "Française",
+      "italian": "Italienne",
+      "japanese": "Japonaise",
+      "chinese": "Chinoise",
+      "mexican": "Mexicaine",
+      "indian": "Indienne",
+      "thai": "Thaï",
+      "greek": "Grecque",
+      "spanish": "Espagnole"
+    },
     "price_range": "Prix",
+    "price_options": {
+      "economic": "€ (Économique)",
+      "moderate": "€€ (Modéré)",
+      "expensive": "€€€ (Élevé)",
+      "luxury": "€€€€ (Luxe)"
+    },
     "rating": "Note minimum",
+    "rating_options": {
+      "4.5": "4.5+ ⭐",
+      "4.0": "4.0+ ⭐",
+      "3.5": "3.5+ ⭐",
+      "3.0": "3.0+ ⭐"
+    },
     "featured_restaurant": "Coup de cœur",
     "popular_restaurant": "Très populaire",
     "description": "À propos",

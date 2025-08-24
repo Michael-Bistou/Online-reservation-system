@@ -211,6 +211,43 @@
     "title": "Restaurants",
     "subtitle": "Discover our partner restaurants",
     "search": "Search for a restaurant...",
+    "restaurants": "Restaurants",
+    "restaurant_list": "Discover our partner restaurants",
+    "search_restaurants": "Search for a restaurant...",
+    "loading": "Loading restaurants...",
+    "no_restaurants_found": "No restaurants found",
+    "try_different_filters": "Try modifying your search criteria or clearing the filters",
+    "view_details": "View details",
+    "make_reservation": "Make a reservation",
+    "load_error": "Error loading restaurants",
+    "cuisine_types": "Cuisine type",
+    "cuisine_options": {
+      "french": "French",
+      "italian": "Italian",
+      "japanese": "Japanese",
+      "chinese": "Chinese",
+      "mexican": "Mexican",
+      "indian": "Indian",
+      "thai": "Thai",
+      "greek": "Greek",
+      "spanish": "Spanish"
+    },
+    "price_range": "Price",
+    "price_options": {
+      "economic": "$ (Economic)",
+      "moderate": "$$ (Moderate)",
+      "expensive": "$$$ (Expensive)",
+      "luxury": "$$$$ (Luxury)"
+    },
+    "rating": "Minimum rating",
+    "rating_options": {
+      "4.5": "4.5+ ⭐",
+      "4.0": "4.0+ ⭐",
+      "3.5": "3.5+ ⭐",
+      "3.0": "3.0+ ⭐"
+    },
+    "featured_restaurant": "Featured",
+    "popular_restaurant": "Very popular",
     "filters": {
       "title": "Filters",
       "cuisine": "Cuisine type",

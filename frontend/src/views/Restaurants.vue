@@ -30,31 +30,31 @@
           <div class="filters">
                                     <select v-model="selectedCuisine" class="filter-select" @change="handleFilter">
                           <option value="">{{ $t('restaurants.cuisine_types') }}</option>
-                          <option value="Française">Française</option>
-                          <option value="Italienne">Italienne</option>
-                          <option value="Japonaise">Japonaise</option>
-                          <option value="Chinoise">Chinoise</option>
-                          <option value="Mexicaine">Mexicaine</option>
-                          <option value="Indienne">Indienne</option>
-                          <option value="Thaï">Thaï</option>
-                          <option value="Grecque">Grecque</option>
-                          <option value="Espagnole">Espagnole</option>
+                          <option value="Française">{{ $t('restaurants.cuisine_options.french') }}</option>
+                          <option value="Italienne">{{ $t('restaurants.cuisine_options.italian') }}</option>
+                          <option value="Japonaise">{{ $t('restaurants.cuisine_options.japanese') }}</option>
+                          <option value="Chinoise">{{ $t('restaurants.cuisine_options.chinese') }}</option>
+                          <option value="Mexicaine">{{ $t('restaurants.cuisine_options.mexican') }}</option>
+                          <option value="Indienne">{{ $t('restaurants.cuisine_options.indian') }}</option>
+                          <option value="Thaï">{{ $t('restaurants.cuisine_options.thai') }}</option>
+                          <option value="Grecque">{{ $t('restaurants.cuisine_options.greek') }}</option>
+                          <option value="Espagnole">{{ $t('restaurants.cuisine_options.spanish') }}</option>
                         </select>
 
             <select v-model="selectedPriceRange" class="filter-select" @change="handleFilter">
               <option value="">{{ $t('restaurants.price_range') }}</option>
-              <option value="€">€ (Économique)</option>
-              <option value="€€">€€ (Modéré)</option>
-              <option value="€€€">€€€ (Élevé)</option>
-              <option value="€€€€">€€€€ (Luxe)</option>
+              <option value="€">{{ $t('restaurants.price_options.economic') }}</option>
+              <option value="€€">{{ $t('restaurants.price_options.moderate') }}</option>
+              <option value="€€€">{{ $t('restaurants.price_options.expensive') }}</option>
+              <option value="€€€€">{{ $t('restaurants.price_options.luxury') }}</option>
             </select>
 
             <select v-model="selectedRating" class="filter-select" @change="handleFilter">
               <option value="">{{ $t('restaurants.rating') }}</option>
-              <option value="4.5">4.5+ ⭐</option>
-              <option value="4.0">4.0+ ⭐</option>
-              <option value="3.5">3.5+ ⭐</option>
-              <option value="3.0">3.0+ ⭐</option>
+              <option value="4.5">{{ $t('restaurants.rating_options.4.5') }}</option>
+              <option value="4.0">{{ $t('restaurants.rating_options.4.0') }}</option>
+              <option value="3.5">{{ $t('restaurants.rating_options.3.5') }}</option>
+              <option value="3.0">{{ $t('restaurants.rating_options.3.0') }}</option>
             </select>
           </div>
         </div>
@@ -120,7 +120,7 @@
               </div>
 
               <div class="restaurant-details">
-                <p class="restaurant-cuisine">{{ restaurant.cuisine_type }}</p>
+                <p class="restaurant-cuisine">{{ translateCuisineType(restaurant.cuisine_type) }}</p>
                 <p class="restaurant-price">{{ restaurant.price_range }}</p>
                 <p class="restaurant-address">{{ restaurant.address }}</p>
               </div>
@@ -159,7 +159,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
@@ -169,6 +169,24 @@ export default {
   setup() {
     const router = useRouter()
     const { t } = useI18n()
+    
+    // Function to translate cuisine types
+    const translateCuisineType = (cuisineType) => {
+      const cuisineMap = {
+        'Française': 'french',
+        'Italienne': 'italian',
+        'Japonaise': 'japanese',
+        'Chinoise': 'chinese',
+        'Mexicaine': 'mexican',
+        'Indienne': 'indian',
+        'Thaï': 'thai',
+        'Grecque': 'greek',
+        'Espagnole': 'spanish'
+      }
+      
+      const key = cuisineMap[cuisineType]
+      return key ? t(`restaurants.cuisine_options.${key}`) : cuisineType
+    }
     
     // Reactive data
     const restaurants = ref([])
@@ -519,9 +537,20 @@ export default {
       router.push(`/restaurants/${restaurant.id}`)
     }
 
+    // Écouter les changements de langue
+    const handleLanguageChange = () => {
+      console.log('🌍 Langue changée, mise à jour de la page restaurants...')
+      // Le composant se mettra à jour automatiquement grâce aux $t()
+    }
+
     // Lifecycle
     onMounted(() => {
       loadRestaurants()
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {
@@ -533,6 +562,7 @@ export default {
       selectedPriceRange,
       selectedRating,
       filteredRestaurants,
+      translateCuisineType,
       loadRestaurants,
       handleSearch,
       handleFilter,
