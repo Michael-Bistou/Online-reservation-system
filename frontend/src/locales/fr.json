@@ -1,0 +1,199 @@
+{
+  "common": {
+    "welcome": "Bienvenue",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Déconnexion",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "view": "Voir",
+    "confirm": "Confirmer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "warning": "Attention",
+    "info": "Information"
+  },
+  "home": {
+    "title": "Système de Réservation de Restaurants",
+    "subtitle": "Réservez votre table en quelques clics",
+    "hero": {
+      "title": "Trouvez le restaurant parfait",
+      "subtitle": "Des milliers de restaurants vous attendent",
+      "cta": "Commencer à réserver"
+    },
+    "features": {
+      "title": "Fonctionnalités",
+      "easy_booking": "Réservation facile",
+      "secure_payment": "Paiement sécurisé",
+      "instant_confirmation": "Confirmation instantanée",
+      "mobile_friendly": "Compatible mobile"
+    },
+    "featured": {
+      "title": "Restaurants Vedettes",
+      "subtitle": "Découvrez nos restaurants les plus populaires"
+    },
+    "testimonials": {
+      "title": "Ce que disent nos clients",
+      "subtitle": "Découvrez les avis de nos utilisateurs satisfaits"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "forgot_password": "Mot de passe oublié ?",
+      "no_account": "Pas de compte ?",
+      "register_link": "S'inscrire"
+    },
+    "register": {
+      "title": "Inscription",
+      "first_name": "Prénom",
+      "last_name": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "password": "Mot de passe",
+      "confirm_password": "Confirmer le mot de passe",
+      "submit": "S'inscrire",
+      "has_account": "Déjà un compte ?",
+      "login_link": "Se connecter"
+    }
+  },
+  "restaurants": {
+    "title": "Restaurants",
+    "search": "Rechercher un restaurant...",
+    "filters": {
+      "title": "Filtres",
+      "cuisine": "Type de cuisine",
+      "price_range": "Fourchette de prix",
+      "rating": "Note minimum",
+      "clear": "Effacer les filtres"
+    },
+    "card": {
+      "rating": "Note",
+      "reviews": "avis",
+      "price_range": "Prix",
+      "cuisine": "Cuisine",
+      "view_details": "Voir détails",
+      "book_now": "Réserver"
+    }
+  },
+  "restaurant": {
+    "details": {
+      "about": "À propos",
+      "practical_info": "Informations pratiques",
+      "opening_hours": "Horaires d'ouverture",
+      "amenities": "Équipements",
+      "contact": "Contact",
+      "address": "Adresse",
+      "phone": "Téléphone",
+      "email": "Email"
+    },
+    "reservation": {
+      "title": "Réserver une table",
+      "date": "Date de réservation",
+      "time": "Heure de réservation",
+      "people": "Nombre de personnes",
+      "special_requests": "Demandes spéciales",
+      "submit": "Confirmer la réservation"
+    }
+  },
+  "reservations": {
+    "title": "Mes Réservations",
+    "upcoming": "Réservations à venir",
+    "past": "Réservations passées",
+    "status": {
+      "pending": "En attente",
+      "confirmed": "Confirmée",
+      "cancelled": "Annulée"
+    },
+    "actions": {
+      "modify": "Modifier",
+      "cancel": "Annuler",
+      "view": "Voir détails"
+    }
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "personal_info": "Informations personnelles",
+    "activity": "Mon activité",
+    "stats": {
+      "total_reservations": "Total des réservations",
+      "total_spent": "Total dépensé",
+      "favorite_cuisine": "Cuisine préférée",
+      "member_since": "Membre depuis"
+    },
+    "actions": {
+      "export_data": "Exporter mes données",
+      "delete_account": "Supprimer mon compte"
+    }
+  },
+  "admin": {
+    "dashboard": {
+      "title": "Tableau de bord",
+      "stats": {
+        "users": "Utilisateurs",
+        "restaurants": "Restaurants",
+        "reservations": "Réservations",
+        "revenue": "Revenus"
+      }
+    },
+    "users": {
+      "title": "Gestion des utilisateurs",
+      "actions": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "deactivate": "Désactiver"
+      }
+    },
+    "restaurants": {
+      "title": "Gestion des restaurants",
+      "actions": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "deactivate": "Désactiver"
+      }
+    },
+    "reservations": {
+      "title": "Gestion des réservations",
+      "actions": {
+        "view": "Voir",
+        "edit": "Modifier",
+        "cancel": "Annuler"
+      }
+    },
+    "logs": {
+      "title": "Logs d'audit",
+      "actions": {
+        "view": "Voir détails"
+      }
+    }
+  },
+  "payment": {
+    "title": "Paiement",
+    "amount": "Montant",
+    "deposit": "Acompte",
+    "total": "Total",
+    "card_number": "Numéro de carte",
+    "expiry": "Date d'expiration",
+    "cvv": "CVV",
+    "submit": "Payer",
+    "success": "Paiement réussi",
+    "error": "Erreur de paiement"
+  },
+  "notifications": {
+    "reservation_confirmed": "Réservation confirmée",
+    "reservation_cancelled": "Réservation annulée",
+    "payment_success": "Paiement réussi",
+    "welcome": "Bienvenue sur notre plateforme"
+  }
+}

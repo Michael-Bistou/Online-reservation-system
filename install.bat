@@ -1,99 +1,121 @@
 @echo off
 echo ========================================
-echo Installation du Systeme de Reservation
+echo   Installation du Systeme de Reservation
 echo ========================================
 echo.
 
-echo [1/7] Verification des prerequis...
-node --version >nul 2>&1
-if errorlevel 1 (
-    echo ERREUR: Node.js n'est pas installe
-    echo Téléchargez Node.js sur https://nodejs.org/
-    pause
-    exit /b 1
-)
-
-npm --version >nul 2>&1
-if errorlevel 1 (
-    echo ERREUR: npm n'est pas installe
-    pause
-    exit /b 1
-)
-
-echo ✅ Node.js et npm sont installes
+echo [1/6] Verification des prerequis...
 echo.
 
-echo [2/7] Installation des dependances backend...
+REM Verifier Node.js
+node --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ❌ Node.js n'est pas installe
+    echo Veuillez installer Node.js depuis https://nodejs.org/
+    pause
+    exit /b 1
+)
+echo ✅ Node.js detecte
+
+REM Verifier npm
+npm --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ❌ npm n'est pas installe
+    pause
+    exit /b 1
+)
+echo ✅ npm detecte
+
+REM Verifier Git
+git --version >nul 2>&1
+if %errorlevel% neq 0 (
+    echo ❌ Git n'est pas installe
+    echo Veuillez installer Git depuis https://git-scm.com/
+    pause
+    exit /b 1
+)
+echo ✅ Git detecte
+
+echo.
+echo [2/6] Installation des dependances frontend...
+cd frontend
 call npm install
-if errorlevel 1 (
-    echo ERREUR: Echec de l'installation des dependances backend
+if %errorlevel% neq 0 (
+    echo ❌ Erreur lors de l'installation des dependances frontend
+    pause
+    exit /b 1
+)
+echo ✅ Dependances frontend installees
+
+echo.
+echo [3/6] Installation des dependances backend...
+cd ..\src
+call npm install
+if %errorlevel% neq 0 (
+    echo ❌ Erreur lors de l'installation des dependances backend
     pause
     exit /b 1
 )
 echo ✅ Dependances backend installees
-echo.
 
-echo [3/7] Installation des dependances frontend...
-cd frontend
-call npm install
-if errorlevel 1 (
-    echo ERREUR: Echec de l'installation des dependances frontend
-    pause
-    exit /b 1
-)
+echo.
+echo [4/6] Configuration de la base de donnees...
 cd ..
-echo ✅ Dependances frontend installees
-echo.
-
-echo [4/7] Configuration de l'environnement...
-if not exist .env (
-    copy env.dev .env
-    echo ✅ Fichier .env cree
-) else (
-    echo ✅ Fichier .env existe deja
-)
-echo.
-
-echo [5/7] Verification de la base de donnees...
-echo ATTENTION: Assurez-vous que MySQL est demarre
-echo Si vous utilisez XAMPP, demarrez MySQL dans le Control Panel
-echo.
-pause
-
-echo [6/7] Creation de la base de donnees...
-echo Veuillez entrer le mot de passe MySQL root (laissez vide si aucun):
-set /p mysql_password=
-
-if "%mysql_password%"=="" (
-    mysql -u root -e "CREATE DATABASE IF NOT EXISTS reservation_system;"
-) else (
-    mysql -u root -p%mysql_password% -e "CREATE DATABASE IF NOT EXISTS reservation_system;"
+if exist database.sqlite (
+    echo ⚠️  Base de donnees existante detectee
+    set /p choice="Voulez-vous la recreeer ? (o/n): "
+    if /i "%choice%"=="o" (
+        del database.sqlite
+        echo ✅ Ancienne base supprimee
+    )
 )
 
-if errorlevel 1 (
-    echo ERREUR: Impossible de se connecter a MySQL
-    echo Verifiez que MySQL est demarre et que le mot de passe est correct
-    pause
-    exit /b 1
+if not exist database.sqlite (
+    node migrate-database.js
+    if %errorlevel% neq 0 (
+        echo ❌ Erreur lors de l'initialisation de la base de donnees
+        pause
+        exit /b 1
+    )
+    echo ✅ Base de donnees initialisee
 )
-echo ✅ Base de donnees creee
-echo.
 
-echo [7/7] Installation terminee !
+echo.
+echo [5/6] Creation des scripts de lancement...
+echo @echo off > start-all.bat
+echo echo ======================================== >> start-all.bat
+echo echo   Demarrage du Systeme de Reservation >> start-all.bat
+echo echo ======================================== >> start-all.bat
+echo echo. >> start-all.bat
+echo echo [1/2] Demarrage du backend... >> start-all.bat
+echo start "Backend" cmd /k "cd src ^&^& npm start" >> start-all.bat
+echo timeout /t 3 >> start-all.bat
+echo echo [2/2] Demarrage du frontend... >> start-all.bat
+echo start "Frontend" cmd /k "cd frontend ^&^& npm run dev" >> start-all.bat
+echo echo. >> start-all.bat
+echo echo ✅ Systeme demarre ! >> start-all.bat
+echo echo 🌐 Frontend: http://localhost:8080 >> start-all.bat
+echo echo 🔧 Backend: http://localhost:5000 >> start-all.bat
+echo echo. >> start-all.bat
+echo pause >> start-all.bat
+
+echo ✅ Scripts de lancement crees
+
+echo.
+echo [6/6] Installation terminee !
 echo.
 echo ========================================
-echo PROCHAINES ETAPES:
+echo   Installation reussie ! 🎉
 echo ========================================
 echo.
-echo 1. Configurez le fichier .env avec vos parametres MySQL
-echo 2. Lancez le backend: npm run dev
-echo 3. Lancez le frontend: cd frontend && npm run dev
+echo 📋 Prochaines etapes :
+echo 1. Lancer start-all.bat pour demarrer le systeme
+echo 2. Ouvrir http://localhost:8080 dans votre navigateur
+echo 3. Se connecter avec admin@gastroreserve.com / admin123
 echo.
-echo URLs d'acces:
-echo - Backend: http://localhost:3000
-echo - Frontend: http://localhost:5173
-echo - API: http://localhost:3000/api
+echo 📚 Documentation :
+echo - README.md : Vue d'ensemble du projet
+echo - INSTALLATION.md : Guide d'installation detaille
 echo.
-echo Consultez INSTALLATION.md pour plus de details
-echo.
+echo ========================================
 pause

@@ -1,244 +1,398 @@
-# Guide d'Installation - Système de Réservation en Ligne
+# 📦 Guide d'Installation Détaillé
 
-## 🎯 **Objectif**
-Ce guide permet de lancer le projet complet (Backend + Frontend) sur n'importe quel ordinateur.
+## 🎯 Vue d'ensemble
 
-## 📋 **Prérequis**
+Ce guide vous accompagne étape par étape pour installer et configurer le système de réservation de restaurants sur votre machine.
 
-### **1. Logiciels requis**
-- **Node.js** (version 16 ou supérieure)
-  - Télécharger : https://nodejs.org/
-  - Vérifier : `node --version`
-- **MySQL** (version 8.0 ou supérieure)
-  - Option A : XAMPP (recommandé) : https://www.apachefriends.org/
-  - Option B : MySQL Community Server
-- **Git** (pour cloner le projet)
-  - Télécharger : https://git-scm.com/
+## 📋 Prérequis Système
 
-### **2. Vérification des prérequis**
+### Windows
+- **Node.js** : Version 16.0.0 ou supérieure
+- **Git** : Version 2.30.0 ou supérieure
+- **npm** : Inclus avec Node.js
+
+### macOS
+- **Node.js** : Version 16.0.0 ou supérieure
+- **Git** : Version 2.30.0 ou supérieure
+- **npm** : Inclus avec Node.js
+
+### Linux (Ubuntu/Debian)
+- **Node.js** : Version 16.0.0 ou supérieure
+- **Git** : Version 2.30.0 ou supérieure
+- **npm** : Inclus avec Node.js
+
+## 🔧 Vérification des Prérequis
+
+### 1. Vérifier Node.js
 ```bash
-node --version    # Doit afficher v16.x.x ou supérieur
-npm --version     # Doit afficher 8.x.x ou supérieur
-mysql --version   # Doit afficher la version MySQL
-git --version     # Doit afficher la version Git
+node --version
+# Doit afficher v16.0.0 ou supérieur
 ```
 
-## 🚀 **Installation étape par étape**
-
-### **Étape 1 : Cloner le projet**
+### 2. Vérifier npm
 ```bash
-git clone <URL_DU_REPO>
+npm --version
+# Doit afficher 8.0.0 ou supérieur
+```
+
+### 3. Vérifier Git
+```bash
+git --version
+# Doit afficher 2.30.0 ou supérieur
+```
+
+## 📥 Installation du Projet
+
+### Étape 1 : Cloner le Repository
+
+```bash
+# Cloner le projet
+git clone https://github.com/votre-username/Online-reservation-system.git
+
+# Accéder au dossier du projet
 cd Online-reservation-system
 ```
 
-### **Étape 2 : Configuration de la base de données**
+### Étape 2 : Installation des Dépendances Frontend
 
-#### **Avec XAMPP :**
-1. Lancer XAMPP Control Panel
-2. Démarrer Apache et MySQL
-3. Aller sur http://localhost/phpmyadmin
-4. Créer une base de données nommée `reservation_system`
-
-#### **Avec MySQL en ligne de commande :**
-```bash
-mysql -u root -p
-CREATE DATABASE reservation_system;
-USE reservation_system;
-exit;
-```
-
-### **Étape 3 : Configuration de l'environnement**
-```bash
-# Copier le fichier d'environnement
-cp env.dev .env
-
-# Éditer le fichier .env avec vos paramètres
-# Notamment : DB_PASSWORD, DB_PORT
-```
-
-### **Étape 4 : Installation des dépendances Backend**
-```bash
-# Dans le dossier racine
-npm install
-```
-
-### **Étape 5 : Installation des dépendances Frontend**
 ```bash
 # Aller dans le dossier frontend
 cd frontend
+
+# Installer les dépendances
 npm install
+
+# Vérifier l'installation
+npm list --depth=0
+```
+
+### Étape 3 : Installation des Dépendances Backend
+
+```bash
+# Retourner à la racine et aller dans src
+cd ../src
+
+# Installer les dépendances
+npm install
+
+# Vérifier l'installation
+npm list --depth=0
+```
+
+### Étape 4 : Configuration de la Base de Données
+
+```bash
+# Retourner à la racine du projet
 cd ..
+
+# Initialiser la base de données avec les données de test
+node migrate-database.js
 ```
 
-### **Étape 6 : Configuration de la base de données**
-```bash
-# Se connecter à MySQL
-mysql -u root -p reservation_system
-
-# Exécuter le schéma (dans MySQL)
-source src/config/schema.sql;
-
-# Insérer les données de test
-source src/config/seed.sql;
-
-# Quitter MySQL
-exit;
+**Résultat attendu :**
+```
+✅ Connexion à la base de données SQLite établie
+✅ Table users créée
+✅ Table restaurants créée
+✅ Table tables créée
+✅ Table reservations créée
+✅ Table payments créée
+✅ Table audit_logs créée
+✅ Utilisateur admin créé
+✅ Utilisateurs de test créés
+✅ Restaurants de test créés
+✅ Tables de test créées
+✅ Réservations de test créées
+✅ Logs d'audit créés
+🎉 Base de données initialisée avec succès !
 ```
 
-### **Étape 7 : Lancer l'application**
+## 🚀 Lancement de l'Application
 
-#### **Terminal 1 - Backend :**
+### Option 1 : Lancement Manuel
+
+#### Terminal 1 - Backend
 ```bash
-# Dans le dossier racine
-npm run dev
+# Aller dans le dossier backend
+cd src
+
+# Lancer le serveur backend
+npm start
 ```
-Le serveur backend sera accessible sur : http://localhost:3000
 
-#### **Terminal 2 - Frontend :**
+**Résultat attendu :**
+```
+🚀 Serveur démarré sur le port 5000
+✅ API REST disponible sur http://localhost:5000
+✅ Base de données SQLite connectée
+```
+
+#### Terminal 2 - Frontend
 ```bash
-# Dans le dossier frontend
+# Aller dans le dossier frontend
 cd frontend
+
+# Lancer le serveur de développement
 npm run dev
 ```
-Le frontend sera accessible sur : http://localhost:5173
 
-## 🌐 **URLs d'accès**
+**Résultat attendu :**
+```
+  VITE v4.x.x  ready in xxx ms
 
-### **Application Vue.js (Nouveau) :**
-- **URL principale** : http://localhost:5173
-- **Page d'accueil** : http://localhost:5173/
-- **Connexion** : http://localhost:5173/login
-- **Inscription** : http://localhost:5173/register
+  ➜  Local:   http://localhost:8080/
+  ➜  Network: use --host to expose
+```
 
-### **Site HTML original (Legacy) :**
-- **URL** : http://localhost:3000/legacy/
-- **Pages** : Accueil, À propos, Services, Contact
+### Option 2 : Script de Lancement Automatique
 
-### **API Backend :**
-- **URL de base** : http://localhost:3000/api
-- **Documentation** : http://localhost:3000/api
-- **Test des traductions** : http://localhost:3000/api/translations
+#### Windows
+```bash
+# Créer un fichier start-all.bat
+echo @echo off > start-all.bat
+echo start "Backend" cmd /k "cd src && npm start" >> start-all.bat
+echo timeout /t 3 >> start-all.bat
+echo start "Frontend" cmd /k "cd frontend && npm run dev" >> start-all.bat
 
-## 🔧 **Configuration détaillée**
+# Lancer le script
+start-all.bat
+```
 
-### **Variables d'environnement (.env)**
+#### Linux/macOS
+```bash
+# Créer un fichier start-all.sh
+cat > start-all.sh << 'EOF'
+#!/bin/bash
+echo "🚀 Démarrage du système de réservation..."
+
+# Démarrer le backend
+echo "📡 Démarrage du backend..."
+cd src && npm start &
+BACKEND_PID=$!
+
+# Attendre 3 secondes
+sleep 3
+
+# Démarrer le frontend
+echo "🎨 Démarrage du frontend..."
+cd frontend && npm run dev &
+FRONTEND_PID=$!
+
+echo "✅ Système démarré !"
+echo "🌐 Frontend: http://localhost:8080"
+echo "🔧 Backend: http://localhost:5000"
+echo ""
+echo "Appuyez sur Ctrl+C pour arrêter..."
+
+# Attendre l'interruption
+wait
+EOF
+
+# Rendre le script exécutable
+chmod +x start-all.sh
+
+# Lancer le script
+./start-all.sh
+```
+
+## 🌐 Accès à l'Application
+
+### URLs d'Accès
+
+| Service | URL | Description |
+|---------|-----|-------------|
+| **Frontend** | http://localhost:8080 | Interface utilisateur principale |
+| **Backend API** | http://localhost:5000 | API REST du système |
+| **Documentation API** | http://localhost:5000/api | Endpoints disponibles |
+
+### Comptes de Test
+
+#### 👤 Utilisateur Standard
+- **Email** : `user@example.com`
+- **Mot de passe** : `user123`
+- **Rôle** : Utilisateur standard
+
+#### 🏪 Restaurant
+- **Email** : `restaurant@example.com`
+- **Mot de passe** : `restaurant123`
+- **Rôle** : Gestionnaire de restaurant
+
+#### 🔧 Administrateur
+- **Email** : `admin@gastroreserve.com`
+- **Mot de passe** : `admin123`
+- **Rôle** : Administrateur système
+
+## 🧪 Tests de Fonctionnement
+
+### Test 1 : Vérification du Backend
+```bash
+# Tester l'API
+curl http://localhost:5000/api
+
+# Résultat attendu
+{
+  "message": "API Backend - Système de réservation en ligne",
+  "status": "API uniquement",
+  "info": "Cette API sert le frontend Vue.js sur http://localhost:8080"
+}
+```
+
+### Test 2 : Vérification du Frontend
+1. Ouvrir http://localhost:8080
+2. Vérifier que la page d'accueil se charge
+3. Tester la navigation entre les pages
+4. Vérifier que le sélecteur de langue fonctionne
+
+### Test 3 : Test de Connexion
+1. Aller sur http://localhost:8080/login
+2. Se connecter avec `admin@gastroreserve.com` / `admin123`
+3. Vérifier l'accès au dashboard admin
+
+## 🔧 Configuration Avancée
+
+### Variables d'Environnement
+
+Créer un fichier `.env` à la racine du projet :
+
 ```env
-# Serveur
-PORT=3000
+# Configuration du serveur
+PORT=5000
 NODE_ENV=development
 
-# Base de données
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=votre_mot_de_passe
-DB_NAME=reservation_system
-DB_PORT=3306  # ou 3307 pour XAMPP
+# Configuration de la base de données
+DB_PATH=./database.sqlite
 
-# JWT
-JWT_SECRET=dev_jwt_secret_key_for_development_only
+# Configuration JWT
+JWT_SECRET=votre_secret_jwt_super_securise
 JWT_EXPIRES_IN=24h
 
-# Frontend URL
-FRONTEND_URL=http://localhost:5173
+# Configuration CORS
+CORS_ORIGIN=http://localhost:8080
+
+# Configuration des logs
+LOG_LEVEL=info
 ```
 
-### **Ports utilisés**
-- **Backend** : 3000
-- **Frontend** : 5173
-- **MySQL** : 3306 (ou 3307 pour XAMPP)
+### Configuration de la Base de Données
 
-## 🧪 **Test de l'installation**
+La base de données SQLite est automatiquement créée. Pour la personnaliser :
 
-### **1. Test du Backend**
 ```bash
-# Vérifier que le serveur démarre
-curl http://localhost:3000/api
-# Réponse attendue : {"message":"Bienvenue - API Backend",...}
+# Sauvegarder la base actuelle
+cp database.sqlite database_backup.sqlite
+
+# Modifier le script d'initialisation
+# Éditer migrate-database.js pour ajouter vos données
+
+# Recréer la base
+rm database.sqlite
+node migrate-database.js
 ```
 
-### **2. Test du Frontend**
-- Ouvrir http://localhost:5173
-- Vérifier que la page d'accueil s'affiche
-- Tester la navigation
+## 🐛 Résolution des Problèmes
 
-### **3. Test de la base de données**
+### Problème 1 : Port déjà utilisé
+
+**Symptôme :** `Error: listen EADDRINUSE: address already in use :::5000`
+
+**Solution :**
 ```bash
-# Se connecter à MySQL
-mysql -u root -p reservation_system
+# Trouver le processus qui utilise le port
+netstat -ano | findstr :5000  # Windows
+lsof -i :5000                 # Linux/macOS
 
-# Vérifier les tables
-SHOW TABLES;
-# Doit afficher : users, restaurants, tables, reservations, menu_items, payments
-
-# Vérifier les données
-SELECT COUNT(*) FROM users;
-# Doit afficher un nombre > 0
-```
-
-## 🐛 **Résolution des problèmes courants**
-
-### **Erreur : "Port 3000 déjà utilisé"**
-```bash
-# Trouver le processus
-netstat -ano | findstr :3000
 # Tuer le processus
-taskkill /PID <PID> /F
+taskkill /PID <PID> /F        # Windows
+kill -9 <PID>                 # Linux/macOS
 ```
 
-### **Erreur : "MySQL connection failed"**
-1. Vérifier que MySQL est démarré
-2. Vérifier le port dans .env (3306 ou 3307)
-3. Vérifier le mot de passe root
+### Problème 2 : Erreur de dépendances
 
-### **Erreur : "Module not found"**
+**Symptôme :** `Cannot find module 'express'`
+
+**Solution :**
 ```bash
-# Réinstaller les dépendances
+# Nettoyer et réinstaller
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-### **Erreur : "Vue.js not loading"**
+### Problème 3 : Base de données corrompue
+
+**Symptôme :** Erreurs SQLite ou données manquantes
+
+**Solution :**
 ```bash
-# Dans le dossier frontend
+# Supprimer et recréer la base
+rm database.sqlite
+node migrate-database.js
+```
+
+### Problème 4 : Frontend ne se charge pas
+
+**Symptôme :** Page blanche ou erreurs JavaScript
+
+**Solution :**
+```bash
+# Vérifier les dépendances frontend
 cd frontend
-rm -rf node_modules package-lock.json
 npm install
+
+# Nettoyer le cache
+npm run clean
 npm run dev
 ```
 
-## 📁 **Structure du projet**
+## 📊 Vérification de l'Installation
+
+### Checklist de Vérification
+
+- [ ] Node.js installé (v16+)
+- [ ] npm installé
+- [ ] Git installé
+- [ ] Projet cloné
+- [ ] Dépendances frontend installées
+- [ ] Dépendances backend installées
+- [ ] Base de données initialisée
+- [ ] Backend démarré (port 5000)
+- [ ] Frontend démarré (port 8080)
+- [ ] Page d'accueil accessible
+- [ ] Connexion admin fonctionnelle
+- [ ] Navigation entre les pages
+- [ ] Changement de langue
+- [ ] API backend répond
+
+### Commandes de Vérification
+
+```bash
+# Vérifier les versions
+node --version
+npm --version
+git --version
+
+# Vérifier les processus
+netstat -ano | findstr :5000  # Windows
+netstat -ano | findstr :8080  # Windows
+
+# Vérifier la base de données
+ls -la database.sqlite
+
+# Tester l'API
+curl http://localhost:5000/api
 ```
-Online-reservation-system/
-├── src/                    # Backend (Node.js/Express)
-│   ├── server.js          # Point d'entrée
-│   ├── routes/            # Routes API
-│   ├── controllers/       # Contrôleurs
-│   ├── config/            # Configuration
-│   └── locales/           # Traductions
-├── frontend/              # Frontend (Vue.js)
-│   ├── src/
-│   │   ├── components/    # Composants
-│   │   ├── views/         # Pages
-│   │   └── router/        # Navigation
-│   └── package.json
-├── index.html             # Site original (legacy)
-├── package.json           # Backend dependencies
-└── .env                   # Variables d'environnement
-```
 
-## 📞 **Support**
+## 📞 Support
 
-En cas de problème :
-1. Vérifier que tous les prérequis sont installés
-2. Suivre les étapes dans l'ordre
-3. Vérifier les logs d'erreur dans les terminaux
-4. Consulter la section "Résolution des problèmes"
+Si vous rencontrez des problèmes :
 
-## ✅ **Vérification finale**
+1. **Vérifiez les prérequis** : Node.js, npm, Git
+2. **Consultez les logs** : Terminaux backend et frontend
+3. **Vérifiez les ports** : 5000 et 8080 disponibles
+4. **Recréez la base** : `node migrate-database.js`
+5. **Réinstallez les dépendances** : `npm install`
 
-L'installation est réussie si :
-- ✅ Backend accessible sur http://localhost:3000
-- ✅ Frontend accessible sur http://localhost:5173
-- ✅ Base de données connectée
-- ✅ API répond correctement
-- ✅ Interface Vue.js fonctionnelle
+**Contact :** votre-email@example.com
+
+---
+
+**Installation réussie ! 🎉 Votre système de réservation est prêt à être utilisé.**
