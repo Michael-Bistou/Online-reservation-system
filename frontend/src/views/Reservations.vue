@@ -631,7 +631,12 @@ export default {
     }
 
     const canCancel = (reservation) => {
-      return cancellationService.canCancelReservation(reservation)
+      const canCancelResult = cancellationService.canCancelReservation(reservation)
+      console.log('🔍 Vérification annulation pour réservation:', reservation.id)
+      console.log('   - Statut:', reservation.status)
+      console.log('   - Date:', reservation.date)
+      console.log('   - Peut annuler:', canCancelResult)
+      return canCancelResult
     }
 
     const handleFilter = () => {
@@ -652,10 +657,12 @@ export default {
     }
 
     const cancelReservation = (reservation) => {
+      console.log('🔄 Tentative d\'annulation pour réservation:', reservation.id)
       reservationToCancel.value = reservation
       cancellationReason.value = ''
       customReason.value = ''
       showCancelModal.value = true
+      console.log('✅ Modal d\'annulation ouvert')
     }
 
     const closeCancelModal = () => {
@@ -748,6 +755,10 @@ export default {
 
         // Create new reservation
         const restaurant = restaurants.value.find(r => r.id === parseInt(newReservation.value.restaurant_id))
+        
+        // Récupérer les informations de l'utilisateur connecté
+        const currentUser = JSON.parse(localStorage.getItem('userData') || '{}')
+        
         const newReservationData = {
           id: Date.now(), // Generate unique ID
           restaurant_id: parseInt(newReservation.value.restaurant_id),
@@ -759,7 +770,13 @@ export default {
           status: 'pending',
           table_number: null,
           special_requests: newReservation.value.special_requests,
-          created_at: new Date().toISOString()
+          created_at: new Date().toISOString(),
+          // Informations de l'utilisateur
+          user_id: currentUser.id || null,
+          user_name: currentUser.name || currentUser.firstName + ' ' + currentUser.lastName || 'Client',
+          user_email: currentUser.email || 'client@example.com',
+          customer_name: currentUser.name || currentUser.firstName + ' ' + currentUser.lastName || 'Client',
+          customer_email: currentUser.email || 'client@example.com'
         }
 
         // Add to reservations list

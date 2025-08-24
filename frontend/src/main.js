@@ -14,6 +14,14 @@ app.mount('#app')
 // Initialiser les rappels automatiques au démarrage
 notificationService.scheduleAllReminders()
 
+// Demander la permission pour les notifications push
+if ('Notification' in window && Notification.permission === 'default') {
+  console.log('🔔 Demande de permission pour les notifications...')
+  Notification.requestPermission().then(permission => {
+    console.log('📋 Permission notifications:', permission)
+  })
+}
+
 // Import tests for development
 if (process.env.NODE_ENV === 'development') {
   import('./tests/cancellationSystem.test.js').then(() => {

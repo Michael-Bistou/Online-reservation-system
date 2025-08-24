@@ -45,6 +45,14 @@
           <template v-else-if="isAuthenticated">
             <div class="user-menu">
               <NotificationCenter />
+              <button 
+                v-if="notificationPermission === 'default'" 
+                @click="requestNotificationPermission" 
+                class="btn btn-outline btn-sm notification-permission-btn"
+                title="Activer les notifications"
+              >
+                🔔
+              </button>
               <router-link to="/profile" class="nav-link user-link">
                 <span class="user-avatar">👤</span>
                 <span class="user-name">{{ currentUser?.first_name || $t('navigation.profile') }}</span>
@@ -88,11 +96,30 @@ import NotificationCenter from './NotificationCenter.vue'
             const currentUser = ref(null)
             const isRestaurantAuthenticated = ref(false)
             const isMenuOpen = ref(false)
+            const notificationPermission = ref('default')
 
             const checkAuth = () => {
               isAuthenticated.value = authService.isAuthenticated()
               currentUser.value = authService.getCurrentUser()
               isRestaurantAuthenticated.value = localStorage.getItem('restaurantLoggedIn') === 'true'
+            }
+
+            const checkNotificationPermission = () => {
+              if ('Notification' in window) {
+                notificationPermission.value = Notification.permission
+              }
+            }
+
+            const requestNotificationPermission = async () => {
+              if ('Notification' in window) {
+                try {
+                  const permission = await Notification.requestPermission()
+                  notificationPermission.value = permission
+                  console.log('📋 Permission notifications accordée:', permission)
+                } catch (error) {
+                  console.error('❌ Erreur lors de la demande de permission:', error)
+                }
+              }
             }
 
             const logout = () => {
@@ -125,6 +152,7 @@ import NotificationCenter from './NotificationCenter.vue'
 
             onMounted(() => {
               checkAuth()
+              checkNotificationPermission()
             })
 
             return {
@@ -132,10 +160,12 @@ import NotificationCenter from './NotificationCenter.vue'
               currentUser,
               isRestaurantAuthenticated,
               isMenuOpen,
+              notificationPermission,
               logout,
               logoutRestaurant,
               toggleMenu,
-              closeMenu
+              closeMenu,
+              requestNotificationPermission
             }
           },
           components: {

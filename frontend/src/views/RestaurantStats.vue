@@ -150,6 +150,9 @@
                <div class="chart-container">
                  <div class="pie-chart-container">
                    <div class="pie-chart">
+                     <div v-if="pieSegments.length === 0" class="pie-empty">
+                       <div class="empty-text">Aucune réservation</div>
+                     </div>
                      <div 
                        v-for="(segment, index) in pieSegments" 
                        :key="index"
@@ -272,69 +275,73 @@ export default {
 
     // Segments pour le graphique circulaire
     const pieSegments = computed(() => {
-      if (totalReservations.value === 0) {
-        return [
-          { status: 'pending', startAngle: 0, angle: 90 },
-          { status: 'confirmed', startAngle: 90, angle: 90 },
-          { status: 'completed', startAngle: 180, angle: 90 },
-          { status: 'cancelled', startAngle: 270, angle: 90 }
-        ]
-      }
-
       const pending = statusStats.value.pending
       const confirmed = statusStats.value.confirmed
       const completed = statusStats.value.completed
       const cancelled = statusStats.value.cancelled
-
-      const pendingAngle = (pending / totalReservations.value) * 360
-      const confirmedAngle = (confirmed / totalReservations.value) * 360
-      const completedAngle = (completed / totalReservations.value) * 360
-      const cancelledAngle = (cancelled / totalReservations.value) * 360
+      
+      const total = pending + confirmed + completed + cancelled
 
       console.log('📊 Calcul des segments du graphique:')
-      console.log(`   - En attente: ${pending} (${pendingAngle.toFixed(1)}°)`)
-      console.log(`   - Confirmées: ${confirmed} (${confirmedAngle.toFixed(1)}°)`)
-      console.log(`   - Terminées: ${completed} (${completedAngle.toFixed(1)}°)`)
-      console.log(`   - Annulées: ${cancelled} (${cancelledAngle.toFixed(1)}°)`)
+      console.log(`   - Total réservations: ${total}`)
+      console.log(`   - En attente: ${pending}`)
+      console.log(`   - Confirmées: ${confirmed}`)
+      console.log(`   - Terminées: ${completed}`)
+      console.log(`   - Annulées: ${cancelled}`)
+
+      // Si aucune réservation, afficher un cercle vide
+      if (total === 0) {
+        return []
+      }
 
       let currentAngle = 0
       const segments = []
 
+      // Ajouter les segments seulement s'il y a des données
       if (pending > 0) {
+        const angle = (pending / total) * 360
         segments.push({
           status: 'pending',
           startAngle: currentAngle,
-          angle: pendingAngle
+          angle: angle
         })
-        currentAngle += pendingAngle
+        currentAngle += angle
+        console.log(`   - Segment pending: ${angle.toFixed(1)}° (depuis ${currentAngle - angle}°)`)
       }
 
       if (confirmed > 0) {
+        const angle = (confirmed / total) * 360
         segments.push({
           status: 'confirmed',
           startAngle: currentAngle,
-          angle: confirmedAngle
+          angle: angle
         })
-        currentAngle += confirmedAngle
+        currentAngle += angle
+        console.log(`   - Segment confirmed: ${angle.toFixed(1)}° (depuis ${currentAngle - angle}°)`)
       }
 
       if (completed > 0) {
+        const angle = (completed / total) * 360
         segments.push({
           status: 'completed',
           startAngle: currentAngle,
-          angle: completedAngle
+          angle: angle
         })
-        currentAngle += completedAngle
+        currentAngle += angle
+        console.log(`   - Segment completed: ${angle.toFixed(1)}° (depuis ${currentAngle - angle}°)`)
       }
 
       if (cancelled > 0) {
+        const angle = (cancelled / total) * 360
         segments.push({
           status: 'cancelled',
           startAngle: currentAngle,
-          angle: cancelledAngle
+          angle: angle
         })
+        console.log(`   - Segment cancelled: ${angle.toFixed(1)}° (depuis ${currentAngle}°)`)
       }
 
+      console.log(`   - Total angles: ${currentAngle}°`)
       return segments
     })
 
@@ -948,7 +955,6 @@ export default {
    height: 100%;
    border-radius: 50%;
    transform-origin: 50% 50%;
-   clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
  }
 
  .pie-segment.pending {
@@ -965,6 +971,23 @@ export default {
 
  .pie-segment.cancelled {
    background: conic-gradient(from 0deg, #dc3545 0deg, #dc3545 var(--segment-angle), transparent var(--segment-angle));
+ }
+
+ .pie-empty {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+   color: #6c757d;
+   font-size: 0.9rem;
+ }
+
+ .empty-text {
+   background: #f8f9fa;
+   padding: 10px;
+   border-radius: 8px;
+   border: 2px dashed #dee2e6;
  }
 
  .pie-legend {

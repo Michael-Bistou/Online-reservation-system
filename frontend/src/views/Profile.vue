@@ -38,36 +38,50 @@
 
         <!-- Profile Content -->
         <div v-else class="profile-content">
-          <!-- Stats Section -->
-          <div class="stats-section light-bg">
-            <h2 class="section-title">{{ $t('profile.stats.title') }}</h2>
-            <div class="stats-grid">
-              <div class="stat-card light-bg">
-                <div class="stat-icon">📅</div>
-                <div class="stat-content">
-                  <div class="stat-number">{{ userStats.totalReservations }}</div>
-                  <div class="stat-label">{{ $t('profile.stats.totalReservations') }}</div>
+          <!-- Mon Activité Section -->
+          <div class="activity-section light-bg">
+            <h2 class="section-title">Mon activité</h2>
+            <div class="activity-grid">
+              <div class="activity-card light-bg">
+                <div class="activity-icon">📅</div>
+                <div class="activity-content">
+                  <div class="activity-number">{{ userActivity.totalReservations }}</div>
+                  <div class="activity-label">Réservations totales</div>
                 </div>
               </div>
-              <div class="stat-card light-bg">
-                <div class="stat-icon">✅</div>
-                <div class="stat-content">
-                  <div class="stat-number">{{ userStats.confirmedReservations }}</div>
-                  <div class="stat-label">{{ $t('profile.stats.confirmedReservations') }}</div>
+              <div class="activity-card light-bg">
+                <div class="activity-icon">✅</div>
+                <div class="activity-content">
+                  <div class="activity-number">{{ userActivity.confirmedReservations }}</div>
+                  <div class="activity-label">Réservations confirmées</div>
                 </div>
               </div>
-              <div class="stat-card light-bg">
-                <div class="stat-icon">⭐</div>
-                <div class="stat-content">
-                  <div class="stat-number">{{ userStats.favoriteRestaurants }}</div>
-                  <div class="stat-label">{{ $t('profile.stats.favoriteRestaurants') }}</div>
+              <div class="activity-card light-bg">
+                <div class="activity-icon">❌</div>
+                <div class="activity-content">
+                  <div class="activity-number">{{ userActivity.cancelledReservations }}</div>
+                  <div class="activity-label">Réservations annulées</div>
                 </div>
               </div>
-              <div class="stat-card light-bg">
-                <div class="stat-icon">🎉</div>
-                <div class="stat-content">
-                  <div class="stat-number">{{ userStats.memberSince }}</div>
-                  <div class="stat-label">{{ $t('profile.stats.memberSince') }}</div>
+              <div class="activity-card light-bg">
+                <div class="activity-icon">🏪</div>
+                <div class="activity-content">
+                  <div class="activity-number">{{ userActivity.uniqueRestaurants }}</div>
+                  <div class="activity-label">Restaurants visités</div>
+                </div>
+              </div>
+              <div class="activity-card light-bg">
+                <div class="activity-icon">💰</div>
+                <div class="activity-content">
+                  <div class="activity-number">{{ userActivity.totalSpent }}</div>
+                  <div class="activity-label">Total dépensé</div>
+                </div>
+              </div>
+              <div class="activity-card light-bg">
+                <div class="activity-icon">📧</div>
+                <div class="activity-content">
+                  <div class="activity-number">{{ userActivity.totalEmails }}</div>
+                  <div class="activity-label">Emails reçus</div>
                 </div>
               </div>
             </div>
@@ -284,6 +298,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import authService from '../services/auth.js'
+import paymentService from '../services/paymentService.js'
 
 export default {
   name: 'Profile',
@@ -332,14 +347,95 @@ export default {
         .slice(0, 2)
     })
 
-    const userStats = computed(() => {
+    const userActivity = computed(() => {
+      // Récupérer les réservations depuis la même source que Reservations.vue
+      const restaurantReservations = JSON.parse(localStorage.getItem('restaurantReservations') || '[]')
+      
+      // Récupérer les données de l'utilisateur connecté
+      const currentUser = authService.getCurrentUser()
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}')
+      const userEmail = currentUser?.email || userData?.email
+      
+      // Filtrer les réservations de l'utilisateur actuel
+      const userReservations = restaurantReservations.filter(reservation => {
+        // Vérifier par email ou user_id
+        return reservation.user_email === userEmail || 
+               reservation.customer_email === userEmail ||
+               reservation.user_id === currentUser?.id ||
+               reservation.user_id === userData?.id
+      })
+      
+      console.log('📊 Calcul des statistiques utilisateur:')
+      console.log('   - Email utilisateur:', userEmail)
+      console.log('   - Réservations totales dans localStorage:', restaurantReservations.length)
+      console.log('   - Réservations filtrées pour cet utilisateur:', userReservations.length)
+      
+      // Calculer les statistiques
+      const totalReservations = userReservations.length
+      const confirmedReservations = userReservations.filter(r => r.status === 'confirmed').length
+      const cancelledReservations = userReservations.filter(r => r.status === 'cancelled').length
+      const pendingReservations = userReservations.filter(r => r.status === 'pending').length
+      const completedReservations = userReservations.filter(r => r.status === 'completed').length
+      
+      // Restaurants uniques
+      const uniqueRestaurants = new Set(userReservations.map(r => r.restaurant_name)).size
+      
+      // Total dépensé (utiliser la même logique que paymentService.getPaymentStats())
+      const paymentTransactions = JSON.parse(localStorage.getItem('paymentTransactions') || '[]')
+      
+      // Filtrer les transactions de l'utilisateur actuel
+      const userPaymentTransactions = paymentTransactions.filter(transaction => {
+        return transaction.customerEmail === userEmail || 
+               transaction.customerName === userData?.full_name ||
+               transaction.customerName === currentUser?.full_name
+      })
+      
+      // Utiliser la même logique que getPaymentStats()
+      const totalTransactions = userPaymentTransactions.filter(t => t.status === 'succeeded' && !t.transactionId)
+      const totalRefunds = userPaymentTransactions.filter(t => t.transactionId) // Les remboursements ont un transactionId
+      
+      const totalAmount = totalTransactions.reduce((sum, t) => sum + t.amount, 0)
+      const totalRefunded = totalRefunds.reduce((sum, r) => sum + r.amount, 0)
+      
+      const totalSpent = totalAmount - totalRefunded
+      
+      console.log('   - Calcul du total dépensé (cohérent avec PaymentHistory):')
+      console.log('     * Transactions réussies:', totalTransactions.length)
+      console.log('     * Remboursements:', totalRefunds.length)
+      console.log('     * Montant total:', totalAmount)
+      console.log('     * Montant remboursé:', totalRefunded)
+      console.log('     * Total final (net):', totalSpent)
+      
+      // Emails reçus
+      const emailHistory = JSON.parse(localStorage.getItem('emailHistory') || '[]')
+      const userEmails = emailHistory.filter(email => 
+        email.to === userEmail || email.customerEmail === userEmail
+      )
+      const totalEmails = userEmails.length
+      
+      console.log('   - Statistiques calculées:')
+      console.log('     * Total:', totalReservations)
+      console.log('     * Confirmées:', confirmedReservations)
+      console.log('     * Annulées:', cancelledReservations)
+      console.log('     * En attente:', pendingReservations)
+      console.log('     * Terminées:', completedReservations)
+      console.log('     * Restaurants uniques:', uniqueRestaurants)
+      console.log('     * Total dépensé:', totalSpent)
+      console.log('     * Emails reçus:', totalEmails)
+      
       return {
-        totalReservations: 15,
-        confirmedReservations: 12,
-        favoriteRestaurants: 8,
-        memberSince: '2023'
+        totalReservations,
+        confirmedReservations,
+        cancelledReservations,
+        uniqueRestaurants,
+        totalSpent: formatAmount(totalSpent),
+        totalEmails
       }
     })
+
+    const formatAmount = (amount) => {
+      return paymentService.formatAmount(amount)
+    }
 
     // Methods
     const loadProfile = async () => {
@@ -533,9 +629,27 @@ export default {
       }
     }
 
+
+
     // Lifecycle
     onMounted(() => {
       loadProfile()
+      
+      // Écouter les changements dans localStorage pour mettre à jour les stats
+      const handleStorageChange = (event) => {
+        if (event.key === 'restaurantReservations' || event.key === 'emailHistory') {
+          console.log('📊 Données mises à jour, recalcul des statistiques...')
+          // Forcer la recalcul en touchant une propriété réactive
+          userProfile.value = { ...userProfile.value }
+        }
+      }
+      
+      window.addEventListener('storage', handleStorageChange)
+      
+      // Nettoyer l'écouteur lors du démontage
+      return () => {
+        window.removeEventListener('storage', handleStorageChange)
+      }
     })
 
     return {
@@ -553,7 +667,7 @@ export default {
       errors,
       passwordErrors,
       userInitials,
-      userStats,
+      userActivity,
       loadProfile,
       startEditPersonalInfo,
       cancelEditPersonalInfo,
@@ -668,8 +782,8 @@ export default {
   gap: 40px;
 }
 
-/* Stats Section */
-.stats-section {
+/* Mon Activité Section */
+.activity-section {
   background: white;
   border-radius: 15px;
   padding: 30px;
@@ -684,13 +798,13 @@ export default {
   font-family: 'Playfair Display', serif;
 }
 
-.stats-grid {
+.activity-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.stat-card {
+.activity-card {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -701,12 +815,12 @@ export default {
   transition: all 0.3s ease;
 }
 
-.stat-card:hover {
+.activity-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.stat-icon {
+.activity-icon {
   font-size: 2rem;
   width: 50px;
   height: 50px;
@@ -718,14 +832,14 @@ export default {
   border-radius: 10px;
 }
 
-.stat-number {
+.activity-number {
   font-size: 1.8rem;
   font-weight: 700;
   color: white;
   line-height: 1;
 }
 
-.stat-label {
+.activity-label {
   font-size: 0.9rem;
   color: #e0e0e0;
   margin-top: 5px;

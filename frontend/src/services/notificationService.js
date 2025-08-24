@@ -61,34 +61,57 @@ class NotificationService {
 
   // Afficher une notification push
   showPushNotification(title, message, options = {}) {
+    console.log('🔔 Tentative d\'affichage de notification push:')
+    console.log('   - Notification supportée:', 'Notification' in window)
+    console.log('   - Permission:', Notification.permission)
+    console.log('   - Titre:', title)
+    console.log('   - Message:', message)
+    
     if ('Notification' in window && Notification.permission === 'granted') {
-      const notification = new Notification(title, {
-        body: message,
-        icon: '/img/favicon.png',
-        badge: '/img/favicon.png',
-        tag: options.tag || 'reservation-notification',
-        requireInteraction: options.requireInteraction || false,
-        silent: options.silent || false,
-        ...options
-      })
+      try {
+        const notification = new Notification(title, {
+          body: message,
+          icon: '/favicon.png',
+          badge: '/favicon.png',
+          tag: options.tag || 'reservation-notification',
+          requireInteraction: options.requireInteraction || false,
+          silent: options.silent || false,
+          ...options
+        })
 
-      // Gérer les clics sur la notification
-      notification.onclick = () => {
-        window.focus()
-        notification.close()
-        
-        // Navigation basée sur le type de notification
-        if (options.navigateTo) {
-          window.location.href = options.navigateTo
+        console.log('✅ Notification push créée avec succès')
+
+        // Gérer les clics sur la notification
+        notification.onclick = () => {
+          window.focus()
+          notification.close()
+          
+          // Navigation basée sur le type de notification
+          if (options.navigateTo) {
+            window.location.href = options.navigateTo
+          }
         }
+
+        // Auto-fermeture après 5 secondes
+        setTimeout(() => {
+          notification.close()
+        }, 5000)
+
+        return notification
+      } catch (error) {
+        console.error('❌ Erreur lors de la création de la notification push:', error)
       }
-
-      // Auto-fermeture après 5 secondes
-      setTimeout(() => {
-        notification.close()
-      }, 5000)
-
-      return notification
+    } else {
+      console.log('❌ Notifications non supportées ou permission refusée')
+      if ('Notification' in window && Notification.permission === 'default') {
+        console.log('💡 Demande de permission...')
+        Notification.requestPermission().then(permission => {
+          console.log('📋 Permission accordée:', permission)
+          if (permission === 'granted') {
+            this.showPushNotification(title, message, options)
+          }
+        })
+      }
     }
   }
 
