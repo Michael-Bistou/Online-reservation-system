@@ -19,6 +19,9 @@
           <router-link to="/reservations" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
             {{ $t('navigation.reservations') }}
           </router-link>
+          <router-link to="/email-history" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
+            📧 Emails
+          </router-link>
         </div>
         
         <div class="nav-auth">

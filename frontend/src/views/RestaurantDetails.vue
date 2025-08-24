@@ -656,6 +656,12 @@ export default {
         // Sauvegarder la réservation dans localStorage
         saveReservation(reservation)
 
+        // Envoyer des notifications par email
+        notificationService.sendNewReservationEmailToRestaurant(reservation)
+        
+        // Programmer un rappel automatique
+        notificationService.scheduleReminder(reservation)
+
         // Show success message
         alert(t('reservations.reservation_created'))
         

@@ -145,6 +145,48 @@
               </div>
             </div>
           </div>
+
+          <!-- Emails reçus -->
+          <div class="dashboard-card">
+            <h3 class="card-title">📧 Emails reçus</h3>
+            <div v-if="restaurantEmails.length === 0" class="empty-state">
+              <div class="empty-icon">📧</div>
+              <p>Aucun email reçu</p>
+              <small>Les emails de nouvelles réservations apparaîtront ici.</small>
+            </div>
+            
+            <div v-else class="emails-list">
+              <div 
+                v-for="email in restaurantEmails.slice(0, 3)" 
+                :key="email.id" 
+                class="email-item"
+              >
+                <div class="email-header">
+                  <div class="email-type" :class="`type-${email.type}`">
+                    {{ getEmailTypeLabel(email.type) }}
+                  </div>
+                  <div class="email-date">
+                    {{ formatEmailDate(email.timestamp) }}
+                  </div>
+                </div>
+                
+                <div class="email-content">
+                  <div class="email-subject">
+                    <strong>{{ email.subject }}</strong>
+                  </div>
+                  <div class="email-preview">
+                    {{ truncateEmailContent(email.content) }}
+                  </div>
+                </div>
+              </div>
+              
+              <div v-if="restaurantEmails.length > 3" class="view-more">
+                <router-link to="/email-history" class="btn btn-outline btn-sm">
+                  Voir tous les emails ({{ restaurantEmails.length }})
+                </router-link>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -163,6 +205,7 @@ export default {
     const todayReservations = ref(0)
     const pendingReservations = ref(0)
     const confirmedReservations = ref(0)
+    const restaurantEmails = ref([])
 
     const calculateStats = () => {
       try {
@@ -203,6 +246,56 @@ export default {
       }
     }
 
+    const loadRestaurant = () => {
+      try {
+        const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
+        const restaurantData = JSON.parse(localStorage.getItem('restaurantData') || '{}')
+        
+        restaurant.value = currentRestaurant.restaurant_name ? currentRestaurant : restaurantData
+      } catch (error) {
+        console.error('Erreur lors du chargement du restaurant:', error)
+      }
+    }
+
+    const loadRestaurantEmails = () => {
+      try {
+        const allEmails = JSON.parse(localStorage.getItem('emailHistory') || '[]')
+        const restaurantName = restaurant.value?.restaurant_name || ''
+        
+        // Filtrer les emails pour ce restaurant
+        restaurantEmails.value = allEmails.filter(email => {
+          const restaurantEmail = `${restaurantName.toLowerCase().replace(/\s+/g, '')}@example.com`
+          return email.to === restaurantEmail
+        }).sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      } catch (error) {
+        console.error('Erreur lors du chargement des emails:', error)
+        restaurantEmails.value = []
+      }
+    }
+
+    const getEmailTypeLabel = (type) => {
+      const labels = {
+        confirmation: 'Confirmation',
+        new_reservation: 'Nouvelle réservation',
+        reminder: 'Rappel',
+        cancellation: 'Annulation'
+      }
+      return labels[type] || type
+    }
+
+    const formatEmailDate = (timestamp) => {
+      return new Date(timestamp).toLocaleString('fr-FR', {
+        day: '2-digit',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    }
+
+    const truncateEmailContent = (content) => {
+      return content.length > 100 ? content.substring(0, 100) + '...' : content
+    }
+
     onMounted(() => {
       // Vérifier si le restaurant est connecté
       const isLoggedIn = localStorage.getItem('restaurantLoggedIn')
@@ -211,11 +304,11 @@ export default {
         return
       }
 
-      // Récupérer les données du restaurant
-      const restaurantData = localStorage.getItem('currentRestaurant')
-      if (restaurantData) {
-        restaurant.value = JSON.parse(restaurantData)
-      }
+      // Charger les données du restaurant
+      loadRestaurant()
+      
+      // Charger les emails du restaurant
+      loadRestaurantEmails()
 
       // Calculer les statistiques
       calculateStats()
@@ -224,6 +317,7 @@ export default {
     // Recalculer les statistiques quand on revient sur la page
     onActivated(() => {
       calculateStats()
+      loadRestaurantEmails()
     })
 
     const logout = () => {
@@ -237,6 +331,10 @@ export default {
       todayReservations,
       pendingReservations,
       confirmedReservations,
+      restaurantEmails,
+      getEmailTypeLabel,
+      formatEmailDate,
+      truncateEmailContent,
       logout
     }
   }
@@ -437,6 +535,81 @@ export default {
 .no-amenities {
   color: #7f8c8d;
   font-style: italic;
+}
+
+/* Styles pour les emails */
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.emails-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.email-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.email-item:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.email-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.email-type {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.type-confirmation { background: #e3f2fd; color: #1976d2; }
+.type-new_reservation { background: #f3e5f5; color: #7b1fa2; }
+.type-reminder { background: #fff3e0; color: #f57c00; }
+.type-cancellation { background: #ffebee; color: #d32f2f; }
+
+.email-date {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.email-content {
+  line-height: 1.4;
+}
+
+.email-subject {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.email-preview {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.view-more {
+  text-align: center;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
 }
 
 .logout-section {

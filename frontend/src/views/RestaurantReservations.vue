@@ -466,6 +466,12 @@ export default {
         // Créer une notification pour l'utilisateur
         const currentRestaurant = JSON.parse(localStorage.getItem('currentRestaurant') || '{}')
         notificationService.createReservationStatusNotification(reservation, 'confirmed', currentRestaurant.restaurant_name, currentRestaurant.restaurant_name)
+        
+        // Envoyer un email de confirmation
+        notificationService.sendReservationConfirmationEmail(reservation)
+        
+        // Programmer un rappel automatique
+        notificationService.scheduleReminder(reservation)
       }
     }
 

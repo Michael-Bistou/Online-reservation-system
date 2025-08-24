@@ -108,6 +108,12 @@ const routes = [
     meta: { title: 'Notifications', requiresAuth: true }
   },
   {
+    path: '/email-history',
+    name: 'EmailHistory',
+    component: () => import('../views/EmailHistory.vue'),
+    meta: { title: 'Historique des Emails', requiresAuth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     redirect: '/'
