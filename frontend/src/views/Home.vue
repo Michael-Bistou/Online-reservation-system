@@ -71,10 +71,6 @@
              </div>
             <h3 class="feature-title">Réservations Instantanées</h3>
             <p class="feature-description">Réservez votre table en quelques clics, 24h/24 et 7j/7. Interface intuitive et processus simplifié pour une expérience fluide.</p>
-            <div class="feature-link">
-              <span>En savoir plus</span>
-              <span class="arrow">→</span>
-            </div>
           </div>
           
           <div class="feature-card card">
@@ -83,10 +79,6 @@
              </div>
             <h3 class="feature-title">Sécurité Maximale</h3>
             <p class="feature-description">Authentification JWT, données chiffrées et protection complète de vos informations personnelles. Votre sécurité est notre priorité.</p>
-            <div class="feature-link">
-              <span>En savoir plus</span>
-              <span class="arrow">→</span>
-            </div>
           </div>
           
           <div class="feature-card card">
@@ -95,10 +87,6 @@
              </div>
             <h3 class="feature-title">Multilingue & Accessible</h3>
             <p class="feature-description">Interface disponible en français et anglais. Support complet pour l'internationalisation et accessibilité universelle.</p>
-            <div class="feature-link">
-              <span>En savoir plus</span>
-              <span class="arrow">→</span>
-            </div>
           </div>
           
           <div class="feature-card card">
@@ -107,10 +95,6 @@
              </div>
             <h3 class="feature-title">Design Responsive</h3>
             <p class="feature-description">Interface parfaitement adaptée à tous les appareils : desktop, tablette et mobile. Une expérience optimale partout.</p>
-            <div class="feature-link">
-              <span>En savoir plus</span>
-              <span class="arrow">→</span>
-            </div>
           </div>
           
           <div class="feature-card card">
@@ -119,10 +103,6 @@
              </div>
             <h3 class="feature-title">Performance Optimale</h3>
             <p class="feature-description">Application optimisée avec Vite et Vue.js 3 pour des temps de chargement ultra-rapides et une expérience fluide.</p>
-            <div class="feature-link">
-              <span>En savoir plus</span>
-              <span class="arrow">→</span>
-            </div>
           </div>
           
           <div class="feature-card card">
@@ -131,10 +111,6 @@
              </div>
             <h3 class="feature-title">Architecture Moderne</h3>
             <p class="feature-description">Backend API REST, frontend SPA et base de données MySQL pour une solution évolutive et maintenable.</p>
-            <div class="feature-link">
-              <span>En savoir plus</span>
-              <span class="arrow">→</span>
-            </div>
           </div>
         </div>
       </div>
