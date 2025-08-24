@@ -126,8 +126,20 @@
           <p class="section-subtitle">{{ $t('home.featured_restaurants.subtitle') }}</p>
         </div>
         
-        <div class="restaurants-grid">
-          <div class="restaurant-card featured-card" v-for="restaurant in featuredRestaurants" :key="restaurant.id">
+        <div class="carousel-container">
+          <!-- Bouton précédent -->
+          <button @click="prevSlide" class="carousel-btn carousel-btn-prev" aria-label="Restaurant précédent">
+            <span class="carousel-arrow">‹</span>
+          </button>
+          
+          <!-- Carrousel des restaurants -->
+          <div class="carousel-wrapper">
+            <div class="restaurants-carousel" :class="{ 
+              'slide-transition': isTransitioning
+            }" :style="{ 
+              transform: `translateX(${slideOffset}%)`
+            }">
+              <div class="restaurant-card featured-card" v-for="restaurant in featuredRestaurants" :key="restaurant.id">
             <div class="restaurant-image">
               <img :src="restaurant.image" :alt="restaurant.name" class="restaurant-img">
               <div class="restaurant-overlay">
@@ -159,6 +171,28 @@
                 </router-link>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+          
+          <!-- Bouton suivant -->
+          <button @click="nextSlide" class="carousel-btn carousel-btn-next" aria-label="Restaurant suivant">
+            <span class="carousel-arrow">›</span>
+          </button>
+        </div>
+        
+        <!-- Indicateurs de navigation -->
+        <div class="carousel-indicators">
+          <span class="indicator-text">{{ currentSlide }} / {{ totalSlides }}</span>
+          <div class="indicator-dots">
+            <button 
+              v-for="slide in totalSlides" 
+              :key="slide"
+              @click="goToSlide(slide - 1)"
+              class="indicator-dot"
+              :class="{ active: slide === currentSlide }"
+              :aria-label="`Aller au slide ${slide}`"
+            ></button>
           </div>
         </div>
         
@@ -259,7 +293,7 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import authService from '../services/auth.js'
 
 export default {
@@ -267,8 +301,8 @@ export default {
   setup() {
     const isAuthenticated = ref(false)
     
-    // Données des restaurants vedettes
-    const featuredRestaurants = ref([
+    // Données des restaurants vedettes (liste complète)
+    const allFeaturedRestaurants = ref([
       {
         id: 1,
         name: "Le Petit Bistrot",
@@ -295,8 +329,159 @@ export default {
         rating: 4.7,
         address: "789 Boulevard Saint-Germain, Paris",
         image: "/img/restaurants/italian-trattoria.jpg"
+      },
+      {
+        id: 4,
+        name: "Spice Garden",
+        cuisine_type: "Indienne",
+        price_range: "€€",
+        rating: 4.0,
+        address: "321 Rue du Commerce, Paris",
+        image: "/img/restaurants/indian-spice.jpg"
+      },
+      {
+        id: 5,
+        name: "Le Grand Restaurant",
+        cuisine_type: "Française",
+        price_range: "€€€€",
+        rating: 4.9,
+        address: "654 Champs-Élysées, Paris",
+        image: "/img/restaurants/french-luxury.jpg"
+      },
+      {
+        id: 6,
+        name: "Taco Loco",
+        cuisine_type: "Mexicaine",
+        price_range: "€",
+        rating: 3.8,
+        address: "987 Rue de Rivoli, Paris",
+        image: "/img/restaurants/mexican-tacos.jpeg"
+      },
+      {
+        id: 7,
+        name: "Bamboo Palace",
+        cuisine_type: "Chinoise",
+        price_range: "€€",
+        rating: 4.3,
+        address: "147 Rue de la Roquette, Paris",
+        image: "/img/restaurants/chinese-bamboo.jpg"
+      },
+      {
+        id: 8,
+        name: "Ouzeri Athina",
+        cuisine_type: "Grecque",
+        price_range: "€€",
+        rating: 4.1,
+        address: "258 Rue du Faubourg Saint-Antoine, Paris",
+        image: "/img/restaurants/greek-ouzeri.jpg"
+      },
+      {
+        id: 9,
+        name: "Tapas Barcelona",
+        cuisine_type: "Espagnole",
+        price_range: "€€",
+        rating: 4.4,
+        address: "369 Avenue de la République, Paris",
+        image: "/img/restaurants/spanish-tapas.jpg"
+      },
+      {
+        id: 10,
+        name: "Siam Garden",
+        cuisine_type: "Thaï",
+        price_range: "€€",
+        rating: 4.6,
+        address: "741 Rue de Charonne, Paris",
+        image: "/img/restaurants/thai-siam.jpg"
       }
     ])
+
+    // État du carrousel
+    const currentIndex = ref(0)
+    const itemsPerView = 3
+
+    // Calculer les restaurants visibles par groupe de 3
+    const featuredRestaurants = computed(() => {
+      const startIndex = currentIndex.value
+      const endIndex = Math.min(startIndex + itemsPerView, allFeaturedRestaurants.value.length)
+      return allFeaturedRestaurants.value.slice(startIndex, endIndex)
+    })
+
+    // État pour les animations
+    const isTransitioning = ref(false)
+    const slideDirection = ref('right') // 'left' ou 'right'
+    const slideOffset = ref(0) // Pour l'animation de glissement
+
+    // Navigation du carrousel avec glissement fluide
+    const nextSlide = () => {
+      if (isTransitioning.value) return
+      
+      isTransitioning.value = true
+      slideDirection.value = 'right'
+      
+      // Animation de glissement vers la gauche
+      slideOffset.value = -100
+      
+      setTimeout(() => {
+        const maxIndex = allFeaturedRestaurants.value.length - itemsPerView
+        if (currentIndex.value < maxIndex) {
+          currentIndex.value++
+        } else {
+          currentIndex.value = 0 // Retour au début
+        }
+        
+        // Reset de la position
+        slideOffset.value = 0
+        isTransitioning.value = false
+      }, 800)
+    }
+
+    const prevSlide = () => {
+      if (isTransitioning.value) return
+      
+      isTransitioning.value = true
+      slideDirection.value = 'left'
+      
+      // Animation de glissement vers la droite
+      slideOffset.value = 100
+      
+      setTimeout(() => {
+        if (currentIndex.value > 0) {
+          currentIndex.value--
+        } else {
+          const maxIndex = allFeaturedRestaurants.value.length - itemsPerView
+          currentIndex.value = Math.max(0, maxIndex) // Aller à la fin
+        }
+        
+        // Reset de la position
+        slideOffset.value = 0
+        isTransitioning.value = false
+      }, 800)
+    }
+
+    // Navigation directe vers un slide
+    const goToSlide = (slideIndex) => {
+      if (isTransitioning.value) return
+      
+      isTransitioning.value = true
+      const newIndex = slideIndex * itemsPerView
+      const maxIndex = allFeaturedRestaurants.value.length - itemsPerView
+      currentIndex.value = Math.min(newIndex, maxIndex)
+      
+      setTimeout(() => {
+        isTransitioning.value = false
+      }, 400)
+    }
+
+    // Indicateurs de navigation
+    const totalSlides = computed(() => {
+      const total = allFeaturedRestaurants.value.length
+      return Math.ceil(total / itemsPerView)
+    })
+    
+    const currentSlide = computed(() => {
+      const slide = Math.floor(currentIndex.value / itemsPerView) + 1
+      return Math.min(slide, totalSlides.value)
+    })
 
     onMounted(() => {
       isAuthenticated.value = authService.isAuthenticated()
@@ -319,7 +504,15 @@ export default {
 
     return {
       isAuthenticated,
-      featuredRestaurants
+      featuredRestaurants,
+      nextSlide,
+      prevSlide,
+      goToSlide,
+      totalSlides,
+      currentSlide,
+      isTransitioning,
+      slideDirection,
+      slideOffset
     }
   }
 }
@@ -941,11 +1134,180 @@ export default {
   background: #f8f9fa;
 }
 
-.restaurants-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+/* Carousel Container */
+.carousel-container {
+  position: relative;
   margin: 3rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #2c3e50;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 10;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.carousel-btn:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.carousel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: translateY(-50%) scale(1);
+}
+
+.carousel-btn-prev {
+  left: -25px;
+}
+
+.carousel-btn-next {
+  right: -25px;
+}
+
+.carousel-arrow {
+  font-weight: bold;
+  line-height: 1;
+}
+
+/* Carrousel wrapper */
+.carousel-wrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.restaurants-carousel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  width: 100%;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Animations du carrousel fluides et naturelles */
+.slide-transition {
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  filter: blur(0px);
+}
+
+.slide-transition[style*="opacity: 0.8"] {
+  filter: blur(0.5px);
+}
+
+/* Animation des cartes individuelles */
+.restaurant-card {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.slide-transition .restaurant-card {
+  animation: none; /* Désactiver les animations pendant la transition */
+}
+
+/* Effet de parallaxe subtil pour plus de naturel */
+.slide-transition .restaurant-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.slide-transition .restaurant-card:nth-child(2) {
+  transition-delay: 0.05s;
+}
+
+.slide-transition .restaurant-card:nth-child(3) {
+  transition-delay: 0s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Carousel Indicators */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.indicator-text {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 600;
+  min-width: 40px;
+  text-align: center;
+}
+
+.indicator-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.indicator-dot {
+  width: 12px;
+  height: 12px;
+  border: none;
+  border-radius: 50%;
+  background: #dee2e6;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.indicator-dot:hover {
+  background: #adb5bd;
+}
+
+.indicator-dot.active {
+  background: #d4af37;
+  transform: scale(1.2);
+  animation: pulse 0.3s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1.2);
+  }
 }
 
 .featured-card {
@@ -1120,6 +1482,30 @@ export default {
     gap: 0.5rem;
   }
   
+  /* Carousel responsive */
+  .carousel-container {
+    margin: 2rem 0;
+  }
+  
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .carousel-btn-prev {
+    left: -20px;
+  }
+  
+  .carousel-btn-next {
+    right: -20px;
+  }
+  
+  .restaurants-carousel {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
   .features,
   .tech-stack,
   .cta {
@@ -1149,6 +1535,31 @@ export default {
   .feature-card,
   .tech-card {
     padding: 2rem 1.5rem;
+  }
+  
+  /* Carousel responsive mobile */
+  .restaurants-carousel {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .carousel-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .carousel-btn-prev {
+    left: -17px;
+  }
+  
+  .carousel-btn-next {
+    right: -17px;
+  }
+  
+  .carousel-indicators {
+    flex-direction: column;
+    gap: 0.5rem;
   }
   
   .features-grid {
