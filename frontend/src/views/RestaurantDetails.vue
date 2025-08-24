@@ -282,10 +282,37 @@
               </button>
               <button type="submit" class="btn-primary" :disabled="submitting">
                 <span v-if="submitting" class="loading-spinner-small"></span>
-                {{ submitting ? $t('common.submitting') : $t('restaurants.make_reservation') }}
+                {{ submitting ? $t('common.submitting') : 'Continuer vers le paiement' }}
               </button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal de paiement -->
+    <div v-if="showPaymentModal" class="modal-overlay payment-modal">
+      <div class="modal-content payment-modal-content" @click.stop>
+        <div class="modal-header">
+          <h3>💳 Paiement de l'acompte</h3>
+          <button @click="handlePaymentCancel" class="modal-close">×</button>
+        </div>
+        <div class="modal-body">
+          <div v-if="!currentReservation" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Chargement du formulaire de paiement...</p>
+          </div>
+          <PaymentForm
+            v-else
+            :reservation-id="currentReservation.id.toString()"
+            :restaurant-name="currentReservation.restaurant_name"
+            :restaurant-price-range="restaurant?.price_range || '€€'"
+            :reservation-date="currentReservation.date"
+            :reservation-time="currentReservation.time"
+            :party-size="currentReservation.party_size"
+            @success="handlePaymentSuccess"
+            @cancel="handlePaymentCancel"
+          />
         </div>
       </div>
     </div>
@@ -300,9 +327,13 @@ import axios from 'axios'
 import authService from '../services/auth.js'
 import notificationService from '../services/notificationService.js'
 import { validateReservation } from '../utils/validation.js'
+import PaymentForm from '../components/PaymentForm.vue'
 
 export default {
   name: 'RestaurantDetails',
+  components: {
+    PaymentForm
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -313,7 +344,9 @@ export default {
     const loading = ref(true)
     const error = ref(null)
     const showReservationModal = ref(false)
+    const showPaymentModal = ref(false)
     const submitting = ref(false)
+    const currentReservation = ref(null)
     
     const reservationData = ref({
       date: '',
@@ -653,17 +686,42 @@ export default {
           created_at: new Date().toISOString()
         }
 
+        // Stocker la réservation temporairement et passer au paiement
+        console.log('🔍 Réservation créée:', reservation)
+        currentReservation.value = reservation
+        console.log('🔍 currentReservation défini:', currentReservation.value)
+        showReservationModal.value = false
+        showPaymentModal.value = true
+        console.log('🔍 Modal de paiement ouvert:', showPaymentModal.value)
+        
+      } catch (err) {
+        console.error('Erreur lors de la création de la réservation:', err)
+        alert(t('reservations.reservation_error'))
+      } finally {
+        submitting.value = false
+      }
+    }
+
+    // Gérer le succès du paiement
+    const handlePaymentSuccess = (paymentResult) => {
+      try {
+        // Ajouter les informations de paiement à la réservation
+        currentReservation.value.payment_id = paymentResult.transactionId
+        currentReservation.value.payment_amount = paymentResult.amount
+        currentReservation.value.status = 'confirmed' // Confirmer automatiquement après paiement
+
         // Sauvegarder la réservation dans localStorage
-        saveReservation(reservation)
+        saveReservation(currentReservation.value)
 
         // Envoyer des notifications par email
-        notificationService.sendNewReservationEmailToRestaurant(reservation)
+        notificationService.sendNewReservationEmailToRestaurant(currentReservation.value)
+        notificationService.sendReservationConfirmationEmail(currentReservation.value)
         
         // Programmer un rappel automatique
-        notificationService.scheduleReminder(reservation)
+        notificationService.scheduleReminder(currentReservation.value)
 
         // Show success message
-        alert(t('reservations.reservation_created'))
+        alert('Réservation confirmée ! Votre acompte a été prélevé avec succès.')
         
         // Reset form
         reservationData.value = {
@@ -673,17 +731,23 @@ export default {
           specialRequests: ''
         }
         
-        showReservationModal.value = false
+        showPaymentModal.value = false
+        currentReservation.value = null
         
         // Redirect to reservations page
         router.push('/reservations')
         
       } catch (err) {
-        console.error('Erreur lors de la création de la réservation:', err)
-        alert(t('reservations.reservation_error'))
-      } finally {
-        submitting.value = false
+        console.error('Erreur lors de la finalisation de la réservation:', err)
+        alert('Erreur lors de la finalisation de la réservation')
       }
+    }
+
+    // Annuler le paiement
+    const handlePaymentCancel = () => {
+      showPaymentModal.value = false
+      currentReservation.value = null
+      showReservationModal.value = true
     }
 
     const saveReservation = (reservation) => {
@@ -726,11 +790,15 @@ export default {
       loading,
       error,
       showReservationModal,
+      showPaymentModal,
       submitting,
+      currentReservation,
       reservationData,
       today,
       loadRestaurant,
       handleReservation,
+      handlePaymentSuccess,
+      handlePaymentCancel,
       scrollToDetails
     }
   }
@@ -1195,19 +1263,50 @@ export default {
 }
 
 .modal-actions .btn-outline,
-.modal-actions .btn-primary {
-  flex: 1;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
+  .modal-actions .btn-primary {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  /* Styles pour le modal de paiement */
+  .payment-modal .modal-content {
+    max-width: 700px;
+    width: 90%;
+  }
+
+  .payment-modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .loading-state {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .loading-state .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
 /* Responsive Design */
 @media (max-width: 768px) {

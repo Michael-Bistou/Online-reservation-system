@@ -368,7 +368,8 @@ export default {
 
 .page-subtitle {
   font-size: 1.1rem;
-  opacity: 0.9;
+  opacity: 1;
+  color: #f0f0f0;
 }
 
 .page-content {
@@ -399,16 +400,18 @@ export default {
   display: block;
   margin-bottom: 5px;
   font-weight: 500;
-  color: var(--text-color);
+  color: #333;
 }
 
 .filter-select,
 .filter-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid var(--border-color);
+  border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
+  color: #333;
+  background-color: white;
 }
 
 /* Statistiques */
@@ -433,12 +436,12 @@ export default {
 .stat-number {
   font-size: 2rem;
   font-weight: bold;
-  color: var(--primary-color);
+  color: #667eea;
   margin-bottom: 5px;
 }
 
 .stat-label {
-  color: var(--text-secondary);
+  color: #666;
   font-size: 0.9rem;
 }
 
@@ -457,17 +460,29 @@ export default {
   margin-bottom: 20px;
 }
 
+.section-header .btn {
+  color: #333;
+  border-color: #ddd;
+}
+
+.section-header .btn:hover {
+  background-color: #f8f9fa;
+  border-color: #667eea;
+  color: #667eea;
+}
+
 .section-header h2 {
   margin: 0;
-  color: var(--text-color);
+  color: #333;
 }
 
 .email-card {
-  border: 1px solid var(--border-color);
+  border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
   margin-bottom: 15px;
   transition: all 0.3s ease;
+  background: white;
 }
 
 .email-card:hover {
@@ -511,7 +526,7 @@ export default {
 
 .email-date {
   font-size: 0.9rem;
-  color: var(--text-secondary);
+  color: #666;
 }
 
 .email-content {
@@ -522,10 +537,11 @@ export default {
 .email-subject {
   margin-bottom: 5px;
   font-size: 0.9rem;
+  color: #333;
 }
 
 .email-preview {
-  color: var(--text-secondary);
+  color: #666;
   font-size: 0.85rem;
   line-height: 1.4;
 }
@@ -533,6 +549,17 @@ export default {
 .email-actions {
   display: flex;
   gap: 10px;
+}
+
+.email-actions .btn {
+  color: #333;
+  border-color: #ddd;
+}
+
+.email-actions .btn:hover {
+  background-color: #f8f9fa;
+  border-color: #667eea;
+  color: #667eea;
 }
 
 /* Pagination */
@@ -544,9 +571,26 @@ export default {
   margin-top: 30px;
 }
 
+.pagination .btn {
+  color: #333;
+  border-color: #ddd;
+}
+
+.pagination .btn:hover:not(:disabled) {
+  background-color: #f8f9fa;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.pagination .btn:disabled {
+  color: #999;
+  border-color: #eee;
+  background-color: #f5f5f5;
+}
+
 .page-info {
   font-weight: 500;
-  color: var(--text-color);
+  color: #333;
 }
 
 /* Modal */
@@ -577,7 +621,14 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid #ddd;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .modal-close {
@@ -585,7 +636,7 @@ export default {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--text-secondary);
+  color: #666;
 }
 
 .modal-body {
@@ -594,10 +645,12 @@ export default {
 
 .email-details {
   line-height: 1.6;
+  color: #333;
 }
 
 .detail-row {
   margin-bottom: 10px;
+  color: #333;
 }
 
 .email-content-full {
@@ -607,12 +660,14 @@ export default {
   border-radius: 4px;
   max-height: 300px;
   overflow-y: auto;
+  color: #333;
 }
 
 .email-content-full pre {
   margin: 0;
   white-space: pre-wrap;
   font-family: inherit;
+  color: #333;
 }
 
 .modal-footer {
@@ -620,7 +675,29 @@ export default {
   justify-content: flex-end;
   gap: 10px;
   padding: 20px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid #ddd;
+}
+
+.modal-footer .btn {
+  color: #333;
+  border-color: #ddd;
+}
+
+.modal-footer .btn:hover {
+  background-color: #f8f9fa;
+  border-color: #667eea;
+  color: #667eea;
+}
+
+.modal-footer .btn-primary {
+  background-color: #667eea;
+  border-color: #667eea;
+  color: white;
+}
+
+.modal-footer .btn-primary:hover {
+  background-color: #5a6fd8;
+  border-color: #5a6fd8;
 }
 
 /* États vides et chargement */
@@ -628,13 +705,19 @@ export default {
 .empty-state {
   text-align: center;
   padding: 60px 20px;
+  color: #333;
+}
+
+.loading-container p {
+  color: #333;
+  margin-top: 10px;
 }
 
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--border-color);
-  border-top: 4px solid var(--primary-color);
+  border: 4px solid #ddd;
+  border-top: 4px solid #667eea;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 20px;
@@ -652,11 +735,11 @@ export default {
 
 .empty-state h3 {
   margin-bottom: 10px;
-  color: var(--text-color);
+  color: #333;
 }
 
 .empty-state p {
-  color: var(--text-secondary);
+  color: #666;
 }
 
 /* Responsive */

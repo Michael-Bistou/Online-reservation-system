@@ -114,6 +114,12 @@ const routes = [
     meta: { title: 'Historique des Emails', requiresAuth: true }
   },
   {
+    path: '/payment-history',
+    name: 'PaymentHistory',
+    component: () => import('../views/PaymentHistory.vue'),
+    meta: { title: 'Historique des Paiements', requiresAuth: true }
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     redirect: '/'

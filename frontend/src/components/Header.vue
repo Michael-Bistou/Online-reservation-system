@@ -19,9 +19,12 @@
           <router-link to="/reservations" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
             {{ $t('navigation.reservations') }}
           </router-link>
-          <router-link to="/email-history" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
-            📧 Emails
-          </router-link>
+                      <router-link to="/email-history" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
+              Emails
+            </router-link>
+            <router-link to="/payment-history" class="nav-link" v-if="isAuthenticated" @click="closeMenu">
+              Paiements
+            </router-link>
         </div>
         
         <div class="nav-auth">
@@ -160,10 +163,12 @@ import NotificationCenter from './NotificationCenter.vue'
   justify-content: space-between;
   padding: 1rem 0;
   gap: 2rem;
+  position: relative;
 }
 
 .nav-brand {
   flex-shrink: 0;
+  z-index: 10;
 }
 
         .nav-logo {
@@ -221,11 +226,13 @@ import NotificationCenter from './NotificationCenter.vue'
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
   flex: 1;
   justify-content: center;
-  margin-left: 8%;
   min-width: 200px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
         .nav-link {
@@ -235,11 +242,14 @@ import NotificationCenter from './NotificationCenter.vue'
           font-size: 0.875rem;
           transition: var(--transition);
           position: relative;
-          padding: 0.5rem 0;
+          padding: 0.5rem 0.75rem;
           text-align: center;
-          min-width: 80px;
+          min-width: 90px;
           outline: none !important;
           box-shadow: none !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .nav-link:focus,
@@ -265,8 +275,9 @@ import NotificationCenter from './NotificationCenter.vue'
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
   height: 2px;
   background: var(--primary-color);
   border-radius: 1px;
@@ -275,21 +286,22 @@ import NotificationCenter from './NotificationCenter.vue'
 .nav-auth {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   flex-shrink: 0;
+  z-index: 10;
 }
 
 .user-menu {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .user-link {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-radius: var(--border-radius);
   transition: var(--transition);
 }
@@ -382,6 +394,9 @@ import NotificationCenter from './NotificationCenter.vue'
     opacity: 0;
     visibility: hidden;
     transition: var(--transition);
+    position: fixed;
+    left: 0;
+    transform: translateY(-100%);
   }
   
   .nav-menu-open {
@@ -394,6 +409,7 @@ import NotificationCenter from './NotificationCenter.vue'
     width: 100%;
     padding: 1rem 2rem;
     border-bottom: 1px solid var(--border-color);
+    min-width: auto;
   }
   
   .nav-link:last-child {
