@@ -120,6 +120,13 @@ const routes = [
     meta: { title: 'Historique des Paiements', requiresAuth: true }
   },
   {
+    path: '/admin',
+    name: 'AdminDashboard',
+    component: () => import('../views/AdminDashboard.vue'),
+    meta: { title: 'Administration', requiresAuth: true, requiresAdmin: true }
+  },
+
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     redirect: '/'
@@ -135,6 +142,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const isAuthenticated = authService.isAuthenticated()
   const isRestaurantAuthenticated = localStorage.getItem('restaurantLoggedIn') === 'true'
+  const userRole = localStorage.getItem('userRole')
   
   // Mettre à jour le titre de la page
   document.title = to.meta.title ? `${to.meta.title} - Système de Réservation` : 'Système de Réservation'
@@ -152,6 +160,12 @@ router.beforeEach((to, from, next) => {
   // Vérifier l'authentification restaurant
   if (to.meta.requiresRestaurantAuth && !isRestaurantAuthenticated) {
     next('/restaurant-login')
+    return
+  }
+  
+  // Vérifier les permissions d'administrateur
+  if (to.meta.requiresAdmin && userRole !== 'admin') {
+    next('/')
     return
   }
   

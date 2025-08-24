@@ -38,10 +38,11 @@
     "profile": "My Profile",
     "login": "Login",
     "register": "Register",
-    "restaurant_register": "Restaurant",
+    "restaurant_register": "Register My Restaurant",
     "restaurant_dashboard": "Restaurant Dashboard",
     "logout": "Logout",
-    "language": "Language"
+    "language": "Language",
+    "admin": "Administration"
   },
   "home": {
     "title": "Restaurant Reservation System",
@@ -925,83 +926,26 @@
   },
   "profile": {
     "title": "My Profile",
-    "subtitle": "Manage your personal information",
-    "stats": {
-      "title": "My Activity",
-      "totalReservations": "Total reservations",
-      "confirmedReservations": "Confirmed reservations",
-      "favoriteRestaurants": "Favorite restaurants",
-      "memberSince": "Member since"
-    },
+    "personal_info": "Personal Information",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "save": "Save",
+    "saved": "Profile updated successfully!",
     "activity": {
       "title": "My Activity",
-      "total_reservations": "Total reservations",
-      "confirmed_reservations": "Confirmed reservations",
-      "cancelled_reservations": "Cancelled reservations",
-      "unique_restaurants": "Unique restaurants",
-      "total_spent": "Total spent",
-      "total_emails": "Emails sent"
+      "total_reservations": "Total Reservations",
+      "confirmed_reservations": "Confirmed Reservations",
+      "cancelled_reservations": "Cancelled Reservations",
+      "unique_restaurants": "Unique Restaurants",
+      "total_spent": "Total Spent",
+      "total_emails": "Emails Received"
     },
-    "personalInfo": {
-      "title": "Personal Information",
-      "fullName": "Full name",
-      "email": "Email address",
-      "phone": "Phone number",
-      "notProvided": "Not provided",
-      "edit": "Edit",
-      "cancel": "Cancel",
-      "save": "Save",
-      "saving": "Saving...",
-      "success": "Profile updated successfully!",
-      "errors": {
-        "nameRequired": "Name is required",
-        "nameMin": "Name must contain at least 2 characters",
-        "emailRequired": "Email is required",
-        "emailInvalid": "Invalid email format",
-        "phoneInvalid": "Invalid phone format"
-      }
-    },
-    "password": {
-      "title": "Change Password",
-      "currentPassword": "Current password",
-      "newPassword": "New password",
-      "confirmPassword": "Confirm new password",
-      "note": "Your password was set during registration",
-      "edit": "Edit",
-      "cancel": "Cancel",
-      "change": "Change password",
-      "changing": "Changing...",
-      "success": "Password changed successfully!",
-      "errors": {
-        "currentRequired": "Current password is required",
-        "newRequired": "New password is required",
-        "newMin": "Password must contain at least 6 characters",
-        "confirmMatch": "Passwords do not match",
-        "currentIncorrect": "Current password is incorrect"
-      }
-    },
-    "loading": "Loading your profile...",
-    "error": "Error loading profile",
-    "account_actions": {
-      "export_data": {
-        "title": "Export my data",
-        "description": "Download your reservation history"
-      },
-      "delete_account": {
-        "title": "Delete my account",
-        "description": "This action is irreversible",
-        "modal_title": "Delete my account",
-        "warning_title": "Warning!",
-        "warning_message": "This action will permanently delete your account and all your data:",
-        "data_list": {
-          "reservations": "All your reservations",
-          "personal_info": "Your personal information",
-          "history": "Your history"
-        },
-        "irreversible": "This action cannot be undone.",
-        "deleting": "Deleting...",
-        "confirm_button": "Delete permanently"
-      }
+    "actions": {
+      "title": "Actions",
+      "export_data": "Export my data",
+      "delete_account": "Delete my account"
     }
   },
   "language": {

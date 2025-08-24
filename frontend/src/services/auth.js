@@ -82,6 +82,7 @@ class AuthService {
       // Stocker le token et les infos utilisateur
       localStorage.setItem('token', token)
       localStorage.setItem('userData', JSON.stringify(user))
+      localStorage.setItem('userRole', user.role || 'user')
       this.token = token
       this.user = user
 
@@ -105,6 +106,7 @@ class AuthService {
       // Stocker le token et les infos utilisateur
       localStorage.setItem('token', token)
       localStorage.setItem('userData', JSON.stringify(user))
+      localStorage.setItem('userRole', user.role || 'user')
       this.token = token
       this.user = user
 
@@ -123,6 +125,7 @@ class AuthService {
   logout() {
     localStorage.removeItem('token')
     localStorage.removeItem('userData')
+    localStorage.removeItem('userRole')
     this.token = null
     this.user = null
   }
@@ -196,6 +199,24 @@ class AuthService {
       console.error('Erreur lors du parsing des données utilisateur:', error)
     }
     
+    return null
+  }
+
+  // Forcer la mise à jour du rôle utilisateur
+  updateUserRole() {
+    try {
+      const userData = localStorage.getItem('userData')
+      if (userData) {
+        const user = JSON.parse(userData)
+        if (user.role) {
+          localStorage.setItem('userRole', user.role)
+          console.log('Rôle utilisateur mis à jour:', user.role)
+          return user.role
+        }
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du rôle:', error)
+    }
     return null
   }
 

@@ -23,7 +23,7 @@ const authenticateToken = async (req, res, next) => {
     
     // Récupérer les informations de l'utilisateur depuis la base de données
     const [user] = await query(
-      'SELECT id, email, first_name, last_name FROM users WHERE id = ?',
+      'SELECT id, email, first_name, last_name, role, is_active FROM users WHERE id = ?',
       [decoded.userId]
     );
 
@@ -31,6 +31,14 @@ const authenticateToken = async (req, res, next) => {
       return res.status(401).json({
         error: 'Token invalide',
         message: 'Utilisateur non trouvé'
+      });
+    }
+
+    // Vérifier si l'utilisateur est actif
+    if (!user.is_active) {
+      return res.status(401).json({
+        error: 'Compte désactivé',
+        message: 'Votre compte a été désactivé'
       });
     }
 
@@ -100,12 +108,18 @@ const requireRole = (role) => {
       });
     }
 
-    // Pour l'instant, on vérifie juste si c'est un admin
-    // On peut étendre cette logique plus tard
-    if (role === 'admin' && req.user.email !== 'admin@restaurant.com') {
+    // Vérifier le rôle de l'utilisateur
+    if (role === 'admin' && req.user.role !== 'admin') {
       return res.status(403).json({
         error: 'Accès refusé',
-        message: 'Vous n\'avez pas les permissions nécessaires'
+        message: 'Vous n\'avez pas les permissions d\'administrateur'
+      });
+    }
+
+    if (role === 'restaurant' && req.user.role !== 'restaurant') {
+      return res.status(403).json({
+        error: 'Accès refusé',
+        message: 'Vous n\'avez pas les permissions de restaurant'
       });
     }
 
@@ -113,8 +127,37 @@ const requireRole = (role) => {
   };
 };
 
+/**
+ * Middleware pour logger les actions d'administration
+ */
+const logAdminAction = (action, targetType = null, targetId = null) => {
+  return async (req, res, next) => {
+    if (req.user && req.user.role === 'admin') {
+      try {
+        const { query } = require('../config/database');
+        await query(`
+          INSERT INTO admin_logs (admin_id, action, target_type, target_id, details, ip_address, user_agent)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `, [
+          req.user.id,
+          action,
+          targetType,
+          targetId,
+          JSON.stringify(req.body),
+          req.ip,
+          req.get('User-Agent')
+        ]);
+      } catch (error) {
+        console.error('Erreur lors du logging admin:', error);
+      }
+    }
+    next();
+  };
+};
+
 module.exports = {
   authenticateToken,
   optionalAuth,
-  requireRole
+  requireRole,
+  logAdminAction
 };

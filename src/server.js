@@ -11,6 +11,7 @@ const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const restaurantRoutes = require('./routes/restaurants');
 const reservationRoutes = require('./routes/reservations');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -91,6 +92,9 @@ app.use('/api/restaurants', restaurantRoutes);
 
 // Routes réservations
 app.use('/api/reservations', reservationRoutes);
+
+// Routes d'administration
+app.use('/api/admin', adminRoutes);
 
 // Route de test (redirige vers l'API)
 app.get('/test', (req, res) => {

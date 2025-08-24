@@ -47,7 +47,8 @@
     "restaurant_register": "Restaurant",
     "restaurant_dashboard": "Dashboard Restaurant",
     "logout": "Déconnexion",
-    "language": "Langue"
+    "language": "Langue",
+    "admin": "Administration"
   },
   "home": {
     "title": "Système de Réservation de Restaurants",
@@ -928,74 +929,26 @@
   },
   "profile": {
     "title": "Mon Profil",
-    "subtitle": "Gérez vos informations personnelles",
-    "stats": {
+    "personal_info": "Informations Personnelles",
+    "first_name": "Prénom",
+    "last_name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "save": "Sauvegarder",
+    "saved": "Profil mis à jour avec succès !",
+    "activity": {
       "title": "Mon Activité",
-      "totalReservations": "Réservations totales",
-      "confirmedReservations": "Réservations confirmées",
-      "favoriteRestaurants": "Restaurants favoris",
-      "memberSince": "Membre depuis"
+      "total_reservations": "Réservations Totales",
+      "confirmed_reservations": "Réservations Confirmées",
+      "cancelled_reservations": "Réservations Annulées",
+      "unique_restaurants": "Restaurants Uniques",
+      "total_spent": "Total Dépensé",
+      "total_emails": "Emails Reçus"
     },
-    "personalInfo": {
-      "title": "Mes Informations",
-      "fullName": "Nom complet",
-      "email": "Adresse email",
-      "phone": "Numéro de téléphone",
-      "notProvided": "Non renseigné",
-      "edit": "Modifier",
-      "cancel": "Annuler",
-      "save": "Sauvegarder",
-      "saving": "Sauvegarde...",
-      "success": "Vos informations ont été mises à jour avec succès !",
-      "errors": {
-        "nameRequired": "Le nom est requis",
-        "nameMin": "Le nom doit contenir au moins 2 caractères",
-        "emailRequired": "L'email est requis",
-        "emailInvalid": "Format d'email invalide",
-        "phoneInvalid": "Format de téléphone invalide"
-      }
-    },
-    "password": {
-      "title": "Changer le Mot de Passe",
-      "currentPassword": "Mot de passe actuel",
-      "newPassword": "Nouveau mot de passe",
-      "confirmPassword": "Confirmer le nouveau mot de passe",
-      "note": "Votre mot de passe a été défini lors de l'inscription",
-      "edit": "Modifier",
-      "cancel": "Annuler",
-      "change": "Changer le mot de passe",
-      "changing": "Changement...",
-      "success": "Votre mot de passe a été changé avec succès !",
-      "errors": {
-        "currentRequired": "Le mot de passe actuel est requis",
-        "newRequired": "Le nouveau mot de passe est requis",
-        "newMin": "Le mot de passe doit contenir au moins 6 caractères",
-        "confirmMatch": "Les mots de passe ne correspondent pas",
-        "currentIncorrect": "Mot de passe actuel incorrect"
-      }
-    },
-    "loading": "Chargement de votre profil...",
-    "error": "Erreur lors du chargement du profil",
-    "account_actions": {
-      "export_data": {
-        "title": "Exporter mes données",
-        "description": "Télécharger l'historique de vos réservations"
-      },
-      "delete_account": {
-        "title": "Supprimer mon compte",
-        "description": "Cette action est irréversible",
-        "modal_title": "Supprimer mon compte",
-        "warning_title": "Attention !",
-        "warning_message": "Cette action supprimera définitivement votre compte et toutes vos données :",
-        "data_list": {
-          "reservations": "Toutes vos réservations",
-          "personal_info": "Vos informations personnelles",
-          "history": "Votre historique"
-        },
-        "irreversible": "Cette action ne peut pas être annulée.",
-        "deleting": "Suppression...",
-        "confirm_button": "Supprimer définitivement"
-      }
+    "actions": {
+      "title": "Actions",
+      "export_data": "Exporter mes données",
+      "delete_account": "Supprimer mon compte"
     }
   },
   "language": {

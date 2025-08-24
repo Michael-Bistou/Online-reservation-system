@@ -46,7 +46,7 @@ const register = async (req, res) => {
 
     // Récupérer l'utilisateur créé (sans le mot de passe)
     const newUser = await get(
-      'SELECT id, email, first_name, last_name, phone, created_at FROM users WHERE id = ?',
+      'SELECT id, email, first_name, last_name, phone, role, created_at FROM users WHERE id = ?',
       [result.insertId]
     );
 
@@ -64,7 +64,8 @@ const register = async (req, res) => {
         email: newUser.email,
         first_name: newUser.first_name,
         last_name: newUser.last_name,
-        phone: newUser.phone
+        phone: newUser.phone,
+        role: newUser.role || 'user'
       },
       token
     });
@@ -98,7 +99,7 @@ const login = async (req, res) => {
 
     // Récupérer l'utilisateur
     const users = await query(
-      'SELECT id, email, password, first_name, last_name, phone FROM users WHERE email = ?',
+      'SELECT id, email, password, first_name, last_name, phone, role, is_active FROM users WHERE email = ?',
       [email]
     );
 
@@ -110,6 +111,14 @@ const login = async (req, res) => {
     }
 
     const user = users[0];
+
+    // Vérifier si l'utilisateur est actif
+    if (!user.is_active) {
+      return res.status(401).json({
+        error: 'Compte désactivé',
+        message: 'Votre compte a été désactivé'
+      });
+    }
 
     // Vérifier le mot de passe
     const isValidPassword = await bcrypt.compare(password, user.password);
@@ -134,7 +143,8 @@ const login = async (req, res) => {
         email: user.email,
         first_name: user.first_name,
         last_name: user.last_name,
-        phone: user.phone
+        phone: user.phone,
+        role: user.role || 'user'
       },
       token
     });
@@ -155,7 +165,7 @@ const login = async (req, res) => {
 const getProfile = async (req, res) => {
   try {
     const users = await query(
-      'SELECT id, email, first_name, last_name, phone, created_at FROM users WHERE id = ?',
+      'SELECT id, email, first_name, last_name, phone, role, created_at FROM users WHERE id = ?',
       [req.user.id]
     );
 

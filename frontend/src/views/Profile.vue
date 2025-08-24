@@ -251,6 +251,8 @@
                   <p>{{ $t('profile.account_actions.delete_account.description') }}</p>
                 </div>
               </button>
+
+
             </div>
           </div>
         </div>
@@ -631,6 +633,7 @@ export default {
 
 
 
+
     // Lifecycle
     onMounted(() => {
       loadProfile()
@@ -682,9 +685,9 @@ export default {
       savePersonalInfo,
       startEditPassword,
       cancelEditPassword,
-      changePassword,
-      exportData,
-      deleteAccount
+              changePassword,
+        exportData,
+        deleteAccount
     }
   }
 }
@@ -1048,6 +1051,8 @@ export default {
   background: #fef2f2;
 }
 
+
+
 .action-icon {
   font-size: 2rem;
   width: 50px;
@@ -1063,6 +1068,8 @@ export default {
 .action-card.danger .action-icon {
   background: #ef4444;
 }
+
+
 
 .action-content h3 {
   font-size: 1.1rem;

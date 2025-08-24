@@ -107,6 +107,28 @@ function initializeDatabase() {
       console.log('✅ Table reservations créée');
     }
   });
+
+  // Table admin_logs pour l'audit d'activité
+  db.run(`
+    CREATE TABLE IF NOT EXISTS admin_logs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      admin_id INTEGER NOT NULL,
+      action TEXT NOT NULL,
+      target_type TEXT,
+      target_id INTEGER,
+      details TEXT,
+      ip_address TEXT,
+      user_agent TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
+    )
+  `, (err) => {
+    if (err) {
+      console.error('Erreur lors de la création de la table admin_logs:', err);
+    } else {
+      console.log('✅ Table admin_logs créée');
+    }
+  });
 }
 
 // Fonction pour exécuter des requêtes

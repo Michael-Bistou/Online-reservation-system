@@ -57,6 +57,14 @@
                 <span class="user-avatar">👤</span>
                 <span class="user-name">{{ currentUser?.first_name || $t('navigation.profile') }}</span>
               </router-link>
+              <router-link 
+                v-if="userRole === 'admin'" 
+                to="/admin" 
+                class="nav-link admin-link"
+                title="Administration"
+              >
+                🔧 Admin
+              </router-link>
               <button @click="logout" class="btn btn-outline btn-sm">
                 {{ $t('navigation.logout') }}
               </button>
@@ -97,11 +105,13 @@ import NotificationCenter from './NotificationCenter.vue'
             const isRestaurantAuthenticated = ref(false)
             const isMenuOpen = ref(false)
             const notificationPermission = ref('default')
+            const userRole = ref('')
 
             const checkAuth = () => {
               isAuthenticated.value = authService.isAuthenticated()
               currentUser.value = authService.getCurrentUser()
               isRestaurantAuthenticated.value = localStorage.getItem('restaurantLoggedIn') === 'true'
+              userRole.value = localStorage.getItem('userRole') || ''
             }
 
             const checkNotificationPermission = () => {
@@ -161,6 +171,7 @@ import NotificationCenter from './NotificationCenter.vue'
               isRestaurantAuthenticated,
               isMenuOpen,
               notificationPermission,
+              userRole,
               logout,
               logoutRestaurant,
               toggleMenu,
