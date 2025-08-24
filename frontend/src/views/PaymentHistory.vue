@@ -2,8 +2,8 @@
   <div class="payment-history-page">
     <div class="page-header">
       <div class="container">
-        <h1 class="page-title">Historique des Paiements</h1>
-        <p class="page-subtitle">Consultez tous vos paiements et remboursements</p>
+        <h1 class="page-title">{{ $t('payment_history.title') }}</h1>
+        <p class="page-subtitle">{{ $t('payment_history.subtitle') }}</p>
       </div>
     </div>
 
@@ -16,28 +16,28 @@
               <div class="stat-icon">💳</div>
               <div class="stat-content">
                 <div class="stat-number">{{ paymentStats.totalTransactions }}</div>
-                <div class="stat-label">Total transactions</div>
+                <div class="stat-label">{{ $t('payment_history.stats.total_transactions') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">💰</div>
               <div class="stat-content">
                 <div class="stat-number">{{ formatAmount(paymentStats.totalAmount) }}</div>
-                <div class="stat-label">Montant total</div>
+                <div class="stat-label">{{ $t('payment_history.stats.total_amount') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">🔄</div>
               <div class="stat-content">
                 <div class="stat-number">{{ paymentStats.totalRefunds }}</div>
-                <div class="stat-label">Remboursements</div>
+                <div class="stat-label">{{ $t('payment_history.stats.total_refunds') }}</div>
               </div>
             </div>
             <div class="stat-card">
               <div class="stat-icon">📊</div>
               <div class="stat-content">
                 <div class="stat-number">{{ formatAmount(paymentStats.netAmount) }}</div>
-                <div class="stat-label">Montant net</div>
+                <div class="stat-label">{{ $t('payment_history.stats.net_amount') }}</div>
               </div>
             </div>
           </div>
@@ -47,29 +47,29 @@
         <div class="filters-section">
           <div class="filter-row">
             <div class="filter-group">
-              <label class="filter-label">Type</label>
+              <label class="filter-label">{{ $t('payment_history.filters.type') }}</label>
               <select v-model="selectedType" class="filter-select">
-                <option value="">Tous les types</option>
-                <option value="payment">Paiements</option>
-                <option value="refund">Remboursements</option>
+                <option value="">{{ $t('payment_history.filters.all_types') }}</option>
+                <option value="payment">{{ $t('payment_history.filters.payments') }}</option>
+                <option value="refund">{{ $t('payment_history.filters.refunds') }}</option>
               </select>
             </div>
             <div class="filter-group">
-              <label class="filter-label">Statut</label>
+              <label class="filter-label">{{ $t('payment_history.filters.status') }}</label>
               <select v-model="selectedStatus" class="filter-select">
-                <option value="">Tous les statuts</option>
-                <option value="succeeded">Réussi</option>
-                <option value="failed">Échec</option>
-                <option value="pending">En attente</option>
+                <option value="">{{ $t('payment_history.filters.all_statuses') }}</option>
+                <option value="succeeded">{{ $t('payment_history.filters.succeeded') }}</option>
+                <option value="failed">{{ $t('payment_history.filters.failed') }}</option>
+                <option value="pending">{{ $t('payment_history.filters.pending') }}</option>
               </select>
             </div>
             <div class="filter-group">
-              <label class="filter-label">Recherche</label>
+              <label class="filter-label">{{ $t('common.search') }}</label>
               <input 
                 v-model="searchQuery" 
                 type="text" 
                 class="filter-input" 
-                placeholder="Rechercher par restaurant ou description..."
+                :placeholder="$t('payment_history.filters.search_placeholder')"
               />
             </div>
           </div>
@@ -78,21 +78,21 @@
         <!-- Liste des transactions -->
         <div class="transactions-section">
           <div class="section-header">
-            <h2>Transactions</h2>
+            <h2>{{ $t('payment_history.transactions.title') }}</h2>
             <button @click="refreshTransactions" class="btn btn-outline btn-sm">
-              🔄 Actualiser
+              🔄 {{ $t('payment_history.transactions.refresh') }}
             </button>
           </div>
 
           <div v-if="loading" class="loading-container">
             <div class="loading-spinner"></div>
-            <p>Chargement des transactions...</p>
+            <p>{{ $t('payment_history.transactions.loading') }}</p>
           </div>
 
           <div v-else-if="filteredTransactions.length === 0" class="empty-state">
             <div class="empty-icon">💳</div>
-            <h3>Aucune transaction trouvée</h3>
-            <p>Aucune transaction ne correspond à vos critères de recherche.</p>
+            <h3>{{ $t('payment_history.transactions.no_transactions') }}</h3>
+            <p>{{ $t('payment_history.transactions.no_transactions_text') }}</p>
           </div>
 
           <div v-else class="transactions-list">
@@ -105,7 +105,7 @@
               <div class="transaction-header">
                 <div class="transaction-info">
                   <div class="transaction-type" :class="`type-${transaction.transactionId ? 'refund' : 'payment'}`">
-                    {{ transaction.transactionId ? '🔄 Remboursement' : '💳 Paiement' }}
+                    {{ transaction.transactionId ? $t('payment_history.transactions.refund') : $t('payment_history.transactions.payment') }}
                   </div>
                   <div class="transaction-status" :class="`status-${transaction.status}`">
                     {{ getStatusLabel(transaction.status) }}
@@ -121,39 +121,39 @@
               <div class="transaction-content">
                 <div class="transaction-details">
                   <div class="detail-row">
-                    <strong>ID :</strong> {{ transaction.id }}
+                    <strong>{{ $t('payment_history.details.id') }} :</strong> {{ transaction.id }}
                   </div>
                   <div class="detail-row">
-                    <strong>Restaurant :</strong> {{ transaction.restaurantName }}
+                    <strong>{{ $t('payment_history.details.restaurant') }} :</strong> {{ transaction.restaurantName }}
                   </div>
                   <div class="detail-row">
-                    <strong>Description :</strong> {{ transaction.description }}
+                    <strong>{{ $t('payment_history.details.description') }} :</strong> {{ transaction.description }}
                   </div>
                   <div class="detail-row">
-                    <strong>Date :</strong> {{ formatDate(transaction.createdAt) }}
+                    <strong>{{ $t('payment_history.details.date') }} :</strong> {{ formatDate(transaction.createdAt) }}
                   </div>
                   <div v-if="transaction.cardLast4" class="detail-row">
-                    <strong>Carte :</strong> **** **** **** {{ transaction.cardLast4 }}
+                    <strong>{{ $t('payment_history.details.card') }} :</strong> **** **** **** {{ transaction.cardLast4 }}
                   </div>
                   <div v-if="transaction.transactionId" class="detail-row">
-                    <strong>Transaction originale :</strong> {{ transaction.transactionId }}
+                    <strong>{{ $t('payment_history.details.original_transaction') }} :</strong> {{ transaction.transactionId }}
                   </div>
                   <div v-if="transaction.reason" class="detail-row">
-                    <strong>Raison :</strong> {{ transaction.reason }}
+                    <strong>{{ $t('payment_history.details.reason') }} :</strong> {{ transaction.reason }}
                   </div>
                 </div>
               </div>
 
               <div class="transaction-actions">
                 <button @click="viewTransactionDetails(transaction)" class="btn btn-outline btn-sm">
-                  👁️ Détails
+                  {{ $t('payment_history.transactions.details') }}
                 </button>
                 <button 
                   v-if="!transaction.transactionId && transaction.status === 'succeeded'"
                   @click="requestRefund(transaction)" 
                   class="btn btn-outline btn-sm"
                 >
-                  🔄 Demander remboursement
+                  {{ $t('payment_history.transactions.request_refund') }}
                 </button>
               </div>
             </div>
@@ -166,11 +166,11 @@
               :disabled="currentPage === 1"
               class="btn btn-outline btn-sm"
             >
-              ← Précédent
+              {{ $t('payment_history.pagination.previous') }}
             </button>
             
             <span class="page-info">
-              Page {{ currentPage }} sur {{ totalPages }}
+              {{ $t('payment_history.pagination.page_info', { current: currentPage, total: totalPages }) }}
             </span>
             
             <button 
@@ -178,7 +178,7 @@
               :disabled="currentPage === totalPages"
               class="btn btn-outline btn-sm"
             >
-              Suivant →
+              {{ $t('payment_history.pagination.next') }}
             </button>
           </div>
         </div>
@@ -189,89 +189,89 @@
     <div v-if="showTransactionModal" class="modal-overlay" @click="closeTransactionModal">
       <div class="modal-content" @click.stop>
         <div class="modal-header">
-          <h3>Détails de la transaction</h3>
+          <h3>{{ $t('payment_history.details.title') }}</h3>
           <button @click="closeTransactionModal" class="modal-close">×</button>
         </div>
         <div class="modal-body">
           <div v-if="selectedTransaction" class="transaction-details-full">
             <div class="detail-section">
-              <h4>Informations générales</h4>
+              <h4>{{ $t('payment_history.details.general_info') }}</h4>
               <div class="detail-grid">
                 <div class="detail-item">
-                  <strong>ID :</strong> {{ selectedTransaction.id }}
+                  <strong>{{ $t('payment_history.details.id') }} :</strong> {{ selectedTransaction.id }}
                 </div>
                 <div class="detail-item">
-                  <strong>Type :</strong> {{ selectedTransaction.transactionId ? 'Remboursement' : 'Paiement' }}
+                  <strong>{{ $t('payment_history.details.type') }} :</strong> {{ selectedTransaction.transactionId ? $t('payment_history.filters.refunds') : $t('payment_history.filters.payments') }}
                 </div>
                 <div class="detail-item">
-                  <strong>Statut :</strong> {{ getStatusLabel(selectedTransaction.status) }}
+                  <strong>{{ $t('payment_history.details.status') }} :</strong> {{ getStatusLabel(selectedTransaction.status) }}
                 </div>
                 <div class="detail-item">
-                  <strong>Montant :</strong> {{ formatAmount(selectedTransaction.amount) }}
+                  <strong>{{ $t('payment_history.details.amount') }} :</strong> {{ formatAmount(selectedTransaction.amount) }}
                 </div>
                 <div class="detail-item">
-                  <strong>Date :</strong> {{ formatDate(selectedTransaction.createdAt) }}
+                  <strong>{{ $t('payment_history.details.date') }} :</strong> {{ formatDate(selectedTransaction.createdAt) }}
                 </div>
               </div>
             </div>
 
             <div class="detail-section">
-              <h4>Informations de réservation</h4>
+              <h4>{{ $t('payment_history.details.reservation_info') }}</h4>
               <div class="detail-grid">
                 <div class="detail-item">
-                  <strong>Restaurant :</strong> {{ selectedTransaction.restaurantName }}
+                  <strong>{{ $t('payment_history.details.restaurant') }} :</strong> {{ selectedTransaction.restaurantName }}
                 </div>
                 <div class="detail-item">
-                  <strong>Description :</strong> {{ selectedTransaction.description }}
+                  <strong>{{ $t('payment_history.details.description') }} :</strong> {{ selectedTransaction.description }}
                 </div>
                 <div v-if="selectedTransaction.metadata" class="detail-item">
-                  <strong>Date de réservation :</strong> {{ formatDate(selectedTransaction.metadata.reservationDate) }}
+                  <strong>{{ $t('payment_history.details.reservation_date') }} :</strong> {{ formatDate(selectedTransaction.metadata.reservationDate) }}
                 </div>
                 <div v-if="selectedTransaction.metadata" class="detail-item">
-                  <strong>Heure :</strong> {{ selectedTransaction.metadata.reservationTime }}
+                  <strong>{{ $t('common.time') }} :</strong> {{ selectedTransaction.metadata.reservationTime }}
                 </div>
                 <div v-if="selectedTransaction.metadata" class="detail-item">
-                  <strong>Nombre de personnes :</strong> {{ selectedTransaction.metadata.partySize }}
+                  <strong>{{ $t('payment_history.details.party_size') }} :</strong> {{ selectedTransaction.metadata.partySize }}
                 </div>
               </div>
             </div>
 
             <div class="detail-section">
-              <h4>Informations client</h4>
+              <h4>{{ $t('payment_history.details.payment_info') }}</h4>
               <div class="detail-grid">
                 <div class="detail-item">
-                  <strong>Nom :</strong> {{ selectedTransaction.customerName }}
+                  <strong>{{ $t('common.name') }} :</strong> {{ selectedTransaction.customerName }}
                 </div>
                 <div class="detail-item">
-                  <strong>Email :</strong> {{ selectedTransaction.customerEmail }}
+                  <strong>{{ $t('common.email') }} :</strong> {{ selectedTransaction.customerEmail }}
                 </div>
                 <div v-if="selectedTransaction.cardLast4" class="detail-item">
-                  <strong>Carte :</strong> **** **** **** {{ selectedTransaction.cardLast4 }}
+                  <strong>{{ $t('payment_history.details.card') }} :</strong> **** **** **** {{ selectedTransaction.cardLast4 }}
                 </div>
               </div>
             </div>
 
             <div v-if="selectedTransaction.transactionId" class="detail-section">
-              <h4>Informations de remboursement</h4>
+              <h4>{{ $t('payment_history.details.refund_info') }}</h4>
               <div class="detail-grid">
                 <div class="detail-item">
-                  <strong>Transaction originale :</strong> {{ selectedTransaction.transactionId }}
+                  <strong>{{ $t('payment_history.details.original_transaction') }} :</strong> {{ selectedTransaction.transactionId }}
                 </div>
                 <div class="detail-item">
-                  <strong>Raison :</strong> {{ selectedTransaction.reason }}
+                  <strong>{{ $t('payment_history.details.reason') }} :</strong> {{ selectedTransaction.reason }}
                 </div>
               </div>
             </div>
           </div>
         </div>
         <div class="modal-footer">
-          <button @click="closeTransactionModal" class="btn btn-outline">Fermer</button>
+          <button @click="closeTransactionModal" class="btn btn-outline">{{ $t('common.close') }}</button>
           <button 
             v-if="!selectedTransaction?.transactionId && selectedTransaction?.status === 'succeeded'"
             @click="requestRefund(selectedTransaction)" 
             class="btn btn-primary"
           >
-            🔄 Demander remboursement
+            {{ $t('payment_history.transactions.request_refund') }}
           </button>
         </div>
       </div>
@@ -280,12 +280,24 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import paymentService from '../services/paymentService.js'
+import { useI18n } from 'vue-i18n'
 
 export default {
   name: 'PaymentHistory',
   setup() {
+    const { t } = useI18n()
+    
+    // Function to handle language changes
+    const handleLanguageChange = () => {
+      // Force re-render when language changes
+      nextTick(() => {
+        // The component will automatically re-render with new translations
+      })
+    }
+    
+    // Reactive data
     const transactions = ref([])
     const loading = ref(false)
     const selectedType = ref('')
@@ -356,9 +368,9 @@ export default {
 
     const getStatusLabel = (status) => {
       const labels = {
-        succeeded: 'Réussi',
-        failed: 'Échec',
-        pending: 'En attente'
+        succeeded: t('payment_history.filters.succeeded'),
+        failed: t('payment_history.filters.failed'),
+        pending: t('payment_history.filters.pending')
       }
       return labels[status] || status
     }
@@ -402,6 +414,13 @@ export default {
     // Lifecycle
     onMounted(() => {
       loadTransactions()
+      // Listen for language changes
+      window.addEventListener('languageChanged', handleLanguageChange)
+    })
+
+    onUnmounted(() => {
+      // Clean up event listener
+      window.removeEventListener('languageChanged', handleLanguageChange)
     })
 
     return {

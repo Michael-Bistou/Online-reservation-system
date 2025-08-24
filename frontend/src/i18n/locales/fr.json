@@ -357,6 +357,63 @@
     "to_confirm": "À confirmer",
     "emergency": "Urgence personnelle"
   },
+  "payment_history": {
+    "title": "Historique des Paiements",
+    "subtitle": "Consultez tous vos paiements et remboursements",
+    "stats": {
+      "total_transactions": "Total transactions",
+      "total_amount": "Montant total",
+      "total_refunds": "Remboursements",
+      "net_amount": "Montant net"
+    },
+    "filters": {
+      "type": "Type",
+      "all_types": "Tous les types",
+      "payments": "Paiements",
+      "refunds": "Remboursements",
+      "status": "Statut",
+      "all_statuses": "Tous les statuts",
+      "succeeded": "Réussi",
+      "failed": "Échec",
+      "pending": "En attente",
+      "search_placeholder": "Rechercher par restaurant ou description..."
+    },
+    "transactions": {
+      "title": "Transactions",
+      "refresh": "Actualiser",
+      "loading": "Chargement des transactions...",
+      "no_transactions": "Aucune transaction trouvée",
+      "no_transactions_text": "Aucune transaction ne correspond à vos critères de recherche.",
+      "payment": "💳 Paiement",
+      "refund": "🔄 Remboursement",
+      "details": "👁️ Détails",
+      "request_refund": "🔄 Demander remboursement"
+    },
+    "pagination": {
+      "previous": "← Précédent",
+      "next": "Suivant →",
+      "page_info": "Page {current} sur {total}"
+    },
+    "details": {
+      "title": "Détails de la transaction",
+      "general_info": "Informations générales",
+      "refund_info": "Informations de remboursement",
+      "reservation_info": "Informations de réservation",
+      "payment_info": "Informations de paiement",
+      "id": "ID",
+      "type": "Type",
+      "status": "Statut",
+      "amount": "Montant",
+      "date": "Date",
+      "restaurant": "Restaurant",
+      "description": "Description",
+      "reservation_date": "Date de réservation",
+      "party_size": "Nombre de personnes",
+      "card": "Carte",
+      "original_transaction": "Transaction originale",
+      "reason": "Raison"
+    }
+  },
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez vos informations personnelles",
