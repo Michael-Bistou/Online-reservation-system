@@ -15,7 +15,7 @@
           <button 
             v-for="tab in tabs" 
             :key="tab.id"
-            @click="activeTab = tab.id"
+            @click="switchTab(tab.id)"
             :class="{ active: activeTab === tab.id }"
             class="admin-nav-btn"
           >
@@ -296,10 +296,13 @@
               <div class="log-details">
                 <p v-if="log.target_type">Type: {{ log.target_type }} (ID: {{ log.target_id }})</p>
                 <p v-if="log.ip_address">IP: {{ log.ip_address }}</p>
-                <details v-if="log.details">
+                <details v-if="log.details && log.details !== '{}'">
                   <summary>Détails</summary>
-                  <pre>{{ log.details }}</pre>
+                  <pre>{{ typeof log.details === 'string' ? JSON.parse(log.details) : log.details }}</pre>
                 </details>
+                <div v-if="!log.details || log.details === '{}'" class="log-no-details">
+                  <small>Aucun détail supplémentaire disponible</small>
+                </div>
               </div>
             </div>
           </div>
@@ -353,8 +356,25 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import axios from 'axios'
+
+// Configuration axios pour le dashboard admin
+const API_BASE_URL = 'http://localhost:5000/api'
+
+// Configuration des intercepteurs pour l'authentification
+axios.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token')
+    if (token && config.url?.startsWith(API_BASE_URL)) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 export default {
   name: 'AdminDashboard',
@@ -396,12 +416,40 @@ export default {
       { id: 'stats', label: '📈 Statistiques' }
     ]
 
+    const switchTab = (tabId) => {
+      activeTab.value = tabId
+      console.log('Onglet actif:', tabId)
+      
+      // Charger les données appropriées selon l'onglet
+      switch (tabId) {
+        case 'dashboard':
+          loadDashboard()
+          break
+        case 'users':
+          loadUsers()
+          break
+        case 'restaurants':
+          loadRestaurants()
+          break
+        case 'reservations':
+          loadReservations()
+          break
+        case 'logs':
+          loadLogs()
+          break
+        case 'stats':
+          loadStats()
+          break
+      }
+    }
+
     const loadDashboard = async () => {
       try {
-        const response = await axios.get('/api/admin/dashboard')
+        const response = await axios.get(`${API_BASE_URL}/admin/dashboard`)
         stats.value = response.data.stats
         recentActivity.value = response.data.recentActivity
         recentReservations.value = response.data.recentReservations
+        console.log('Dashboard data loaded:', response.data)
       } catch (error) {
         console.error('Erreur chargement dashboard:', error)
       }
@@ -413,8 +461,9 @@ export default {
         if (userFilters.value.search) params.search = userFilters.value.search
         if (userFilters.value.role) params.role = userFilters.value.role
 
-        const response = await axios.get('/api/admin/users', { params })
+        const response = await axios.get(`${API_BASE_URL}/admin/users`, { params })
         users.value = response.data.users
+        console.log('Users data loaded:', response.data)
       } catch (error) {
         console.error('Erreur chargement utilisateurs:', error)
       }
@@ -426,8 +475,9 @@ export default {
         if (restaurantFilters.value.search) params.search = restaurantFilters.value.search
         if (restaurantFilters.value.cuisine_type) params.cuisine_type = restaurantFilters.value.cuisine_type
 
-        const response = await axios.get('/api/admin/restaurants', { params })
+        const response = await axios.get(`${API_BASE_URL}/admin/restaurants`, { params })
         restaurants.value = response.data.restaurants
+        console.log('Restaurants data loaded:', response.data)
       } catch (error) {
         console.error('Erreur chargement restaurants:', error)
       }
@@ -438,8 +488,9 @@ export default {
         const params = {}
         if (reservationFilters.value.status) params.status = reservationFilters.value.status
 
-        const response = await axios.get('/api/admin/reservations', { params })
+        const response = await axios.get(`${API_BASE_URL}/admin/reservations`, { params })
         reservations.value = response.data.reservations
+        console.log('Reservations data loaded:', response.data)
       } catch (error) {
         console.error('Erreur chargement réservations:', error)
       }
@@ -450,8 +501,9 @@ export default {
         const params = {}
         if (logFilters.value.action) params.action = logFilters.value.action
 
-        const response = await axios.get('/api/admin/logs', { params })
+        const response = await axios.get(`${API_BASE_URL}/admin/logs`, { params })
         logs.value = response.data.logs
+        console.log('Logs data loaded:', response.data)
       } catch (error) {
         console.error('Erreur chargement logs:', error)
       }
@@ -459,8 +511,9 @@ export default {
 
     const loadStats = async () => {
       try {
-        const response = await axios.get('/api/admin/stats')
+        const response = await axios.get(`${API_BASE_URL}/admin/stats`)
         systemStats.value = response.data
+        console.log('Stats data loaded:', response.data)
       } catch (error) {
         console.error('Erreur chargement statistiques:', error)
       }
@@ -468,7 +521,7 @@ export default {
 
     const createBackup = async () => {
       try {
-        const response = await axios.post('/api/admin/backup')
+        const response = await axios.post(`${API_BASE_URL}/admin/backup`)
         alert('Sauvegarde créée avec succès !')
       } catch (error) {
         console.error('Erreur création sauvegarde:', error)
@@ -487,19 +540,60 @@ export default {
     }
 
     const viewUser = (id) => {
-      // Implémenter la vue détaillée d'un utilisateur
-      console.log('Voir utilisateur:', id)
+      const user = users.value.find(u => u.id === id)
+      if (user) {
+        alert(`Détails de l'utilisateur:\n\nNom: ${user.first_name} ${user.last_name}\nEmail: ${user.email}\nRôle: ${user.role}\nStatut: ${user.is_active ? 'Actif' : 'Inactif'}\nDate de création: ${formatDate(user.created_at)}`)
+      }
     }
 
     const editUser = (id) => {
-      // Implémenter l'édition d'un utilisateur
-      console.log('Modifier utilisateur:', id)
+      const user = users.value.find(u => u.id === id)
+      if (user) {
+        const newFirstName = prompt('Prénom:', user.first_name)
+        if (newFirstName !== null) {
+          const newLastName = prompt('Nom:', user.last_name)
+          if (newLastName !== null) {
+            const newEmail = prompt('Email:', user.email)
+            if (newEmail !== null) {
+              const newRole = prompt('Rôle (user/admin/restaurant):', user.role)
+              if (newRole !== null) {
+                // Appel API pour mettre à jour
+                updateUser(id, {
+                  first_name: newFirstName,
+                  last_name: newLastName,
+                  email: newEmail,
+                  role: newRole
+                })
+              }
+            }
+          }
+        }
+      }
+    }
+
+    const updateUser = async (id, userData) => {
+      try {
+        // Récupérer les données actuelles de l'utilisateur
+        const currentUser = users.value.find(u => u.id === id)
+        const updateData = {
+          ...currentUser,
+          ...userData,
+          is_active: currentUser.is_active ? 1 : 0
+        }
+        
+        await axios.put(`${API_BASE_URL}/admin/users/${id}`, updateData)
+        alert('Utilisateur mis à jour avec succès!')
+        loadUsers() // Recharger les données
+      } catch (error) {
+        console.error('Erreur mise à jour utilisateur:', error)
+        alert('Erreur lors de la mise à jour de l\'utilisateur')
+      }
     }
 
     const disableUser = async (id) => {
       if (confirm('Êtes-vous sûr de vouloir désactiver cet utilisateur ?')) {
         try {
-          await axios.delete(`/api/admin/users/${id}`)
+          await axios.delete(`${API_BASE_URL}/admin/users/${id}`)
           await loadUsers()
           alert('Utilisateur désactivé avec succès')
         } catch (error) {
@@ -510,17 +604,60 @@ export default {
     }
 
     const viewRestaurant = (id) => {
-      console.log('Voir restaurant:', id)
+      const restaurant = restaurants.value.find(r => r.id === id)
+      if (restaurant) {
+        alert(`Détails du restaurant:\n\nNom: ${restaurant.name}\nAdresse: ${restaurant.address}\nType: ${restaurant.cuisine_type}\nEmail: ${restaurant.email}\nTéléphone: ${restaurant.phone}\nStatut: ${restaurant.is_active ? 'Actif' : 'Inactif'}`)
+      }
     }
 
     const editRestaurant = (id) => {
-      console.log('Modifier restaurant:', id)
+      const restaurant = restaurants.value.find(r => r.id === id)
+      if (restaurant) {
+        const newName = prompt('Nom du restaurant:', restaurant.name)
+        if (newName !== null) {
+          const newAddress = prompt('Adresse:', restaurant.address)
+          if (newAddress !== null) {
+            const newCuisineType = prompt('Type de cuisine:', restaurant.cuisine_type)
+            if (newCuisineType !== null) {
+              const newPriceRange = prompt('Fourchette de prix (€, €€, €€€):', restaurant.price_range)
+              if (newPriceRange !== null) {
+                // Appel API pour mettre à jour
+                updateRestaurant(id, {
+                  name: newName,
+                  address: newAddress,
+                  cuisine_type: newCuisineType,
+                  price_range: newPriceRange
+                })
+              }
+            }
+          }
+        }
+      }
+    }
+
+    const updateRestaurant = async (id, restaurantData) => {
+      try {
+        // Récupérer les données actuelles du restaurant
+        const currentRestaurant = restaurants.value.find(r => r.id === id)
+        const updateData = {
+          ...currentRestaurant,
+          ...restaurantData,
+          is_active: currentRestaurant.is_active ? 1 : 0
+        }
+        
+        await axios.put(`${API_BASE_URL}/admin/restaurants/${id}`, updateData)
+        alert('Restaurant mis à jour avec succès!')
+        loadRestaurants() // Recharger les données
+      } catch (error) {
+        console.error('Erreur mise à jour restaurant:', error)
+        alert('Erreur lors de la mise à jour du restaurant')
+      }
     }
 
     const disableRestaurant = async (id) => {
       if (confirm('Êtes-vous sûr de vouloir désactiver ce restaurant ?')) {
         try {
-          await axios.delete(`/api/admin/restaurants/${id}`)
+          await axios.delete(`${API_BASE_URL}/admin/restaurants/${id}`)
           await loadRestaurants()
           alert('Restaurant désactivé avec succès')
         } catch (error) {
@@ -531,16 +668,47 @@ export default {
     }
 
     const viewReservation = (id) => {
-      console.log('Voir réservation:', id)
+      const reservation = reservations.value.find(r => r.id === id)
+      if (reservation) {
+        alert(`Détails de la réservation:\n\nClient: ${reservation.first_name} ${reservation.last_name}\nRestaurant: ${reservation.restaurant_name}\nDate: ${formatDate(reservation.reservation_date)}\nHeure: ${reservation.reservation_time}\nPersonnes: ${reservation.number_of_guests}\nStatut: ${reservation.status}`)
+      }
     }
 
     const editReservation = (id) => {
-      console.log('Modifier réservation:', id)
+      const reservation = reservations.value.find(r => r.id === id)
+      if (reservation) {
+        alert(`Modification de la réservation:\n\nClient: ${reservation.first_name} ${reservation.last_name}\nRestaurant: ${reservation.restaurant_name}\n\nCette fonctionnalité sera implémentée dans une prochaine version.`)
+      }
     }
 
     onMounted(() => {
       loadDashboard()
     })
+
+    // Watchers pour les filtres
+    watch(userFilters, () => {
+      if (activeTab.value === 'users') {
+        loadUsers()
+      }
+    }, { deep: true })
+
+    watch(restaurantFilters, () => {
+      if (activeTab.value === 'restaurants') {
+        loadRestaurants()
+      }
+    }, { deep: true })
+
+    watch(reservationFilters, () => {
+      if (activeTab.value === 'reservations') {
+        loadReservations()
+      }
+    }, { deep: true })
+
+    watch(logFilters, () => {
+      if (activeTab.value === 'logs') {
+        loadLogs()
+      }
+    }, { deep: true })
 
     return {
       activeTab,
@@ -557,6 +725,7 @@ export default {
       reservationFilters,
       logFilters,
       tabs,
+      switchTab,
       loadDashboard,
       loadUsers,
       loadRestaurants,
@@ -572,7 +741,13 @@ export default {
       editRestaurant,
       disableRestaurant,
       viewReservation,
-      editReservation
+      editReservation,
+      viewUser,
+      editUser,
+      updateUser,
+      viewRestaurant,
+      editRestaurant,
+      updateRestaurant
     }
   }
 }
@@ -581,7 +756,7 @@ export default {
 <style scoped>
 .admin-dashboard {
   min-height: 100vh;
-  background: #f8f9fa;
+  background: #ffffff;
 }
 
 .admin-header {
@@ -637,6 +812,7 @@ export default {
 
 .admin-content {
   padding: 2rem 0;
+  background: #ffffff;
 }
 
 .admin-section {
@@ -693,7 +869,7 @@ export default {
 
 .dashboard-card h3 {
   margin: 0 0 1rem 0;
-  color: #495057;
+  color: #212529;
 }
 
 .activity-item, .reservation-item {
@@ -714,11 +890,11 @@ export default {
 
 .activity-content p, .reservation-info p {
   margin: 0;
-  color: #495057;
+  color: #212529;
 }
 
 .activity-content small, .reservation-info small {
-  color: #6c757d;
+  color: #495057;
 }
 
 .reservation-status {
@@ -752,7 +928,7 @@ export default {
 
 .section-header h2 {
   margin: 0;
-  color: #495057;
+  color: #212529;
 }
 
 .filters {
@@ -785,12 +961,13 @@ export default {
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid #e9ecef;
+  color: #212529;
 }
 
 .admin-table th {
   background: #f8f9fa;
   font-weight: 600;
-  color: #495057;
+  color: #212529;
 }
 
 .role-badge {
@@ -899,7 +1076,7 @@ export default {
 }
 
 .log-admin {
-  color: #495057;
+  color: #212529;
 }
 
 .log-date {
@@ -908,8 +1085,14 @@ export default {
 }
 
 .log-details {
-  color: #6c757d;
+  color: #495057;
   font-size: 0.9rem;
+}
+
+.log-no-details {
+  color: #6c757d;
+  font-style: italic;
+  padding: 5px 0;
 }
 
 .log-details pre {
@@ -933,7 +1116,7 @@ export default {
 
 .chart-card h3 {
   margin: 0 0 1rem 0;
-  color: #495057;
+  color: #212529;
 }
 
 .restaurant-stats {
@@ -953,11 +1136,11 @@ export default {
 
 .restaurant-name {
   font-weight: 500;
-  color: #495057;
+  color: #212529;
 }
 
 .restaurant-count {
-  color: #6c757d;
+  color: #495057;
   font-size: 0.9rem;
 }
 
