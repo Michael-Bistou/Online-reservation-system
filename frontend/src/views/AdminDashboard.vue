@@ -352,6 +352,54 @@
         </div>
       </div>
     </div>
+
+    <!-- Modale de modification de réservation -->
+    <div v-if="showEditModal" class="modal-overlay" @click="cancelEdit">
+      <div class="modal-content" @click.stop>
+        <div class="modal-header">
+          <h3>Modifier la réservation</h3>
+          <button @click="cancelEdit" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Client:</label>
+            <input type="text" :value="editingReservation?.first_name + ' ' + editingReservation?.last_name" disabled class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Restaurant:</label>
+            <input type="text" :value="editingReservation?.restaurant_name" disabled class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Date de réservation:</label>
+            <input type="date" v-model="editForm.reservation_date" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Heure de réservation:</label>
+            <input type="time" v-model="editForm.reservation_time" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Nombre de personnes:</label>
+            <input type="number" v-model="editForm.number_of_guests" min="1" max="20" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label>Statut:</label>
+            <select v-model="editForm.status" class="form-control">
+              <option value="pending">En attente</option>
+              <option value="confirmed">Confirmée</option>
+              <option value="cancelled">Annulée</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Demandes spéciales:</label>
+            <textarea v-model="editForm.special_requests" class="form-control" rows="3" placeholder="Aucune demande spéciale"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button @click="cancelEdit" class="btn btn-secondary">Annuler</button>
+          <button @click="saveReservation" class="btn btn-primary">Sauvegarder</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -388,6 +436,17 @@ export default {
     const reservations = ref([])
     const logs = ref([])
     const systemStats = ref({})
+    
+    // États pour les modales
+    const showEditModal = ref(false)
+    const editingReservation = ref(null)
+    const editForm = ref({
+      reservation_date: '',
+      reservation_time: '',
+      number_of_guests: 0,
+      status: '',
+      special_requests: ''
+    })
 
     const userFilters = ref({
       search: '',
@@ -677,7 +736,55 @@ export default {
     const editReservation = (id) => {
       const reservation = reservations.value.find(r => r.id === id)
       if (reservation) {
-        alert(`Modification de la réservation:\n\nClient: ${reservation.first_name} ${reservation.last_name}\nRestaurant: ${reservation.restaurant_name}\n\nCette fonctionnalité sera implémentée dans une prochaine version.`)
+        editingReservation.value = reservation
+        editForm.value = {
+          reservation_date: reservation.reservation_date,
+          reservation_time: reservation.reservation_time,
+          number_of_guests: reservation.number_of_guests,
+          status: reservation.status,
+          special_requests: reservation.special_requests || ''
+        }
+        showEditModal.value = true
+      }
+    }
+
+    const saveReservation = async () => {
+      try {
+        await updateReservation(editingReservation.value.id, editForm.value)
+        showEditModal.value = false
+        editingReservation.value = null
+      } catch (error) {
+        console.error('Erreur sauvegarde:', error)
+      }
+    }
+
+    const cancelEdit = () => {
+      showEditModal.value = false
+      editingReservation.value = null
+      editForm.value = {
+        reservation_date: '',
+        reservation_time: '',
+        number_of_guests: 0,
+        status: '',
+        special_requests: ''
+      }
+    }
+
+    const updateReservation = async (id, reservationData) => {
+      try {
+        // Récupérer les données actuelles de la réservation
+        const currentReservation = reservations.value.find(r => r.id === id)
+        const updateData = {
+          ...currentReservation,
+          ...reservationData
+        }
+        
+        await axios.put(`${API_BASE_URL}/admin/reservations/${id}`, updateData)
+        alert('Réservation mise à jour avec succès!')
+        loadReservations() // Recharger les données
+      } catch (error) {
+        console.error('Erreur mise à jour réservation:', error)
+        alert('Erreur lors de la mise à jour de la réservation')
       }
     }
 
@@ -742,12 +849,18 @@ export default {
       disableRestaurant,
       viewReservation,
       editReservation,
+      updateReservation,
+      saveReservation,
+      cancelEdit,
       viewUser,
       editUser,
       updateUser,
       viewRestaurant,
       editRestaurant,
-      updateRestaurant
+      updateRestaurant,
+      showEditModal,
+      editingReservation,
+      editForm
     }
   }
 }
@@ -1142,6 +1255,103 @@ export default {
 .restaurant-count {
   color: #495057;
   font-size: 0.9rem;
+}
+
+/* Styles pour la modale */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #212529;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6c757d;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: #dc3545;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #212529;
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.form-control:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
 }
 
 @media (max-width: 768px) {

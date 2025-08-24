@@ -543,7 +543,13 @@ const getReservation = async (req, res) => {
 const updateReservation = async (req, res) => {
   try {
     const { id } = req.params;
-    const { status, special_requests } = req.body;
+    const { 
+      reservation_date, 
+      reservation_time, 
+      number_of_guests, 
+      status, 
+      special_requests 
+    } = req.body;
 
     // Vérifier que la réservation existe
     const existingReservation = await query('SELECT id FROM reservations WHERE id = ?', [id]);
@@ -557,9 +563,9 @@ const updateReservation = async (req, res) => {
     // Mettre à jour la réservation
     await run(`
       UPDATE reservations 
-      SET status = ?, special_requests = ?, updated_at = CURRENT_TIMESTAMP
+      SET reservation_date = ?, reservation_time = ?, number_of_guests = ?, status = ?, special_requests = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
-    `, [status, special_requests, id]);
+    `, [reservation_date, reservation_time, number_of_guests, status, special_requests, id]);
 
     res.json({
       message: 'Réservation mise à jour avec succès'
